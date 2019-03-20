@@ -6,8 +6,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
-    <Folder Include="Models\" />
-    <Folder Include="Controllers\API\" />
     <Folder Include="DAO\" />
   </ItemGroup>
 
@@ -16,4 +14,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Controllers\API\BlacklistService.cs" />
+  </ItemGroup>
 </Project>
