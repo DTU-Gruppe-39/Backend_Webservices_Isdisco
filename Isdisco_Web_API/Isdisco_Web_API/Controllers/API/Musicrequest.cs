@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Isdisco_Web_API.Controllers.API
 {
-    [Route("api/[controller]")]
+    [Route("api/musicrequest")]
     public class Musicrequest : Controller
     {
         // GET: api/values

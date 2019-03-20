@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Isdisco_Web_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/user")]
     [ApiController]
     public class ValuesController : ControllerBase
     {

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Isdisco_Web_API.Controllers.API
 {
-    [Route("api/[controller]")]
+    [Route("api/admin")]
     public class AdminService : Controller
     {
         // GET: api/values

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Isdisco_Web_API.Controllers.API
 {
-    [Route("api/[controller]")]
+    [Route("api/blacklist")]
     public class BlacklistService : Controller
     {
         // GET: api/values
