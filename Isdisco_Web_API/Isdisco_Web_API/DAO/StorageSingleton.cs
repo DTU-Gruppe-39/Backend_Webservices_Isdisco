@@ -16,6 +16,8 @@ namespace Isdisco_Web_API.DAO
             }
         }
 
+        public string AuthToken { get; set; }
+
         public StorageSingleton() 
         {
         }

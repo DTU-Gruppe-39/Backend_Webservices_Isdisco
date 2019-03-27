@@ -7,6 +7,7 @@ namespace Isdisco_Web_API.Controllers
 {
     public class SpotifyAuthController
     {
+        private DAO.StorageSingleton storage = DAO.StorageSingleton.GetInstance();
         public SpotifyAuthController()
         {
         }
@@ -29,6 +30,8 @@ namespace Isdisco_Web_API.Controllers
             var tokenResponse = webClient.UploadValues("https://accounts.spotify.com/api/token", postparams);
 
             var textResponse = Encoding.UTF8.GetString(tokenResponse);
+            storage.AuthToken = textResponse;
+            //Console.WriteLine(textResponse);
         }
 
     }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
+using System.Net;
+using Newtonsoft.Json.Linq;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,6 +15,10 @@ namespace Isdisco_Web_API.Controllers.API
     [Route("api/spotify-track")]
     public class SpotifyTrackService : Controller
     {
+        private DAO.StorageSingleton storage = DAO.StorageSingleton.GetInstance();
+        private SpotifyAuthController auth = new SpotifyAuthController();
+
+
         // GET: api/values
         //[HttpGet]
         //public IEnumerable<string> Get()
@@ -22,9 +28,22 @@ namespace Isdisco_Web_API.Controllers.API
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public string Get(String id)
         {
-            return "Spotify is nice";
+            if (storage.AuthToken == null) {
+                auth.GetClientCredentialsAuthToken();
+            }
+
+            var webClient = new WebClient();
+            JObject jObject = JObject.Parse(storage.AuthToken);
+            string AuthToken = (string)jObject.SelectToken("access_token");
+            var authHeader = AuthToken;
+            //webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
+            webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + authHeader);
+
+            var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/tracks/" + id);
+
+            return GetResponse;
         }
 
         //// POST api/values
