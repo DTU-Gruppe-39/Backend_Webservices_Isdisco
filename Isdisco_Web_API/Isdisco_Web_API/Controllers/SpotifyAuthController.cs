@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 using System.Net;
 using System.Text;
 
-namespace Isdisco_Web_API.Controllers.API
+namespace Isdisco_Web_API.Controllers
 {
     public class SpotifyAuthController
     {
