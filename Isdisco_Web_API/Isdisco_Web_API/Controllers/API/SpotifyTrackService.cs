@@ -28,7 +28,7 @@ namespace Isdisco_Web_API.Controllers.API
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(String id)
+        public string GetTrack(String id)
         {
             if (storage.AuthToken == null) {
                 auth.GetClientCredentialsAuthToken();
@@ -45,6 +45,28 @@ namespace Isdisco_Web_API.Controllers.API
 
             return GetResponse;
         }
+
+        [HttpGet("search/{song}")]
+        public string GetSearch(String song)
+        {
+            if (storage.AuthToken == null)
+            {
+                auth.GetClientCredentialsAuthToken();
+            }
+
+            var webClient = new WebClient();
+            JObject jObject = JObject.Parse(storage.AuthToken);
+            string AuthToken = (string)jObject.SelectToken("access_token");
+            var authHeader = AuthToken;
+            //webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
+            webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + authHeader);
+            //webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + authHeader);
+            var limit = "4";    //Number of songs that Spotify returns
+            var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/search?q=" + Uri.EscapeUriString(song) + "&type=track&market=DK&limit=" + limit + "&offset=0");
+
+            return GetResponse;
+        }
+
 
         //// POST api/values
         //[HttpPost]
