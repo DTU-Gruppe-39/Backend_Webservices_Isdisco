@@ -60,7 +60,6 @@ namespace Isdisco_Web_API.Controllers.API
             var authHeader = AuthToken;
             //webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
             webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + authHeader);
-            //webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + authHeader);
             var limit = "4";    //Number of songs that Spotify returns
             var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/search?q=" + Uri.EscapeUriString(song) + "&type=track&market=DK&limit=" + limit + "&offset=0");
 
