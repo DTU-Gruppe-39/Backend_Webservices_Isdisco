@@ -9,6 +9,7 @@
     <Folder Include="Models\" />
     <Folder Include="Controllers\API\" />
     <Folder Include="DAO\" />
+    <Folder Include="Controllers\Business logic\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,4 +19,7 @@
     <PackageReference Include="SpotifyAPI.Web.Auth" Version="4.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Controllers\Business logic\SpotifyController.cs" />
+  </ItemGroup>
 </Project>

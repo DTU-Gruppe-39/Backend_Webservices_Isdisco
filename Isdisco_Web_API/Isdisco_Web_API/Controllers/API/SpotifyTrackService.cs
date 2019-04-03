@@ -30,40 +30,15 @@ namespace Isdisco_Web_API.Controllers.API
         [HttpGet("{id}")]
         public string GetTrack(String id)
         {
-            if (storage.AuthToken == null) {
-                auth.GetClientCredentialsAuthToken();
-            }
-
-            var webClient = new WebClient();
-            JObject jObject = JObject.Parse(storage.AuthToken);
-            string AuthToken = (string)jObject.SelectToken("access_token");
-            var authHeader = AuthToken;
-            //webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
-            webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + authHeader);
-
-            var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/tracks/" + id);
-
-            return GetResponse;
+            Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
+            return scc.GetTrack(id);
         }
 
-        [HttpGet("search/{song}")]
-        public string GetSearch(String song)
+        [HttpGet("search/{songName}")]
+        public string GetSearch(String songName)
         {
-            if (storage.AuthToken == null)
-            {
-                auth.GetClientCredentialsAuthToken();
-            }
-
-            var webClient = new WebClient();
-            JObject jObject = JObject.Parse(storage.AuthToken);
-            string AuthToken = (string)jObject.SelectToken("access_token");
-            var authHeader = AuthToken;
-            //webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
-            webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + authHeader);
-            var limit = "4";    //Number of songs that Spotify returns
-            var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/search?q=" + Uri.EscapeUriString(song) + "&type=track&market=DK&limit=" + limit + "&offset=0");
-
-            return GetResponse;
+            Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
+            return scc.GetSearch(songName);
         }
 
 
