@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net;
 using Newtonsoft.Json.Linq;
 
+
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Isdisco_Web_API.Controllers.API
@@ -39,6 +40,22 @@ namespace Isdisco_Web_API.Controllers.API
         {
             Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
             return scc.GetSearch(songName);
+        }
+
+
+        [HttpGet("currently-playing")]
+        [Produces("text/html")]
+        public ContentResult GetCurrentlyPlaying()
+        {
+            Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
+
+            return new ContentResult
+            {
+                ContentType = "text/html",
+                StatusCode = (int)HttpStatusCode.OK,
+                Content = scc.GetCurrentlyPlaying()
+            };
+
         }
 
 

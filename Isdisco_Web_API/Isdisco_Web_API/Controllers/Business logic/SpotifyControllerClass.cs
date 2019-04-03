@@ -15,13 +15,13 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         public string GetTrack(String id)
         {
-            if (storage.AuthToken == null)
+            if (storage.ClientCredentialsFlowAuthToken == null)
             {
-                auth.GetClientCredentialsAuthToken();
+                auth.GetClientCredentialsFlowAuthToken();
             }
 
             var webClient = new WebClient();
-            JObject jObject = JObject.Parse(storage.AuthToken);
+            JObject jObject = JObject.Parse(storage.ClientCredentialsFlowAuthToken);
             string AuthToken = (string)jObject.SelectToken("access_token");
             var authHeader = AuthToken;
             //webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
@@ -35,13 +35,13 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         public string GetSearch(String songName)
         {
-            if (storage.AuthToken == null)
+            if (storage.ClientCredentialsFlowAuthToken == null)
             {
-                auth.GetClientCredentialsAuthToken();
+                auth.GetClientCredentialsFlowAuthToken();
             }
 
             var webClient = new WebClient();
-            JObject jObject = JObject.Parse(storage.AuthToken);
+            JObject jObject = JObject.Parse(storage.ClientCredentialsFlowAuthToken);
             string AuthToken = (string)jObject.SelectToken("access_token");
             var authHeader = AuthToken;
             //webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
@@ -50,6 +50,28 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/search?q=" + Uri.EscapeUriString(songName) + "&type=track&market=DK&limit=" + limit + "&offset=0");
 
             return GetResponse;
+        }
+
+
+
+        public string GetCurrentlyPlaying()
+        {
+            if (storage.AuthorizationCodeFlowAuthToken == null)
+            {
+                return auth.GetAuthorizationCodeFlowAuthToken();
+            }
+
+            //var webClient = new WebClient();
+            //JObject jObject = JObject.Parse(storage.ClientCredentialsFlowAuthToken);
+            //string AuthToken = (string)jObject.SelectToken("access_token");
+            //var authHeader = AuthToken;
+            ////webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
+            //webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + authHeader);
+            //var limit = "4";    //Number of songs that Spotify returns
+            //var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/search?q=" + Uri.EscapeUriString(songName) + "&type=track&market=DK&limit=" + limit + "&offset=0");
+
+            //return GetResponse;
+            return "";
         }
 
 
