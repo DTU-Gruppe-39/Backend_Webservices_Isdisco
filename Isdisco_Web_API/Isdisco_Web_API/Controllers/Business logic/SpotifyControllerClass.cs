@@ -23,9 +23,8 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             var webClient = new WebClient();
             JObject jObject = JObject.Parse(storage.ClientCredentialsFlowAuthToken);
             string AuthToken = (string)jObject.SelectToken("access_token");
-            var authHeader = AuthToken;
             //webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
-            webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + authHeader);
+            webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + AuthToken);
 
             var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/tracks/" + id);
 
@@ -43,12 +42,26 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             var webClient = new WebClient();
             JObject jObject = JObject.Parse(storage.ClientCredentialsFlowAuthToken);
             string AuthToken = (string)jObject.SelectToken("access_token");
-            var authHeader = AuthToken;
             //webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
-            webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + authHeader);
+            webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + AuthToken);
             var limit = "4";    //Number of songs that Spotify returns
             var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/search?q=" + Uri.EscapeUriString(songName) + "&type=track&market=DK&limit=" + limit + "&offset=0");
 
+            return GetResponse;
+        }
+
+
+        public String GetCurrentlyPlayingSong()
+        {
+            var webClient = new WebClient();
+            JObject jObject = JObject.Parse(storage.AuthorizationCodeFlowAuthToken);
+            string AuthToken = (string)jObject.SelectToken("access_token");
+            webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
+            webClient.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+            webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + AuthToken);
+            var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/me/player/currently-playing?market=DK");
+            Console.WriteLine("\n\n\n\n\n" + AuthToken + "\n\n\n\n\n");
+            //Console.WriteLine("\n\n\n\n\n" + GetResponse + "\n\n\n\n\n");
             return GetResponse;
         }
 

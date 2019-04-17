@@ -44,7 +44,7 @@ namespace Isdisco_Web_API.Controllers.API
 
 
         [HttpGet("currently-playing")]
-        [Produces("text/html")]
+        //[Produces("text/html")]
         public void GetCurrentlyPlayingScope()
         {
             Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
@@ -53,12 +53,13 @@ namespace Isdisco_Web_API.Controllers.API
 
 
         [HttpGet("callback")]
-        [Produces("text/html")]
-        public void GetCurrentlyPlayingToken(String code)
+        //[Produces("text/html")]
+        public String GetCurrentlyPlayingToken(String code)
         {
             Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
             storage.AuthorizationCodeFlowAuthCode = code;
             scc.GetCurrentlyPlayingToken();
+            return scc.GetCurrentlyPlayingSong();
         }
 
 
