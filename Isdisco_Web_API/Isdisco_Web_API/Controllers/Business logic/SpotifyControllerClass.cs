@@ -54,26 +54,19 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
 
 
-        public string GetCurrentlyPlaying()
+        public String GetCurrentlyPlayingScope()
         {
-            if (storage.AuthorizationCodeFlowAuthToken == null)
-            {
-                return auth.GetAuthorizationCodeFlowAuthToken();
-            }
-
-            //var webClient = new WebClient();
-            //JObject jObject = JObject.Parse(storage.ClientCredentialsFlowAuthToken);
-            //string AuthToken = (string)jObject.SelectToken("access_token");
-            //var authHeader = AuthToken;
-            ////webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
-            //webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + authHeader);
-            //var limit = "4";    //Number of songs that Spotify returns
-            //var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/search?q=" + Uri.EscapeUriString(songName) + "&type=track&market=DK&limit=" + limit + "&offset=0");
-
-            //return GetResponse;
-            return "";
+            return auth.GetAuthorizationCodeFlowUserScope();
         }
 
 
+        public void GetCurrentlyPlayingToken()
+        {
+            //if (storage.AuthorizationCodeFlowAuthToken == null)
+            //{
+            //    return auth.GetAuthorizationCodeFlowAuthToken();
+            //}
+            auth.GetAuthorizationCodeFlowAuthToken();
+        }
     }
 }
