@@ -45,21 +45,38 @@ namespace Isdisco_Web_API.Controllers.API
 
         [HttpGet("currently-playing")]
         //[Produces("text/html")]
-        public void GetCurrentlyPlayingScope()
+        public String GetCurrentlyPlayingScope()
         {
             Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
-            Response.Redirect(scc.GetCurrentlyPlayingScope());
+            //Response.Redirect(scc.GetCurrentlyPlayingScope());
+            if (storage.AuthorizationCodeFlowAuthToken == null)
+            {
+                Response.Redirect(scc.GetCurrentlyPlayingScope());
+                return "";
+            }
+            else
+            {
+                return scc.GetCurrentlyPlayingSong();
+            }
         }
+
+        //[HttpGet("user-login")]
+        //public void GetUserLogin()
+        //{
+        //    Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
+        //    Response.Redirect(scc.GetCurrentlyPlayingScope());
+        //}
 
 
         [HttpGet("callback")]
         //[Produces("text/html")]
-        public String GetCurrentlyPlayingToken(String code)
+        public void GetCurrentlyPlayingToken(String code)
         {
             Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
             storage.AuthorizationCodeFlowAuthCode = code;
             scc.GetCurrentlyPlayingToken();
-            return scc.GetCurrentlyPlayingSong();
+            Response.Redirect("https://localhost:5001/api/spotify-track/currently-playing");
+            //return scc.GetCurrentlyPlayingSong();
         }
 
 
