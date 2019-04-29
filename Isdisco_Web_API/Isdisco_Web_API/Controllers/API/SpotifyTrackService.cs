@@ -35,7 +35,7 @@ namespace Isdisco_Web_API.Controllers.API
             return scc.GetTrack(id);
         }
 
-        [HttpGet("search/{songName}")]
+        [HttpGet("search")]
         public string GetSearch(String songName)
         {
             Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
