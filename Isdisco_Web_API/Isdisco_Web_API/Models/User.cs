@@ -8,12 +8,14 @@ namespace Isdisco_Web_API.Models
         public string Fullname { get; set; }
         public bool VIP { get; set; }
         public LoginDetails LoginDetails { get; set; }
+        public string AppToken { get; set; }
+        public string FacebookToken { get; set; }
 
         public User()
         {
         }
 
-        public User(string fullname, LoginDetails loginDetails, bool vip)
+        public User(string fullname, LoginDetails loginDetails, bool vip, string appToken, string facebookToken)
         {
             Id = Counter;
             Counter++;
@@ -21,6 +23,8 @@ namespace Isdisco_Web_API.Models
             Fullname = fullname;
             LoginDetails = loginDetails;
             VIP = vip;
+            AppToken = AppToken;
+            FacebookToken = facebookToken;
         }
 
         public User(LoginDetails loginDetails)
