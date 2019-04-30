@@ -16,6 +16,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="SpotifyAPI.Web" Version="4.0.0" />
     <PackageReference Include="SpotifyAPI.Web.Auth" Version="4.0.0" />
+    <PackageReference Include="PushSharp.Core" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
