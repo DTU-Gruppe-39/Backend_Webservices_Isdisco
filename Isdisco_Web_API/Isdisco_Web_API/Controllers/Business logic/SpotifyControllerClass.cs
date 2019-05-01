@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using Isdisco_Web_API.Models;
 using Newtonsoft.Json.Linq;
@@ -42,7 +43,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         }
 
 
-        public string GetSearch(String songName)
+        public JObject GetSearch(String songName)
         {
             if (storage.ClientCredentialsFlowAuthToken == null)
             {
@@ -57,7 +58,23 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             var limit = "10";    //Number of songs that Spotify returns
             var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/search?q=" + Uri.EscapeUriString(songName) + "&type=track&market=DK&limit=" + limit + "&offset=0");
 
-            return GetResponse;
+            var jsonTracks = JObject.Parse(GetResponse);
+            JArray tracks = (JArray)jsonTracks["tracks"]["items"];
+            ListOfTracks listTracks = new ListOfTracks();
+            for (int i = 0; i < tracks.Count; i++)
+            {
+                var trackId = tracks[i]["id"].ToString();
+                var thesongName = tracks[i]["name"].ToString();
+                var artistName = tracks[i]["artists"][0]["name"].ToString();
+                var image_small_url = tracks[i]["album"]["images"][2]["url"].ToString();
+                var image_medium_url = tracks[i]["album"]["images"][1]["url"].ToString();
+                var image_large_url = tracks[i]["album"]["images"][0]["url"].ToString();
+                var webplayerLink = tracks[i]["external_urls"]["spotify"].ToString();
+                listTracks.Tracks.Add(new Track(trackId, songName, artistName, image_small_url, image_medium_url, image_large_url, webplayerLink));
+            }
+
+            return JObject.FromObject(listTracks);
+            //return GetResponse;
         }
 
 
@@ -90,6 +107,17 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             //    return auth.GetAuthorizationCodeFlowAuthToken();
             //}
             auth.GetAuthorizationCodeFlowAuthToken();
+        }
+
+
+        private class ListOfTracks
+        {
+            private List<Track> tracks = new List<Track>();
+            public List<Track> Tracks
+            {
+                get { return tracks; }
+                set { tracks = value; }
+            }
         }
     }
 }
