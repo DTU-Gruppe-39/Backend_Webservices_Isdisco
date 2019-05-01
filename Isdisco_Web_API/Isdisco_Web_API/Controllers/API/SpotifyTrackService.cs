@@ -52,7 +52,7 @@ namespace Isdisco_Web_API.Controllers.API
             //Response.Redirect(scc.GetCurrentlyPlayingScope());
             if (storage.AuthorizationCodeFlowAuthToken == null)
             {
-                Response.Redirect(scc.GetCurrentlyPlayingScope());
+                Response.Redirect(scc.GetCurrentlyPlayingUserScopes());
                 return "";
             }
             else
@@ -60,14 +60,6 @@ namespace Isdisco_Web_API.Controllers.API
                 return scc.GetCurrentlyPlayingSong();
             }
         }
-
-        //[HttpGet("user-login")]
-        //public void GetUserLogin()
-        //{
-        //    Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
-        //    Response.Redirect(scc.GetCurrentlyPlayingScope());
-        //}
-
 
         [HttpGet("callback")]
         //[Produces("text/html")]
@@ -80,6 +72,33 @@ namespace Isdisco_Web_API.Controllers.API
             //return scc.GetCurrentlyPlayingSong();
         }
 
+        //[HttpGet("my-top")]
+        //public JObject GetMyTop()
+        //{
+        //    Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
+        //    if (storage.AuthorizationCodeFlowAuthToken == null)
+        //    {
+        //        Response.Redirect(scc.GetMyTopUserScopes());
+        //        return null;
+        //    }
+        //    else
+        //    {
+        //        return scc.GetMyTopTracks();
+        //    }
+        //}
+
+
+
+        //[HttpGet("callback-my-top")]
+        ////[Produces("text/html")]
+        //public void GetMyTopToken(String code)
+        //{
+        //    Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
+        //    storage.AuthorizationCodeFlowAuthCode = code;
+        //    scc.GetCurrentlyPlayingToken();
+        //    Response.Redirect("https://localhost:5001/api/spotify-track/my-top");
+        //    //return scc.GetCurrentlyPlayingSong();
+        //}
 
         //// POST api/values
         //[HttpPost]

@@ -70,7 +70,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                 var image_medium_url = tracks[i]["album"]["images"][1]["url"].ToString();
                 var image_large_url = tracks[i]["album"]["images"][0]["url"].ToString();
                 var webplayerLink = tracks[i]["external_urls"]["spotify"].ToString();
-                listTracks.Tracks.Add(new Track(trackId, songName, artistName, image_small_url, image_medium_url, image_large_url, webplayerLink));
+                listTracks.Tracks.Add(new Track(trackId, thesongName, artistName, image_small_url, image_medium_url, image_large_url, webplayerLink));
             }
 
             return JObject.FromObject(listTracks);
@@ -87,16 +87,53 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             webClient.Headers.Add(HttpRequestHeader.ContentType, "application/json");
             webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + AuthToken);
             var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/me/player/currently-playing?market=DK");
-            Console.WriteLine("\n\n\n\n\n" + AuthToken + "\n\n\n\n\n");
+            //Console.WriteLine("\n\n\n\n\n" + AuthToken + "\n\n\n\n\n");
             //Console.WriteLine("\n\n\n\n\n" + GetResponse + "\n\n\n\n\n");
             return GetResponse;
         }
 
-
-
-        public String GetCurrentlyPlayingScope()
+        public JObject GetMyTopTracks()
         {
-            return auth.GetAuthorizationCodeFlowUserScope();
+            var webClient = new WebClient();
+            JObject jObject = JObject.Parse(storage.AuthorizationCodeFlowAuthToken);
+            string AuthToken = (string)jObject.SelectToken("access_token");
+            webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
+            webClient.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+            webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + AuthToken);
+            var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/me/top/tracks");
+            //Console.WriteLine("\n\n\n\n\n" + AuthToken + "\n\n\n\n\n");
+            //Console.WriteLine("\n\n\n\n\n" + GetResponse + "\n\n\n\n\n");
+
+            var jsonTracks = JObject.Parse(GetResponse);
+            JArray tracks = (JArray)jsonTracks["tracks"]["items"];
+            ListOfTracks listTracks = new ListOfTracks();
+            for (int i = 0; i < tracks.Count; i++)
+            {
+                var trackId = tracks[i]["id"].ToString();
+                var thesongName = tracks[i]["name"].ToString();
+                var artistName = tracks[i]["artists"][0]["name"].ToString();
+                var image_small_url = tracks[i]["album"]["images"][2]["url"].ToString();
+                var image_medium_url = tracks[i]["album"]["images"][1]["url"].ToString();
+                var image_large_url = tracks[i]["album"]["images"][0]["url"].ToString();
+                var webplayerLink = tracks[i]["external_urls"]["spotify"].ToString();
+                listTracks.Tracks.Add(new Track(trackId, thesongName, artistName, image_small_url, image_medium_url, image_large_url, webplayerLink));
+            }
+
+            return JObject.FromObject(listTracks);
+
+            //return GetResponse;
+        }
+
+
+
+        public String GetCurrentlyPlayingUserScopes()
+        {
+            return auth.GetAuthorizationCodeFlowUserScopeCurrentlyPlaying();
+        }
+       
+       public String GetMyTopUserScopes()
+        {
+            return auth.GetAuthorizationCodeFlowUserScopeMyTop();
         }
 
 
