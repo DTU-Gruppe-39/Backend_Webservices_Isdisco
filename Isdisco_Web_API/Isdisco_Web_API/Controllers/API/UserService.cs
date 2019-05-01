@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Isdisco_Web_API.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Isdisco_Web_API.Controllers
@@ -10,33 +11,33 @@ namespace Isdisco_Web_API.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        // GET api/values
+        // GET api/user
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public List<User> Get()
         {
-            return new string[] { "value1", "value2" };
+            return null;
         }
 
-        // GET api/values/5
+        // GET api/user/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public User Get(int id)
         {
-            return "value";
+            return null;
         }
 
-        // POST api/values
+        // POST api/user
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post(User user)
         {
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // PUT api/user/5
+        [HttpPut]
+        public void Put(User user)
         {
         }
 
-        // DELETE api/values/5
+        // DELETE api/user/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

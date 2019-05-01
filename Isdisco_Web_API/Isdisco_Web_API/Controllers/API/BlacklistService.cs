@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Isdisco_Web_API.Models;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -11,33 +12,27 @@ namespace Isdisco_Web_API.Controllers.API
     [Route("api/blacklist")]
     public class BlacklistService : Controller
     {
-        // GET: api/values
+        // GET: api/blacklist
         [HttpGet]
-        public IEnumerable<string> Get()
+        public List<Blacklist> Get()
         {
-            return new string[] { "value1", "value2" };
+            return null;
         }
 
-        // GET api/values/5
+        // GET api/blacklist/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Blacklist Get(int id)
         {
-            return "value";
+            return null;
         }
 
-        // POST api/values
+        // POST api/blacklist
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post(Blacklist blacklist)
         {
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
+        // DELETE api/blacklist/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
