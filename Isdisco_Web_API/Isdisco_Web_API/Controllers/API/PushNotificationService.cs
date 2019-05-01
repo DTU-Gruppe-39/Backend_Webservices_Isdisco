@@ -17,7 +17,7 @@ namespace Isdisco_Web_API.Controllers.API
         public void PushNotification()
         {
             Businesslogic.NotificationControllerClass ncc = new Businesslogic.NotificationControllerClass();
-            _ = ncc.PushNotificationAsync();
+            ncc.PushNotificationAsync();
              
         }
 

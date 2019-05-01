@@ -16,14 +16,13 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         private ApnServerType server;
 
         private string notification;
-        
 
 
-        public NotificationControllerClass()
+    public NotificationControllerClass()
         {
         }
 
-        internal async System.Threading.Tasks.Task<string> PushNotificationAsync()
+        internal async void PushNotificationAsync()
         {
             p8privateKey = "MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgzdgv9ENf8lc74VfU\n1jCn4WEXryur2sOK6tXBfWnNJGigCgYIKoZIzj0DAQehRANCAARH8kCLw2xvoDGl\njoRv2CWGi6xo8ygK6VYrFCq6TbKyvQksKlsbVoqsmDB3N8f0c3xOsktvYxNtaUf3\nUUHcMXs8";
             p8privateKeyId = "Q96692A9S2";
@@ -33,14 +32,12 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
             server = CorePush.Apple.ApnServerType.Development;
 
-            notification = (string)JObject.Parse("{\n   “aps” : {\n      “badge” : 9\n      “sound” : “bingbong.aiff”\n   },\n   “messageID” : “ABCDEFGHIJ”\n}");
+            notification = "{\n   “aps” : {\n      “badge” : 9\n      “sound” : “bingbong.aiff”\n   },\n   “messageID” : “ABCDEFGHIJ”\n}";
             using (var apn = new ApnSender(p8privateKey, p8privateKeyId, teamId, appBundleIdentifier, server))
             {
                 await apn.SendAsync(deviceToken, notification);
-                
-            }
 
-            return p8.GetToken();
+            }
 
 
 
@@ -107,9 +104,9 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             // This isn't done after every message, but after you're
             // done with the broker
             apnsBroker.Stop();
-     */   
+     */
+        }
+
     }
- 
-   }
 
 }
