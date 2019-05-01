@@ -1,8 +1,9 @@
 ﻿using System;
-using Newtonsoft.Json.Linq;
 using PushSharp;
 using PushSharp.Apple;
 using CorePush;
+using CorePush.Apple;
+using Newtonsoft.Json.Linq;
 
 namespace Isdisco_Web_API.Controllers.Businesslogic
 {
@@ -11,14 +12,33 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         private DAO.StorageSingleton storage = DAO.StorageSingleton.GetInstance();
         private JwtFromP8 p8 = new JwtFromP8();
 
+        private string p8privateKey, p8privateKeyId, teamId, appBundleIdentifier, deviceToken;
+        private ApnServerType server;
+
+        private string notification;
+        
+
+
         public NotificationControllerClass()
         {
         }
 
-        internal string PushNotification()
+        internal async System.Threading.Tasks.Task<string> PushNotificationAsync()
         {
+            p8privateKey = "MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgzdgv9ENf8lc74VfU\n1jCn4WEXryur2sOK6tXBfWnNJGigCgYIKoZIzj0DAQehRANCAARH8kCLw2xvoDGl\njoRv2CWGi6xo8ygK6VYrFCq6TbKyvQksKlsbVoqsmDB3N8f0c3xOsktvYxNtaUf3\nUUHcMXs8";
+            p8privateKeyId = "Q96692A9S2";
+            teamId = "G6TSQJ6DQ5";
+            appBundleIdentifier = "com.Rasmus-Gregersen.Isdisco";
+            deviceToken = "834A1C6138CD293AC464D6CBFDBC987C3F73BC691EF55702F6DE5E84F2DA7081";
 
+            server = CorePush.Apple.ApnServerType.Development;
 
+            notification = (string)JObject.Parse("{\n   “aps” : {\n      “badge” : 9\n      “sound” : “bingbong.aiff”\n   },\n   “messageID” : “ABCDEFGHIJ”\n}");
+            using (var apn = new ApnSender(p8privateKey, p8privateKeyId, teamId, appBundleIdentifier, server))
+            {
+                await apn.SendAsync(deviceToken, notification);
+                
+            }
 
             return p8.GetToken();
 
