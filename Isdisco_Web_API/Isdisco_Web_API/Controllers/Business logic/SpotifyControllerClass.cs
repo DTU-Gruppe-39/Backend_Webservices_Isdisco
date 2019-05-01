@@ -42,6 +42,39 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             return track;
         }
 
+        public JObject GetPlaylist(string id)
+        {
+            if (storage.ClientCredentialsFlowAuthToken == null)
+            {
+                auth.GetClientCredentialsFlowAuthToken();
+            }
+
+            var webClient = new WebClient();
+            JObject jObject = JObject.Parse(storage.ClientCredentialsFlowAuthToken);
+            string AuthToken = (string)jObject.SelectToken("access_token");
+            //webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
+            webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + AuthToken);
+            //var limit = "30";    //Number of songs that Spotify returns
+            var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/playlists/" + id + "/tracks");
+
+            var jsonTracks = JObject.Parse(GetResponse);
+            JArray tracks = (JArray)jsonTracks["items"];
+            ListOfTracks listTracks = new ListOfTracks();
+            for (int i = 0; i < tracks.Count; i++)
+            {
+                var trackId = tracks[i]["track"]["id"].ToString();
+                var thesongName = tracks[i]["track"]["name"].ToString();
+                var artistName = tracks[i]["track"]["artists"][0]["name"].ToString();
+                var image_small_url = tracks[i]["track"]["album"]["images"][2]["url"].ToString();
+                var image_medium_url = tracks[i]["track"]["album"]["images"][1]["url"].ToString();
+                var image_large_url = tracks[i]["track"]["album"]["images"][0]["url"].ToString();
+                var webplayerLink = tracks[i]["track"]["external_urls"]["spotify"].ToString();
+                listTracks.Tracks.Add(new Track(trackId, thesongName, artistName, image_small_url, image_medium_url, image_large_url, webplayerLink));
+            }
+
+            return JObject.FromObject(listTracks);
+            //return JObject.Parse(GetResponse);
+        }
 
         public JObject GetSearch(String songName)
         {

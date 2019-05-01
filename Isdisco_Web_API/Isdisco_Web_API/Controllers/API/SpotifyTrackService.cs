@@ -33,16 +33,33 @@ namespace Isdisco_Web_API.Controllers.API
         [HttpGet()]
         public Track GetTrack(String id)
         {
-            Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
+            //Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
             return scc.GetTrack(id);
         }
 
         [HttpGet("search")]
         public JObject GetSearch(String songName)
         {
-            Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
+            //Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
             return scc.GetSearch(songName);
         }
+
+        [HttpGet("playlist")]
+        public JObject GetPlaylist(String id)
+        {
+            //Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
+            switch (id)
+            {
+                //Denmark Top 50: https://open.spotify.com/playlist/37i9dQZEVXbL3J0k32lWnN
+                case "1": id = "37i9dQZEVXbL3J0k32lWnN";
+                    break;
+                //Ja dak: https://open.spotify.com/playlist/37i9dQZF1DX9vVjb8NqHzD
+                case "2": id = "37i9dQZF1DX9vVjb8NqHzD";
+                    break;
+            }
+            return scc.GetPlaylist(id);
+        }
+
 
         [HttpGet("currently-playing")]
         //[Produces("text/html")]
