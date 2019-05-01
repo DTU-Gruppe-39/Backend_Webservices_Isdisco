@@ -1,15 +1,15 @@
 ﻿using System;
 namespace Isdisco_Web_API.Models
 {
-    public class Blacklisted
+    public class Blacklist
     {
         public Track Track { get; set; }
 
-        public Blacklisted()
+        public Blacklist()
         {
         }
 
-        public Blacklisted(Track track)
+        public Blacklist(Track track)
         {
             Track = track;
         }
