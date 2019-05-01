@@ -1,7 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Security.Cryptography;
 using Jose;
+using Security.Cryptography;
+using Org.BouncyCastle;
+using Org.BouncyCastle.Crypto.Parameters;
+using Org.BouncyCastle.OpenSsl;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+
 namespace Isdisco_Web_API.Controllers.Businesslogic
 {
     public class JwtFromP8
@@ -10,33 +18,45 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         {
         }
 
-        public void MakeToken()
+
+        public string GetToken()
         {
-            var iat = Math.Round((DateTime.UtcNow.AddMinutes(-1) - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds, 0);
-            var exp = Math.Round((DateTime.UtcNow.AddMinutes(30) - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds, 0);
+            var dsa = GetECDsa();
+            return CreateJwt(dsa, "Q96692A9S2", "G6TSQJ6DQ5");
+        }
 
-            var payload = new Dictionary<string, object>()
+        private ECDsa GetECDsa()
         {
-            { "iat", iat },
-            { "exp", exp },
-            { "iss", "G6TSQJ6DQ5" },
-            { "origin", "com.Rasmus-Gregersen.Isdisco" }
-        };
+            using (TextReader reader = System.IO.File.OpenText("/Users/thomasmattsson/Documents/GitHub/Backend_Webservices_Isdisco/Isdisco_Web_API/Isdisco_Web_API/Controllers/Business logic/push-cert.p8"))
+            {
+                var ecPrivateKeyParameters =
+                    (ECPrivateKeyParameters)new Org.BouncyCastle.OpenSsl.PemReader(reader).ReadObject();
+                var x = ecPrivateKeyParameters.Parameters.G.AffineXCoord.GetEncoded();
+                var y = ecPrivateKeyParameters.Parameters.G.AffineYCoord.GetEncoded();
+                var d = ecPrivateKeyParameters.D.ToByteArrayUnsigned();
 
-            var extraHeader = new Dictionary<string, object>()
+                // Convert the BouncyCastle key to a Native Key.
+                var msEcp = new ECParameters { Curve = ECCurve.NamedCurves.nistP256, Q = { X = x, Y = y }, D = d };
+                return ECDsa.Create(msEcp);
+            }
+        }
+
+        private string CreateJwt(ECDsa key, string keyId, string teamId)
         {
-            { "alg", "ES256" },
-            { "typ", "JWT" },
-            { "kid", "Q96692A9S2" }
-        };
+            var securityKey = new ECDsaSecurityKey(key) { KeyId = keyId };
+            var credentials = new SigningCredentials(securityKey, "ES256");
 
-            var keyString = "MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgzdgv9ENf8lc74VfU\n1jCn4WEXryur2sOK6tXBfWnNJGigCgYIKoZIzj0DAQehRANCAARH8kCLw2xvoDGl\njoRv2CWGi6xo8ygK6VYrFCq6TbKyvQksKlsbVoqsmDB3N8f0c3xOsktvYxNtaUf3\nUUHcMXs8";
+            var descriptor = new SecurityTokenDescriptor
+            {
+                IssuedAt = DateTime.Now,
+                Issuer = teamId,
+                SigningCredentials = credentials,
 
-            CngKey privateKey = CngKey.Import(Convert.FromBase64String(keyString), CngKeyBlobFormat.Pkcs8PrivateBlob);
+            };
 
-            string token = JWT.Encode(payload, privateKey, JwsAlgorithm.ES256, extraHeader);
-
-            Console.WriteLine(token);
+            var handler = new JwtSecurityTokenHandler();
+            var encodedToken = handler.CreateEncodedJwt(descriptor);
+            return encodedToken;
         }
     }
 }

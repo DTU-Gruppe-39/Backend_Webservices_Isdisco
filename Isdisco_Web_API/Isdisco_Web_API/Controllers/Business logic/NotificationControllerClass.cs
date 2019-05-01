@@ -14,9 +14,10 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         {
         }
 
-        internal void PushNotification()
+        internal string PushNotification()
         {
-            p8.MakeToken();
+            return p8.GetToken();
+
 
 
 
