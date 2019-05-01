@@ -38,6 +38,8 @@ namespace Isdisco_Web_API.DAO
         public string ClientCredentialsFlowAuthToken { get; set; }
         public string AuthorizationCodeFlowAuthToken { get; set; }
         public string AuthorizationCodeFlowAuthCode { get; set; }
+        public string LoginCallback { get; set; }
+
 
         public StorageSingleton() 
         {

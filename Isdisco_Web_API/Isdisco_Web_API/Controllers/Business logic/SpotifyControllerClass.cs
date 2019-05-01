@@ -105,7 +105,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             //Console.WriteLine("\n\n\n\n\n" + GetResponse + "\n\n\n\n\n");
 
             var jsonTracks = JObject.Parse(GetResponse);
-            JArray tracks = (JArray)jsonTracks["tracks"]["items"];
+            JArray tracks = (JArray)jsonTracks["items"];
             ListOfTracks listTracks = new ListOfTracks();
             for (int i = 0; i < tracks.Count; i++)
             {
@@ -121,23 +121,17 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
             return JObject.FromObject(listTracks);
 
-            //return GetResponse;
+            //return JObject.Parse(GetResponse);
         }
 
 
 
-        public String GetCurrentlyPlayingUserScopes()
+        public String GetUserScopes()
         {
-            return auth.GetAuthorizationCodeFlowUserScopeCurrentlyPlaying();
-        }
-       
-       public String GetMyTopUserScopes()
-        {
-            return auth.GetAuthorizationCodeFlowUserScopeMyTop();
+            return auth.GetAuthorizationCodeFlowUserScope();
         }
 
-
-        public void GetCurrentlyPlayingToken()
+        public void GetAuthorizationCodeToken()
         {
             //if (storage.AuthorizationCodeFlowAuthToken == null)
             //{

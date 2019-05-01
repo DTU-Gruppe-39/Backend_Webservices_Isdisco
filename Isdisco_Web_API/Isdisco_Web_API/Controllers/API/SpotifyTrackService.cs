@@ -17,6 +17,7 @@ namespace Isdisco_Web_API.Controllers.API
     [Route("api/spotify-track")]
     public class SpotifyTrackService : Controller
     {
+        Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
         private DAO.StorageSingleton storage = DAO.StorageSingleton.GetInstance();
         private SpotifyAuthController auth = new SpotifyAuthController();
 
@@ -43,62 +44,51 @@ namespace Isdisco_Web_API.Controllers.API
             return scc.GetSearch(songName);
         }
 
-
         [HttpGet("currently-playing")]
         //[Produces("text/html")]
         public String GetCurrentlyPlayingScope()
         {
-            Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
+            //Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
             //Response.Redirect(scc.GetCurrentlyPlayingScope());
-            if (storage.AuthorizationCodeFlowAuthToken == null)
+            if (storage.AuthorizationCodeFlowAuthCode == null)
             {
-                Response.Redirect(scc.GetCurrentlyPlayingUserScopes());
+                storage.LoginCallback = "currently-playing";
+                Response.Redirect(scc.GetUserScopes());
                 return "";
             }
-            else
+            if (storage.AuthorizationCodeFlowAuthToken == null)
             {
-                return scc.GetCurrentlyPlayingSong();
+                scc.GetAuthorizationCodeToken();
             }
+            return scc.GetCurrentlyPlayingSong();
         }
 
-        [HttpGet("callback")]
+        [HttpGet("my-top")]
+        public JObject GetMyTop()
+        {
+            if (storage.AuthorizationCodeFlowAuthCode == null)
+            {
+                storage.LoginCallback = "my-top";
+                Response.Redirect(scc.GetUserScopes());
+                return null;
+            }
+            if (storage.AuthorizationCodeFlowAuthToken == null)
+            {
+                scc.GetAuthorizationCodeToken();
+            }
+            return scc.GetMyTopTracks();
+        }
+       
+         [HttpGet("callback")]
         //[Produces("text/html")]
         public void GetCurrentlyPlayingToken(String code)
         {
-            Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
+            //Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
             storage.AuthorizationCodeFlowAuthCode = code;
-            scc.GetCurrentlyPlayingToken();
-            Response.Redirect("https://localhost:5001/api/spotify-track/currently-playing");
+            scc.GetAuthorizationCodeToken();
+            Response.Redirect("https://localhost:5001/api/spotify-track/" + storage.LoginCallback);
             //return scc.GetCurrentlyPlayingSong();
         }
-
-        //[HttpGet("my-top")]
-        //public JObject GetMyTop()
-        //{
-        //    Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
-        //    if (storage.AuthorizationCodeFlowAuthToken == null)
-        //    {
-        //        Response.Redirect(scc.GetMyTopUserScopes());
-        //        return null;
-        //    }
-        //    else
-        //    {
-        //        return scc.GetMyTopTracks();
-        //    }
-        //}
-
-
-
-        //[HttpGet("callback-my-top")]
-        ////[Produces("text/html")]
-        //public void GetMyTopToken(String code)
-        //{
-        //    Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
-        //    storage.AuthorizationCodeFlowAuthCode = code;
-        //    scc.GetCurrentlyPlayingToken();
-        //    Response.Redirect("https://localhost:5001/api/spotify-track/my-top");
-        //    //return scc.GetCurrentlyPlayingSong();
-        //}
 
         //// POST api/values
         //[HttpPost]
