@@ -17,6 +17,7 @@
     <PackageReference Include="SpotifyAPI.Web" Version="4.0.0" />
     <PackageReference Include="SpotifyAPI.Web.Auth" Version="4.0.0" />
     <PackageReference Include="PushSharp.Core" Version="1.0.1" />
+    <PackageReference Include="jose-jwt" Version="2.4.0" />
   </ItemGroup>
 
   <ItemGroup>

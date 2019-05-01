@@ -8,6 +8,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
     public class NotificationControllerClass
     {
         private DAO.StorageSingleton storage = DAO.StorageSingleton.GetInstance();
+        private JwtFromP8 p8 = new JwtFromP8();
 
         public NotificationControllerClass()
         {
@@ -15,6 +16,13 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         internal void PushNotification()
         {
+            p8.MakeToken();
+
+
+
+
+
+            /*
             // Configuration (NOTE: .pfx can also be used here)
             var config = new ApnsConfiguration(ApnsConfiguration.ApnsServerEnvironment.Sandbox,
             "push-cert.p8", "push-cert-pwd");
@@ -74,7 +82,9 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             // This isn't done after every message, but after you're
             // done with the broker
             apnsBroker.Stop();
-        }
+     */   
     }
+ 
+   }
 
 }
