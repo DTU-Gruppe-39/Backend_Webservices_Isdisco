@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 using System.Net;
 using Newtonsoft.Json.Linq;
+using Isdisco_Web_API.Models;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -28,8 +29,8 @@ namespace Isdisco_Web_API.Controllers.API
         //}
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public string GetTrack(String id)
+        [HttpGet()]
+        public Track GetTrack(String id)
         {
             Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
             return scc.GetTrack(id);

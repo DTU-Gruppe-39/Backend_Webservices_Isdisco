@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using Isdisco_Web_API.Models;
 using Newtonsoft.Json.Linq;
 
 namespace Isdisco_Web_API.Controllers.Businesslogic
@@ -13,7 +14,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         {
         }
 
-        public string GetTrack(String id)
+        public Track GetTrack(String id)
         {
             if (storage.ClientCredentialsFlowAuthToken == null)
             {
@@ -27,8 +28,17 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + AuthToken);
 
             var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/tracks/" + id);
+            var jsonTrack = JObject.Parse(GetResponse);
+            var trackId = jsonTrack["id"].ToString();
+            var songName = jsonTrack["name"].ToString();
+            var artistName = jsonTrack["artists"][0]["name"].ToString();
+            var image_small_url = jsonTrack["album"]["images"][2]["url"].ToString();
+            var image_medium_url = jsonTrack["album"]["images"][1]["url"].ToString();
+            var image_large_url = jsonTrack["album"]["images"][0]["url"].ToString();
+            var webplayerLink = jsonTrack["external_urls"]["spotify"].ToString();
+            Track track = new Track(trackId, songName, artistName, image_small_url, image_medium_url, image_large_url, webplayerLink);
 
-            return GetResponse;
+            return track;
         }
 
 
@@ -44,7 +54,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             string AuthToken = (string)jObject.SelectToken("access_token");
             //webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
             webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + AuthToken);
-            var limit = "4";    //Number of songs that Spotify returns
+            var limit = "10";    //Number of songs that Spotify returns
             var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/search?q=" + Uri.EscapeUriString(songName) + "&type=track&market=DK&limit=" + limit + "&offset=0");
 
             return GetResponse;
