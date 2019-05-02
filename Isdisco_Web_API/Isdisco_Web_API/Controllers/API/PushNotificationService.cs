@@ -14,10 +14,10 @@ namespace Isdisco_Web_API.Controllers.API
         }
 
         [HttpGet("push")]
-        public void PushNotification()
+        public  void SendNotificationAsync()
         {
             Businesslogic.NotificationControllerClass ncc = new Businesslogic.NotificationControllerClass();
-            ncc.PushNotificationAsync();
+            _ = ncc.SendNotificationAsync();
              
         }
 

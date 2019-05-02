@@ -27,7 +27,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         private ECDsa GetECDsa()
         {
-            using (TextReader reader = System.IO.File.OpenText("/Users/thomasmattsson/Documents/GitHub/Backend_Webservices_Isdisco/Isdisco_Web_API/Isdisco_Web_API/Controllers/Business logic/push-cert.p8"))
+            using (TextReader reader = System.IO.File.OpenText("C:\\Users\\Thomas\\Documents\\GitHub\\Backend_Webservices_Isdisco\\Isdisco_Web_API\\Isdisco_Web_API\\Controllers\\Business logic\\push-cert.p8"))
             {
                 var ecPrivateKeyParameters =
                     (ECPrivateKeyParameters)new Org.BouncyCastle.OpenSsl.PemReader(reader).ReadObject();

@@ -8,7 +8,6 @@
     <Folder Include="wwwroot\" />
     <Folder Include="Controllers\API\" />
     <Folder Include="DAO\" />
-    <Folder Include="Controllers\Business logic\" />
   </ItemGroup>
 
   <ItemGroup>
