@@ -25,5 +25,14 @@ namespace Isdisco_Web_API.Controllers.API
                 await ncc.SendNotificationAsync(title, msg);
             } 
         }
+
+        [HttpGet("pushAll")]
+        public async System.Threading.Tasks.Task SendNotificationToAllAsync(string title, string msg)
+        {
+            if (msg != null || title != null)
+            {
+                await ncc.SendNotificationToAllAsync(title, msg);
+            }
+        }
     }
 }
