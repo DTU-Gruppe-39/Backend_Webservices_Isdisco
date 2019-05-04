@@ -55,7 +55,7 @@ namespace Isdisco_Web_API.DAO
             {
                 Singleton = new StorageSingleton();
                 //Adds token to list
-                Singleton.InitDevicePushTokenList();
+                //Singleton.InitDevicePushTokenList();
                 return Singleton;
             }
             else
@@ -64,11 +64,12 @@ namespace Isdisco_Web_API.DAO
             }
         }
        
-       
+       /*
         public void InitDevicePushTokenList()
         {
             DevicePushTokenList.Add(new Models.DevicePushToken("834A1C6138CD293AC464D6CBFDBC987C3F73BC691EF55702F6DE5E84F2DA7081", 0));
         }
+        */
     }
 
 }

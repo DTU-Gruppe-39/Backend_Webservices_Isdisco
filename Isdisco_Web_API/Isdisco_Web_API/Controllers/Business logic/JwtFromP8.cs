@@ -9,11 +9,14 @@ using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.OpenSsl;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Http;
+using System.Reflection;
 
 namespace Isdisco_Web_API.Controllers.Businesslogic
 {
     public class JwtFromP8
     {
+
         public JwtFromP8()
         {
         }
@@ -27,7 +30,12 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         private ECDsa GetECDsa()
         {
-            using (TextReader reader = System.IO.File.OpenText("C:\\Users\\Thomas\\Documents\\GitHub\\Backend_Webservices_Isdisco\\Isdisco_Web_API\\Isdisco_Web_API\\Controllers\\Business logic\\push-cert.p8"))
+            var outPutDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
+            var p8Path = Path.Combine(outPutDirectory, "push-cert.p8");
+            string p8_path = new Uri(p8Path).LocalPath;
+
+
+            using (TextReader reader = System.IO.File.OpenText(p8_path))
             {
                 var ecPrivateKeyParameters =
                     (ECPrivateKeyParameters)new Org.BouncyCastle.OpenSsl.PemReader(reader).ReadObject();

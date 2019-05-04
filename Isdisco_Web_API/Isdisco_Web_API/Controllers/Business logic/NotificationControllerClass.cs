@@ -9,10 +9,10 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         private JwtFromP8 p8 = new JwtFromP8();
         private CustomHttpHandler.ApnsProvider apnhttp = new CustomHttpHandler.ApnsProvider("https://api.development.push.apple.com:443", "com.Rasmus-Gregersen.Isdisco");
 
-        private string p8privateKey, p8privateKeyId, teamId, appBundleIdentifier, deviceToken;
+        //private string p8privateKey, p8privateKeyId, teamId, appBundleIdentifier, deviceToken;
 
-        private string notification = "Hej!";
-        private string payload;
+        //private string notification = "Hej!";
+        //private string payload;
 
         public NotificationControllerClass()
         {
