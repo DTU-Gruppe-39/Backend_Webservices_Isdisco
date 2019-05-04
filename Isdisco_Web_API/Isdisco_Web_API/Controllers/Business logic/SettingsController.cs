@@ -47,6 +47,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                 storage.currentlyPlaying = currentlyPlaying;
                 //Send notifications
                 //ncc.SendNowPlayingNotificationAsync(currentlyPlaying);
+
                 Console.WriteLine("\n\n\n\nSONG UPDATED!!!!!!!!\n\n\n\n");
             }
             //Console.WriteLine("\nCurrently playing pinged");
