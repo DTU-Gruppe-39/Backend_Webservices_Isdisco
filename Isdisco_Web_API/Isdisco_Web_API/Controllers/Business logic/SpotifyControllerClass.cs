@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
+using Isdisco_Web_API.Models;
 using Newtonsoft.Json.Linq;
 
 namespace Isdisco_Web_API.Controllers.Businesslogic
@@ -13,7 +15,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         {
         }
 
-        public string GetTrack(String id)
+        public Track GetTrack(String id)
         {
             if (storage.ClientCredentialsFlowAuthToken == null)
             {
@@ -27,12 +29,20 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + AuthToken);
 
             var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/tracks/" + id);
+            var jsonTrack = JObject.Parse(GetResponse);
+            var trackId = jsonTrack["id"].ToString();
+            var songName = jsonTrack["name"].ToString();
+            var artistName = jsonTrack["artists"][0]["name"].ToString();
+            var image_small_url = jsonTrack["album"]["images"][2]["url"].ToString();
+            var image_medium_url = jsonTrack["album"]["images"][1]["url"].ToString();
+            var image_large_url = jsonTrack["album"]["images"][0]["url"].ToString();
+            var webplayerLink = jsonTrack["external_urls"]["spotify"].ToString();
+            Track track = new Track(trackId, songName, artistName, image_small_url, image_medium_url, image_large_url, webplayerLink);
 
-            return GetResponse;
+            return track;
         }
 
-
-        public string GetSearch(String songName)
+        public JObject GetPlaylist(string id)
         {
             if (storage.ClientCredentialsFlowAuthToken == null)
             {
@@ -44,10 +54,60 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             string AuthToken = (string)jObject.SelectToken("access_token");
             //webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
             webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + AuthToken);
-            var limit = "4";    //Number of songs that Spotify returns
+            //var limit = "30";    //Number of songs that Spotify returns
+            var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/playlists/" + id + "/tracks");
+
+            var jsonTracks = JObject.Parse(GetResponse);
+            JArray tracks = (JArray)jsonTracks["items"];
+            ListOfTracks listTracks = new ListOfTracks();
+            for (int i = 0; i < tracks.Count; i++)
+            {
+                var trackId = tracks[i]["track"]["id"].ToString();
+                var thesongName = tracks[i]["track"]["name"].ToString();
+                var artistName = tracks[i]["track"]["artists"][0]["name"].ToString();
+                var image_small_url = tracks[i]["track"]["album"]["images"][2]["url"].ToString();
+                var image_medium_url = tracks[i]["track"]["album"]["images"][1]["url"].ToString();
+                var image_large_url = tracks[i]["track"]["album"]["images"][0]["url"].ToString();
+                var webplayerLink = tracks[i]["track"]["external_urls"]["spotify"].ToString();
+                listTracks.Tracks.Add(new Track(trackId, thesongName, artistName, image_small_url, image_medium_url, image_large_url, webplayerLink));
+            }
+
+            return JObject.FromObject(listTracks);
+            //return JObject.Parse(GetResponse);
+        }
+
+        public JObject GetSearch(String songName)
+        {
+            if (storage.ClientCredentialsFlowAuthToken == null)
+            {
+                auth.GetClientCredentialsFlowAuthToken();
+            }
+
+            var webClient = new WebClient();
+            JObject jObject = JObject.Parse(storage.ClientCredentialsFlowAuthToken);
+            string AuthToken = (string)jObject.SelectToken("access_token");
+            //webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
+            webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + AuthToken);
+            var limit = "10";    //Number of songs that Spotify returns
             var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/search?q=" + Uri.EscapeUriString(songName) + "&type=track&market=DK&limit=" + limit + "&offset=0");
 
-            return GetResponse;
+            var jsonTracks = JObject.Parse(GetResponse);
+            JArray tracks = (JArray)jsonTracks["tracks"]["items"];
+            ListOfTracks listTracks = new ListOfTracks();
+            for (int i = 0; i < tracks.Count; i++)
+            {
+                var trackId = tracks[i]["id"].ToString();
+                var thesongName = tracks[i]["name"].ToString();
+                var artistName = tracks[i]["artists"][0]["name"].ToString();
+                var image_small_url = tracks[i]["album"]["images"][2]["url"].ToString();
+                var image_medium_url = tracks[i]["album"]["images"][1]["url"].ToString();
+                var image_large_url = tracks[i]["album"]["images"][0]["url"].ToString();
+                var webplayerLink = tracks[i]["external_urls"]["spotify"].ToString();
+                listTracks.Tracks.Add(new Track(trackId, thesongName, artistName, image_small_url, image_medium_url, image_large_url, webplayerLink));
+            }
+
+            return JObject.FromObject(listTracks);
+            //return GetResponse;
         }
 
 
@@ -60,26 +120,68 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             webClient.Headers.Add(HttpRequestHeader.ContentType, "application/json");
             webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + AuthToken);
             var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/me/player/currently-playing?market=DK");
-            Console.WriteLine("\n\n\n\n\n" + AuthToken + "\n\n\n\n\n");
+            //Console.WriteLine("\n\n\n\n\n" + AuthToken + "\n\n\n\n\n");
             //Console.WriteLine("\n\n\n\n\n" + GetResponse + "\n\n\n\n\n");
             return GetResponse;
         }
 
+        public JObject GetMyTopTracks()
+        {
+            var webClient = new WebClient();
+            JObject jObject = JObject.Parse(storage.AuthorizationCodeFlowAuthToken);
+            string AuthToken = (string)jObject.SelectToken("access_token");
+            webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
+            webClient.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+            webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + AuthToken);
+            var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/me/top/tracks");
+            //Console.WriteLine("\n\n\n\n\n" + AuthToken + "\n\n\n\n\n");
+            //Console.WriteLine("\n\n\n\n\n" + GetResponse + "\n\n\n\n\n");
+
+            var jsonTracks = JObject.Parse(GetResponse);
+            JArray tracks = (JArray)jsonTracks["items"];
+            ListOfTracks listTracks = new ListOfTracks();
+            for (int i = 0; i < tracks.Count; i++)
+            {
+                var trackId = tracks[i]["id"].ToString();
+                var thesongName = tracks[i]["name"].ToString();
+                var artistName = tracks[i]["artists"][0]["name"].ToString();
+                var image_small_url = tracks[i]["album"]["images"][2]["url"].ToString();
+                var image_medium_url = tracks[i]["album"]["images"][1]["url"].ToString();
+                var image_large_url = tracks[i]["album"]["images"][0]["url"].ToString();
+                var webplayerLink = tracks[i]["external_urls"]["spotify"].ToString();
+                listTracks.Tracks.Add(new Track(trackId, thesongName, artistName, image_small_url, image_medium_url, image_large_url, webplayerLink));
+            }
+
+            return JObject.FromObject(listTracks);
+
+            //return JObject.Parse(GetResponse);
+        }
 
 
-        public String GetCurrentlyPlayingScope()
+
+        public String GetUserScopes()
         {
             return auth.GetAuthorizationCodeFlowUserScope();
         }
 
-
-        public void GetCurrentlyPlayingToken()
+        public void GetAuthorizationCodeToken()
         {
             //if (storage.AuthorizationCodeFlowAuthToken == null)
             //{
             //    return auth.GetAuthorizationCodeFlowAuthToken();
             //}
             auth.GetAuthorizationCodeFlowAuthToken();
+        }
+
+
+        private class ListOfTracks
+        {
+            private List<Track> tracks = new List<Track>();
+            public List<Track> Tracks
+            {
+                get { return tracks; }
+                set { tracks = value; }
+            }
         }
     }
 }

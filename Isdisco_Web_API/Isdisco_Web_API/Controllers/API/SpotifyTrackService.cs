@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 using System.Net;
 using Newtonsoft.Json.Linq;
+using Isdisco_Web_API.Models;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -16,6 +17,7 @@ namespace Isdisco_Web_API.Controllers.API
     [Route("api/spotify-track")]
     public class SpotifyTrackService : Controller
     {
+        Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
         private DAO.StorageSingleton storage = DAO.StorageSingleton.GetInstance();
         private SpotifyAuthController auth = new SpotifyAuthController();
 
@@ -28,18 +30,34 @@ namespace Isdisco_Web_API.Controllers.API
         //}
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public string GetTrack(String id)
+        [HttpGet()]
+        public Track GetTrack(String id)
         {
-            Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
+            //Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
             return scc.GetTrack(id);
         }
 
         [HttpGet("search")]
-        public string GetSearch(String songName)
+        public JObject GetSearch(String songName)
         {
-            Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
+            //Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
             return scc.GetSearch(songName);
+        }
+
+        [HttpGet("playlist")]
+        public JObject GetPlaylist(String id)
+        {
+            //Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
+            switch (id)
+            {
+                //Denmark Top 50: https://open.spotify.com/playlist/37i9dQZEVXbL3J0k32lWnN
+                case "1": id = "37i9dQZEVXbL3J0k32lWnN";
+                    break;
+                //Ja dak: https://open.spotify.com/playlist/37i9dQZF1DX9vVjb8NqHzD
+                case "2": id = "37i9dQZF1DX9vVjb8NqHzD";
+                    break;
+            }
+            return scc.GetPlaylist(id);
         }
 
 
@@ -47,38 +65,47 @@ namespace Isdisco_Web_API.Controllers.API
         //[Produces("text/html")]
         public String GetCurrentlyPlayingScope()
         {
-            Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
+            //Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
             //Response.Redirect(scc.GetCurrentlyPlayingScope());
-            if (storage.AuthorizationCodeFlowAuthToken == null)
+            if (storage.AuthorizationCodeFlowAuthCode == null)
             {
-                Response.Redirect(scc.GetCurrentlyPlayingScope());
+                storage.LoginCallback = "currently-playing";
+                Response.Redirect(scc.GetUserScopes());
                 return "";
             }
-            else
+            if (storage.AuthorizationCodeFlowAuthToken == null)
             {
-                return scc.GetCurrentlyPlayingSong();
+                scc.GetAuthorizationCodeToken();
             }
+            return scc.GetCurrentlyPlayingSong();
         }
 
-        //[HttpGet("user-login")]
-        //public void GetUserLogin()
-        //{
-        //    Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
-        //    Response.Redirect(scc.GetCurrentlyPlayingScope());
-        //}
-
-
-        [HttpGet("callback")]
+        [HttpGet("my-top")]
+        public JObject GetMyTop()
+        {
+            if (storage.AuthorizationCodeFlowAuthCode == null)
+            {
+                storage.LoginCallback = "my-top";
+                Response.Redirect(scc.GetUserScopes());
+                return null;
+            }
+            if (storage.AuthorizationCodeFlowAuthToken == null)
+            {
+                scc.GetAuthorizationCodeToken();
+            }
+            return scc.GetMyTopTracks();
+        }
+       
+         [HttpGet("callback")]
         //[Produces("text/html")]
         public void GetCurrentlyPlayingToken(String code)
         {
-            Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
+            //Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
             storage.AuthorizationCodeFlowAuthCode = code;
-            scc.GetCurrentlyPlayingToken();
-            Response.Redirect("https://localhost:5001/api/spotify-track/currently-playing");
+            scc.GetAuthorizationCodeToken();
+            Response.Redirect("https://localhost:5001/api/spotify-track/" + storage.LoginCallback);
             //return scc.GetCurrentlyPlayingSong();
         }
-
 
         //// POST api/values
         //[HttpPost]

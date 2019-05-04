@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Isdisco_Web_API.Models;
 
 namespace Isdisco_Web_API.DAO
 {
@@ -7,8 +8,10 @@ namespace Isdisco_Web_API.DAO
     {
         static StorageSingleton Singleton = null;
 
-        private static List<Models.User> userList = new List<Models.User>();
-        public List<Models.User> UserList 
+
+        private List<User> userList = new List<User>();
+        public List<User> UserList 
+
         {
             get
             {
@@ -16,12 +19,21 @@ namespace Isdisco_Web_API.DAO
             }
         }
 
-        public static List<Models.DevicePushToken> devicePushTokenList = new List<Models.DevicePushToken>();
-        public List<Models.DevicePushToken> DevicePushTokenList
+        private List<MusicRequest> musicRequestList = new List<MusicRequest>();
+        public List<MusicRequest> MusicRequestList
         {
             get
             {
-                return devicePushTokenList;
+                return musicRequestList;
+            }
+        }
+
+        private List<Blacklist> blacklist = new List<Blacklist>();
+        public List<Blacklist> Blacklist
+        {
+            get
+            {
+                return blacklist;
             }
         }
 
@@ -29,9 +41,12 @@ namespace Isdisco_Web_API.DAO
         public string ClientCredentialsFlowAuthToken { get; set; }
         public string AuthorizationCodeFlowAuthToken { get; set; }
         public string AuthorizationCodeFlowAuthCode { get; set; }
+        public string LoginCallback { get; set; }
+
 
         public StorageSingleton() 
         {
+            UserList.Add(new User("Rasmus Gregersen", new LoginDetails("rasmus", "123"), false));
         }
 
         public static StorageSingleton GetInstance()

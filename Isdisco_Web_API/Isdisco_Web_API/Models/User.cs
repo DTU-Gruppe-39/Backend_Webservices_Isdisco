@@ -15,6 +15,16 @@ namespace Isdisco_Web_API.Models
         {
         }
 
+        public User(string fullname, LoginDetails loginDetails, bool vip)
+        {
+            Id = Counter;
+            Counter++;
+
+            Fullname = fullname;
+            LoginDetails = loginDetails;
+            VIP = vip;
+        }
+
         public User(string fullname, LoginDetails loginDetails, bool vip, string appToken, string facebookToken)
         {
             Id = Counter;
