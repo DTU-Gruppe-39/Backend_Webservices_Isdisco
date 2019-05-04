@@ -8,9 +8,10 @@ namespace Isdisco_Web_API.Controllers.API
     [Route("api/notifications")]
     public class PushNotificationService : Controller
     {
-        private string title, msg;
+        //private string title, msg;
 
         //private DAO.StorageSingleton storage = DAO.StorageSingleton.GetInstance();
+        private Businesslogic.NotificationControllerClass ncc = new Businesslogic.NotificationControllerClass();
 
         public PushNotificationService()
         {
@@ -19,11 +20,7 @@ namespace Isdisco_Web_API.Controllers.API
         [HttpGet("push")]
         public async System.Threading.Tasks.Task SendNotificationAsync(string title, string msg)
         {
-            this.title = title;
-            this.msg = msg;
-
-            Businesslogic.NotificationControllerClass ncc = new Businesslogic.NotificationControllerClass();
-            await ncc.SendNotificationAsync();
+            await ncc.SendNotificationAsync(title, msg);
         }
     }
 }

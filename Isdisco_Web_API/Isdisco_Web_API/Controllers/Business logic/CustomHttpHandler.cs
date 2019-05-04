@@ -35,7 +35,11 @@ namespace Isdisco_Web_API.Controllers.Business_logic
                 {
                     aps = new
                     {
-                        alert = message,
+                        alert = new
+                        {
+                            title = "Hej",
+                            body = message
+                        },
                         sound = playSound ? "default" : null
                     }
                 };
