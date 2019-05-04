@@ -28,15 +28,27 @@ namespace Isdisco_Web_API.Models
 
         public Musicrequest()
         {
-        }
-
-        public Musicrequest(Track track, int userId, DateTime timestamp, int downvotes, List<int> upvotes)
-        {
-            Id = Counter;
             Counter++;
+            Id = Counter;
+            Timestamp = DateTime.Now;
+        }
+       
+        public Musicrequest(Track track, int userId)
+        {
+            Counter++;
+            Id = Counter;
             Track = track;
             UserId = userId;
-            Timestamp = timestamp;
+            Timestamp = DateTime.Now;
+        }
+
+        public Musicrequest(Track track, int userId, int downvotes, List<int> upvotes)
+        {
+            Counter++;
+            Id = Counter;
+            Track = track;
+            UserId = userId;
+            Timestamp = DateTime.Now;
             Downvotes = downvotes;
             Upvotes = upvotes;
         }

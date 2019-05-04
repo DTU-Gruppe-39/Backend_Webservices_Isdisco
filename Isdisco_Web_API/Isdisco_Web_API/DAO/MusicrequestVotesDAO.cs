@@ -3,7 +3,7 @@ namespace Isdisco_Web_API.DAO
 {
     public class MusicrequestVotesDAO
     {
-        StorageSingleton storageSingleton = new StorageSingleton();
+        StorageSingleton storageSingleton = StorageSingleton.GetInstance();
 
         public MusicrequestVotesDAO()
         {
