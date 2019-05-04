@@ -49,10 +49,13 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         //Send message to all users
         public async System.Threading.Tasks.Task SendNotificationToAllAsync(string title, string msg)
         {
+            List<User> a = usrDao.GetAll();
             Console.WriteLine("Foreach");
-            foreach (User usr in usrDao.GetAll())
+            for (int i = 0; i <= a.Count; i++)
             {
-                await apnhttp.SendAsync(title, msg, usr.AppToken, token, false);
+                await apnhttp.SendAsync(title, msg, a[i].AppToken, token, false);
+                //await apnhttp.SendAsync(title, msg, deviceToken1, token, false);
+
             }
         }
     }
