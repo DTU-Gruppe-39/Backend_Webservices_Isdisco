@@ -9,7 +9,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
     {
         private static Timer aTimer;
         SpotifyControllerClass sc = new SpotifyControllerClass();
-        NotificationControllerClass ncc = new NotificationControllerClass();
+        //NotificationControllerClass ncc = new NotificationControllerClass();
         StorageSingleton storage = StorageSingleton.GetInstance();
 
         public SettingsController()
@@ -46,7 +46,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             {
                 storage.currentlyPlaying = currentlyPlaying;
                 //Send notifications
-                ncc.SendNowPlayingNotificationAsync(currentlyPlaying);
+                //ncc.SendNowPlayingNotificationAsync(currentlyPlaying);
                 Console.WriteLine("\n\n\n\nSONG UPDATED!!!!!!!!\n\n\n\n");
             }
             //Console.WriteLine("\nCurrently playing pinged");

@@ -111,7 +111,19 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         }
 
 
-        public CurrentlyPlaying GetCurrentlyPlayingSong()
+        public CurrentlyPlaying GetAppCurrentlyPlayingSong()
+        {
+            if (storage.currentlyPlaying != null)
+            {
+                return storage.currentlyPlaying;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+            public CurrentlyPlaying GetCurrentlyPlayingSong()
         {
             var webClient = new WebClient();
             JObject jObject = JObject.Parse(storage.AuthorizationCodeFlowAuthToken);

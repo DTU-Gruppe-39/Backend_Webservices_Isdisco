@@ -82,6 +82,13 @@ namespace Isdisco_Web_API.Controllers.API
             return scc.GetCurrentlyPlayingSong();
         }
 
+        [HttpGet("app-currently-playing")]
+        //[Produces("text/html")]
+        public CurrentlyPlaying GetAppCurrentlyPlayingScope()
+        {
+            return scc.GetAppCurrentlyPlayingSong();
+        }
+
         [HttpGet("my-top")]
         public JObject GetMyTop()
         {
