@@ -18,7 +18,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         {
         }
 
-        public async System.Threading.Tasks.Task SendNotificationAsync(string title, string msg, Models.DevicePushToken)
+        public async System.Threading.Tasks.Task SendNotificationAsync(string title, string msg)
         {
             await apnhttp.SendAsync("Hej", deviceToken, p8.GetToken(), false);
         }
