@@ -26,7 +26,7 @@ namespace Isdisco_Web_API.Controllers.Business_logic
                 _client = new HttpClient(_handler);
             }
 
-            public async Task<bool> SendAsync(string message, string deviceToken, string jwtToken, bool playSound, string debugInfo = null)
+            public async Task<bool> SendAsync(string title, string message, string deviceToken, string jwtToken, bool playSound, string debugInfo = null)
             {
                 var success = false;
                 var headers = GetHeaders();
@@ -37,7 +37,7 @@ namespace Isdisco_Web_API.Controllers.Business_logic
                     {
                         alert = new
                         {
-                            title = "Hej",
+                            title = title,
                             body = message
                         },
                         sound = playSound ? "default" : null
