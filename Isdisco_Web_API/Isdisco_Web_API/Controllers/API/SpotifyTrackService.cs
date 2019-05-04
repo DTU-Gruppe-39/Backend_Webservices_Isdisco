@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net;
 using Newtonsoft.Json.Linq;
 using Isdisco_Web_API.Models;
+using Microsoft.AspNetCore.Cors;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -41,6 +42,7 @@ namespace Isdisco_Web_API.Controllers.API
         public JObject GetSearch(String songName)
         {
             //Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
+            Response.Headers.Add("Acess-Control-Allow-Origin", "*");
             return scc.GetSearch(songName);
         }
 
