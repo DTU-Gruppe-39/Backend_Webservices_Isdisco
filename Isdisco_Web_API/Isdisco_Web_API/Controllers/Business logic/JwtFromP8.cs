@@ -30,12 +30,12 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         private ECDsa GetECDsa()
         {
+            /*
             var outPutDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
             var p8Path = Path.Combine(outPutDirectory, "push-cert.p8");
             string p8_path = new Uri(p8Path).LocalPath;
-
-
-            using (TextReader reader = System.IO.File.OpenText(p8_path))
+            */
+            using (TextReader reader = new StringReader("MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgzdgv9ENf8lc74VfU1jCn4WEXryur2sOK6tXBfWnNJGigCgYIKoZIzj0DAQehRANCAARH8kCLw2xvoDGljoRv2CWGi6xo8ygK6VYrFCq6TbKyvQksKlsbVoqsmDB3N8f0c3xOsktvYxNtaUf3UUHcMXs8"))
             {
                 var ecPrivateKeyParameters =
                     (ECPrivateKeyParameters)new Org.BouncyCastle.OpenSsl.PemReader(reader).ReadObject();
