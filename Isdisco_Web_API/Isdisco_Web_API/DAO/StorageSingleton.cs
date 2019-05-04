@@ -17,12 +17,12 @@ namespace Isdisco_Web_API.DAO
             }
         }
 
-        private List<MusicRequest> musicRequestList = new List<MusicRequest>();
-        public List<MusicRequest> MusicRequestList
+        private List<Musicrequest> musicrequestList = new List<Musicrequest>();
+        public List<Musicrequest> MusicrequestList
         {
             get
             {
-                return musicRequestList;
+                return musicrequestList;
             }
         }
 
