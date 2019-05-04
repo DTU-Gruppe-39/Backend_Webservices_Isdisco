@@ -35,17 +35,22 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             var p8Path = Path.Combine(outPutDirectory, "push-cert.p8");
             string p8_path = new Uri(p8Path).LocalPath;
             */
-            using (TextReader reader = System.IO.File.OpenText("MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgzdgv9ENf8lc74VfU\n1jCn4WEXryur2sOK6tXBfWnNJGigCgYIKoZIzj0DAQehRANCAARH8kCLw2xvoDGl\njoRv2CWGi6xo8ygK6VYrFCq6TbKyvQksKlsbVoqsmDB3N8f0c3xOsktvYxNtaUf3\nUUHcMXs8"))
+            using (var stream = GenerateStreamFromString("a,b \n c,d"))
             {
-                var ecPrivateKeyParameters =
-                    (ECPrivateKeyParameters)new Org.BouncyCastle.OpenSsl.PemReader(reader).ReadObject();
-                var x = ecPrivateKeyParameters.Parameters.G.AffineXCoord.GetEncoded();
-                var y = ecPrivateKeyParameters.Parameters.G.AffineYCoord.GetEncoded();
-                var d = ecPrivateKeyParameters.D.ToByteArrayUnsigned();
+                // ... Do stuff to stream
 
-                // Convert the BouncyCastle key to a Native Key.
-                var msEcp = new ECParameters { Curve = ECCurve.NamedCurves.nistP256, Q = { X = x, Y = y }, D = d };
-                return ECDsa.Create(msEcp);
+                using (TextReader reader = new StreamReader("-----BEGIN PRIVATE KEY-----\nMIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgzdgv9ENf8lc74VfU\n1jCn4WEXryur2sOK6tXBfWnNJGigCgYIKoZIzj0DAQehRANCAARH8kCLw2xvoDGl\njoRv2CWGi6xo8ygK6VYrFCq6TbKyvQksKlsbVoqsmDB3N8f0c3xOsktvYxNtaUf3\nUUHcMXs8\n-----END PRIVATE KEY-----"))
+                {
+                    var ecPrivateKeyParameters =
+                        (ECPrivateKeyParameters)new Org.BouncyCastle.OpenSsl.PemReader(reader).ReadObject();
+                    var x = ecPrivateKeyParameters.Parameters.G.AffineXCoord.GetEncoded();
+                    var y = ecPrivateKeyParameters.Parameters.G.AffineYCoord.GetEncoded();
+                    var d = ecPrivateKeyParameters.D.ToByteArrayUnsigned();
+
+                    // Convert the BouncyCastle key to a Native Key.
+                    var msEcp = new ECParameters { Curve = ECCurve.NamedCurves.nistP256, Q = { X = x, Y = y }, D = d };
+                    return ECDsa.Create(msEcp);
+                }
             }
         }
 
@@ -66,5 +71,16 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             var encodedToken = handler.CreateEncodedJwt(descriptor);
             return encodedToken;
         }
+
+        public static Stream GenerateStreamFromString(string s)
+        {
+            var stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
+            writer.Write(s);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
+        }
     }
+
 }
