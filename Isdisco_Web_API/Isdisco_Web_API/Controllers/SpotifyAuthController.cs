@@ -40,11 +40,10 @@ namespace Isdisco_Web_API.Controllers
             var spotifyClient = "80b3eb68b8454a0c81554c61b47bcc39";
             //var spotifySecret = "c2a18bfa0793457f8a59d277ba412425";
             var redirect_uri = "https://localhost:5001/api/spotify-track/callback";
-            var scope = "user-read-currently-playing";      // use a space between multiple scopes fx "user-read-private user-read-email"
+            var scope = "user-read-currently-playing user-top-read";      // use a space between multiple scopes fx "user-read-private user-read-email"
 
             return "https://accounts.spotify.com/authorize?client_id=" + Uri.EscapeUriString(spotifyClient) + "&response_type=code&redirect_uri=" + redirect_uri + "&scope=" + Uri.EscapeUriString(scope);
         }
-
 
         public void GetAuthorizationCodeFlowAuthToken()
         {
