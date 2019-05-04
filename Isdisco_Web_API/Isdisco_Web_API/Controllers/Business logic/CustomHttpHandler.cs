@@ -31,6 +31,7 @@ namespace Isdisco_Web_API.Controllers.Business_logic
                 var success = false;
                 var headers = GetHeaders();
 
+                //Set up the JSON payload
                 var obj = new
                 {
                     aps = new
