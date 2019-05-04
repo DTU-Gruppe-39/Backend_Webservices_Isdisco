@@ -56,6 +56,7 @@ namespace Isdisco_Web_API.Controllers
             var postparams = new NameValueCollection();
             postparams.Add("grant_type", "authorization_code");
             postparams.Add("code", code);
+            //redirect doesn't do anything here, but is just required for extra safety by spotify, it must match scope redirect
             postparams.Add("redirect_uri", "https://localhost:5001/api/spotify-track/callback");
 
             var authHeader = Convert.ToBase64String(Encoding.Default.GetBytes($"{spotifyClient}:{spotifySecret}"));
