@@ -25,10 +25,4 @@
     <Compile Remove="Controllers\Business logic\SpotifyController.cs" />
     <Compile Remove="Models\Admin.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Remove="wwwroot\push-cert.p8" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="wwwroot\push-cert.p8" />
-  </ItemGroup>
 </Project>
