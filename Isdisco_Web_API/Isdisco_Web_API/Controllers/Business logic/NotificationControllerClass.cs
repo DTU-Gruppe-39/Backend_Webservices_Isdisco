@@ -12,6 +12,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         private DAO.MusicrequestDAO reqDao = new DAO.MusicrequestDAO();
         private DAO.UserDAO usrDao = new DAO.UserDAO();
         private JwtFromP8 p8 = new JwtFromP8();
+        public string token;
         private CustomHttpHandler.ApnsProvider apnhttp = new CustomHttpHandler.ApnsProvider("https://api.development.push.apple.com:443", "com.Rasmus-Gregersen.Isdisco");
 
         private readonly string deviceToken = "834A1C6138CD293AC464D6CBFDBC987C3F73BC691EF55702F6DE5E84F2DA7081";
@@ -19,12 +20,13 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         public NotificationControllerClass()
         {
+            token = p8.GetToken();
         }
 
         //Send message to test phone
         public async System.Threading.Tasks.Task SendNotificationAsync(string title, string msg)
         {
-            await apnhttp.SendAsync(title, msg, deviceToken1, p8.GetToken(), false);
+            await apnhttp.SendAsync(title, msg, deviceToken1, token, false);
         }
 
         //Send now playing message to users who have requested that track
@@ -40,7 +42,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
             foreach (User ureq in usrs2Send)
             {
-                await apnhttp.SendAsync(title, msg, ureq.AppToken, p8.GetToken(), false);
+                await apnhttp.SendAsync(title, msg, ureq.AppToken, token, false);
             }
         }
 
@@ -50,7 +52,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             Console.WriteLine("Foreach");
             foreach (User usr in usrDao.GetAll())
             {
-                await apnhttp.SendAsync(title, msg, usr.AppToken, p8.GetToken(), false);
+                await apnhttp.SendAsync(title, msg, usr.AppToken, token, false);
             }
         }
     }
