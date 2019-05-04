@@ -8,7 +8,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 {
     public class NotificationControllerClass
     {
-        //private DAO.StorageSingleton storage = DAO.StorageSingleton.GetInstance();
+        private DAO.StorageSingleton storage = DAO.StorageSingleton.GetInstance();
         private DAO.MusicrequestDAO reqDao = new DAO.MusicrequestDAO();
         private DAO.UserDAO usrDao = new DAO.UserDAO();
         private JwtFromP8 p8 = new JwtFromP8();
@@ -46,6 +46,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         //Send message to all users
         public async System.Threading.Tasks.Task SendNotificationToAllAsync(string title, string msg)
         {
+            Console.WriteLine("Foreach");
             foreach (User usr in usrDao.GetAll())
             {
                 await apnhttp.SendAsync(title, msg, usr.AppToken, p8.GetToken(), false);
