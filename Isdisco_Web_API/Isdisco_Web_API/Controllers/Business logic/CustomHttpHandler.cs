@@ -26,16 +26,21 @@ namespace Isdisco_Web_API.Controllers.Business_logic
                 _client = new HttpClient(_handler);
             }
 
-            public async Task<bool> SendAsync(string message, string deviceToken, string jwtToken, bool playSound, string debugInfo = null)
+            public async Task<bool> SendAsync(string headline, string message, string deviceToken, string jwtToken, bool playSound, string debugInfo = null)
             {
                 var success = false;
                 var headers = GetHeaders();
 
+                //Set up the JSON payload
                 var obj = new
                 {
                     aps = new
                     {
-                        alert = message,
+                        alert = new
+                        {
+                            title = headline,
+                            body = message
+                        },
                         sound = playSound ? "default" : null
                     }
                 };
