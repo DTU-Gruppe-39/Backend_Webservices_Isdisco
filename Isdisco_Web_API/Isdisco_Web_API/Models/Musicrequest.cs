@@ -3,11 +3,12 @@ using System.Collections.Generic;
 
 namespace Isdisco_Web_API.Models
 {
-    public class MusicRequest
+    public class Musicrequest
     {
-        public string Id { get; set; }
+        public static int Counter { get; set; }
+        public int Id { get; set; }
         public Track Track { get; set; }
-        public string UserId { get; set; }
+        public int UserId { get; set; }
         public DateTime Timestamp { get; set; }
         public int Downvotes { get; set; }
         private List<int> upvotes = new List<int>();
@@ -25,13 +26,14 @@ namespace Isdisco_Web_API.Models
             set { upvoteUsers = value; }
         }
 
-        public MusicRequest()
+        public Musicrequest()
         {
         }
 
-        public MusicRequest(string id, Track track, string userId, DateTime timestamp, int downvotes, List<int> upvotes)
+        public Musicrequest(Track track, int userId, DateTime timestamp, int downvotes, List<int> upvotes)
         {
-            Id = id;
+            Id = Counter;
+            Counter++;
             Track = track;
             UserId = userId;
             Timestamp = timestamp;

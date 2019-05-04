@@ -17,28 +17,47 @@ namespace Isdisco_Web_API.Controllers.API
 
         // GET: api/musicrequest
         [HttpGet]
-        public List<MusicRequest> Get()
+        public List<Musicrequest> Get()
         {
-            return null;
+            return musicrequestController.GetAllMusicRequests();
         }
-
+        
         // GET api/musicrequest/5
         [HttpGet("{id}")]
-        public MusicRequest Get(int id)
+        public Musicrequest Get(int id)
         {
-            return null;
+            return musicrequestController.GetMusicrequest(id);
         }
 
         // POST api/musicrequest
         [HttpPost]
-        public void Post(MusicRequest musicRequest)
+        public void Post(Musicrequest musicRequest)
+        {
+            musicrequestController.AddMusicrequest(musicRequest);
+        }
+
+        // POST api/musicrequest/5
+        [HttpPost("{id}/upvote")]
+        public void Upvote(int id, int userid)
         {
         }
 
+        // DELETE api/musicrequest/5
+        [HttpDelete("{id}/upvote")]
+        public void RemoveUpvote(int id, int userid)
+        {
+        }
+
+
         // PUT api/musicrequest/5
-        // Upvotes/downvotes
-        [HttpPut("{id}")]
-        public void Put(int id, int userid)
+        [HttpPut("{id}/upvote")]
+        public void Downvote(int id)
+        { 
+        }
+
+        // PUT api/musicrequest/5
+        [HttpPut("{id}/upvote")]
+        public void RemoveDownvote(int id)
         {
         }
 

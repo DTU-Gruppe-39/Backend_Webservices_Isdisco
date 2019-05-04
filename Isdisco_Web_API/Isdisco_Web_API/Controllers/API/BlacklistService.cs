@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Isdisco_Web_API.Controllers.Businesslogic;
 using Isdisco_Web_API.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,30 +13,34 @@ namespace Isdisco_Web_API.Controllers.API
     [Route("api/blacklist")]
     public class BlacklistService : Controller
     {
+        BlacklistController blacklistController = new BlacklistController();
+
         // GET: api/blacklist
         [HttpGet]
         public List<Blacklist> Get()
         {
-            return null;
+            return blacklistController.GetBlacklist();
         }
 
         // GET api/blacklist/5
         [HttpGet("{id}")]
         public Blacklist Get(int id)
         {
-            return null;
+            return blacklistController.GetBlacklistItem(id);
         }
 
         // POST api/blacklist
         [HttpPost]
         public void Post(Blacklist blacklist)
         {
+            blacklistController.AddBlacklistItem(blacklist);
         }
 
         // DELETE api/blacklist/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            blacklistController.DeleteBlacklistItem(id);
         }
     }
 }

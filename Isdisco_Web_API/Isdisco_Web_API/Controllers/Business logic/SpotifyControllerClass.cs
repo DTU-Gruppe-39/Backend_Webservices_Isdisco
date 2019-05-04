@@ -111,7 +111,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         }
 
 
-        public String GetCurrentlyPlayingSong()
+        public CurrentlyPlaying GetCurrentlyPlayingSong()
         {
             var webClient = new WebClient();
             JObject jObject = JObject.Parse(storage.AuthorizationCodeFlowAuthToken);
@@ -122,7 +122,25 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/me/player/currently-playing?market=DK");
             //Console.WriteLine("\n\n\n\n\n" + AuthToken + "\n\n\n\n\n");
             //Console.WriteLine("\n\n\n\n\n" + GetResponse + "\n\n\n\n\n");
-            return GetResponse;
+
+
+            var jsonTrack = JObject.Parse(GetResponse);
+            var trackId = jsonTrack["item"]["id"].ToString();
+            var songName = jsonTrack["item"]["name"].ToString();
+            var artistName = jsonTrack["item"]["artists"][0]["name"].ToString();
+            var image_small_url = jsonTrack["item"]["album"]["images"][2]["url"].ToString();
+            var image_medium_url = jsonTrack["item"]["album"]["images"][1]["url"].ToString();
+            var image_large_url = jsonTrack["item"]["album"]["images"][0]["url"].ToString();
+            var webplayerLink = jsonTrack["item"]["external_urls"]["spotify"].ToString();
+            int duration = Int32.Parse(jsonTrack["item"]["duration_ms"].ToString());
+            int progress = Int32.Parse(jsonTrack["progress_ms"].ToString());
+            CurrentlyPlaying track = new CurrentlyPlaying(new Track(trackId, songName, artistName, image_small_url, image_medium_url, image_large_url, webplayerLink), duration, progress);
+
+            return track;
+
+
+
+            //return GetResponse;
         }
 
         public JObject GetMyTopTracks()
