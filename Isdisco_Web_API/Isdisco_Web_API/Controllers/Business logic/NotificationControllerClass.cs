@@ -15,6 +15,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         private CustomHttpHandler.ApnsProvider apnhttp = new CustomHttpHandler.ApnsProvider("https://api.development.push.apple.com:443", "com.Rasmus-Gregersen.Isdisco");
 
         private readonly string deviceToken = "834A1C6138CD293AC464D6CBFDBC987C3F73BC691EF55702F6DE5E84F2DA7081";
+        private readonly string deviceToken1 = "F9659290C65335689BB1F300EDDFDEC036BB3D32E78DB726879049AD487B333D";
 
         public NotificationControllerClass()
         {
@@ -23,7 +24,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         //Send message to test phone
         public async System.Threading.Tasks.Task SendNotificationAsync(string title, string msg)
         {
-            await apnhttp.SendAsync(title, msg, deviceToken, p8.GetToken(), false);
+            await apnhttp.SendAsync(title, msg, deviceToken1, p8.GetToken(), false);
         }
 
         //Send now playing message to users who have requested that track
