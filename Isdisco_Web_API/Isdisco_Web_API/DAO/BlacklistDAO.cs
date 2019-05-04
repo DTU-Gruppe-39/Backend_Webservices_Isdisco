@@ -21,18 +21,18 @@ namespace Isdisco_Web_API.DAO
         {
             for (int i = 0; i < storageSingleton.Blacklist.Count; i++)
             {
-                if (storageSingleton.Blacklist[i].Track.Id.Equals(id))
+                if (storageSingleton.Blacklist[i].Id.Equals(id))
                 {
                     storageSingleton.Blacklist.RemoveAt(i);
                 }
             }
         }
 
-        public Blacklist Get(int trackId)
+        public Blacklist Get(int id)
         {
             foreach (Blacklist blacklist in storageSingleton.Blacklist)
             {
-                if (blacklist.Track.Id.Equals(trackId))
+                if (blacklist.Id.Equals(id))
                 {
                     return blacklist;
                 }
@@ -49,7 +49,7 @@ namespace Isdisco_Web_API.DAO
         {
             for (int i = 0; i < storageSingleton.Blacklist.Count; i++)
             {
-                if (storageSingleton.Blacklist[i].Track.Id.Equals(element.Track.Id))
+                if (storageSingleton.Blacklist[i].Id.Equals(element.Id))
                 {
                     storageSingleton.Blacklist[i] = element;
                 }

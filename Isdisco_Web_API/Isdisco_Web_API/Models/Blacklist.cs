@@ -9,12 +9,14 @@ namespace Isdisco_Web_API.Models
 
         public Blacklist()
         {
+            Counter++;
+            Id = Counter;
         }
 
         public Blacklist(Track track)
         {
-            Id = Counter;
             Counter++;
+            Id = Counter;
             Track = track;
         }
     }

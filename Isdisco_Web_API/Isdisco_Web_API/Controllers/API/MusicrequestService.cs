@@ -31,40 +31,45 @@ namespace Isdisco_Web_API.Controllers.API
 
         // POST api/musicrequest
         [HttpPost]
-        public void Post(Musicrequest musicRequest)
+        public void Post([FromBody] Musicrequest musicRequest)
         {
             musicrequestController.AddMusicrequest(musicRequest);
         }
 
-        // POST api/musicrequest/5
-        [HttpPost("{id}/upvote")]
+        // POST api/musicrequest/5/upvote
+        [HttpPut("{id}/upvote/{userid}")]
         public void Upvote(int id, int userid)
         {
+            musicrequestController.UpvoteMusicrequest(id, userid);
         }
 
-        // DELETE api/musicrequest/5
-        [HttpDelete("{id}/upvote")]
+        // DELETE api/musicrequest/5/upvote
+        [HttpDelete("{id}/upvote/{userid}")]
         public void RemoveUpvote(int id, int userid)
         {
+            musicrequestController.RemoveUpvoteMusicrequest(id, userid);
         }
 
 
-        // PUT api/musicrequest/5
-        [HttpPut("{id}/upvote")]
+        // PUT api/musicrequest/5/downvote
+        [HttpPut("{id}/downvote")]
         public void Downvote(int id)
-        { 
+        {
+            musicrequestController.DownvoteMusicrequest(id);
         }
 
-        // PUT api/musicrequest/5
-        [HttpPut("{id}/upvote")]
+        // PUT api/musicrequest/5/downvote
+        [HttpDelete("{id}/downvote")]
         public void RemoveDownvote(int id)
         {
+            musicrequestController.RemoveDownvoteMusicrequest(id);
         }
 
         // DELETE api/musicrequest/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            musicrequestController.DeleteMusicrequest(id);
         }
     }
 }
