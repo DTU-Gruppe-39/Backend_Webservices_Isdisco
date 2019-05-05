@@ -47,7 +47,6 @@ namespace Isdisco_Web_API.Controllers.API
                 scc.GetAuthorizationCodeToken();
             }
             ss.StartEvent();
-            ncc.StartEvent();
             return "started";
         }
 
@@ -55,7 +54,6 @@ namespace Isdisco_Web_API.Controllers.API
         public string StopEvent()
         {
             ss.StopEvent();
-            ncc.StopEvent();
             return "stopped";
         }
 

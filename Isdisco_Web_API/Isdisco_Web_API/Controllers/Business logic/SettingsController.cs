@@ -10,6 +10,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         private static Timer aTimer;
         private static Timer refreshTimer;
         SpotifyControllerClass sc = new SpotifyControllerClass();
+        SpotifyAuthController auth = new SpotifyAuthController();
         private JwtFromP8 p8 = new JwtFromP8();
         //NotificationControllerClass ncc = new NotificationControllerClass();
         StorageSingleton storage = StorageSingleton.GetInstance();
@@ -68,6 +69,8 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         private void RefreshEvent(object sender, ElapsedEventArgs e)
         {
             storage.p8Token = p8.GetToken();
+            auth.GetAuthorizationCodeFlowAuthToken();
+            auth.GetClientCredentialsFlowAuthToken();
         }
     }
 }
