@@ -11,7 +11,7 @@ namespace Isdisco_Web_API.Controllers.API
         //private string title, msg;
 
         //private DAO.StorageSingleton storage = DAO.StorageSingleton.GetInstance();
-        private Businesslogic.NotificationControllerClass ncc = new Businesslogic.NotificationControllerClass();
+        private readonly Businesslogic.NotificationControllerClass ncc = new Businesslogic.NotificationControllerClass();
 
         public PushNotificationService()
         {
@@ -34,6 +34,21 @@ namespace Isdisco_Web_API.Controllers.API
                 await ncc.SendNotificationToAllAsync(title, msg);
                 Console.WriteLine("SendAll");
             }
+        }
+
+        // POST api/values
+        [HttpGet("start")]
+        public string StartEvent()
+        {
+            ncc.StartEvent();
+            return "started";
+        }
+
+        [HttpGet("stop")]
+        public string StopEvent()
+        {
+            ncc.StopEvent();
+            return "stopped";
         }
     }
 }
