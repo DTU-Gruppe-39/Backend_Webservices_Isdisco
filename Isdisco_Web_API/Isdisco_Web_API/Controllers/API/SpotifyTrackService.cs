@@ -29,6 +29,13 @@ namespace Isdisco_Web_API.Controllers.API
         //{
         //    return new string[] { "value1", "value2" };
         //}
+        [HttpGet("test")]
+        public List<Musicrequest> GetTest()
+        {
+            //Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
+            return storage.MusicrequestList;
+        }
+
 
         // GET api/values/5
         [HttpGet()]
