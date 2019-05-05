@@ -8,11 +8,9 @@ namespace Isdisco_Web_API.DAO
     public class StorageSingleton
     {
         static StorageSingleton Singleton = null;
-        public JwtFromP8 p8 = new JwtFromP8();
 
         private List<User> userList = new List<User>();
-        public List<User> UserList 
-
+        public List<User> UserList
         {
             get
             {
@@ -38,7 +36,7 @@ namespace Isdisco_Web_API.DAO
             }
         }
 
-
+        public string p8Token { get; set; }
         public string ClientCredentialsFlowAuthToken { get; set; }
         public string AuthorizationCodeFlowAuthToken { get; set; }
         public string AuthorizationCodeFlowAuthCode { get; set; }
@@ -69,6 +67,7 @@ namespace Isdisco_Web_API.DAO
             musicrequestList.Add(new Musicrequest(FakeTracks[1], UserList[1].Id, 3, new List<int>() { 0, 3, 5, 7, 32, 4 }));
             musicrequestList.Add(new Musicrequest(FakeTracks[2], UserList[0].Id, 6, new List<int>() { 1, 2 }));
             musicrequestList.Add(new Musicrequest(FakeTracks[3], UserList[1].Id, 8, new List<int>() { 0, 13, 25 }));
+
         }
 
     public static StorageSingleton GetInstance()

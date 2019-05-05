@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using Isdisco_Web_API.Controllers.Business_logic;
 using Isdisco_Web_API.Models;
 using System.Collections.Generic;
+using System.Timers;
 
 namespace Isdisco_Web_API.Controllers.Businesslogic
 {
@@ -12,7 +13,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         private DAO.MusicrequestDAO reqDao = new DAO.MusicrequestDAO();
         private DAO.UserDAO usrDao = new DAO.UserDAO();
         private JwtFromP8 p8 = new JwtFromP8();
-        public string token;
+        private static Timer aTimer;
         private CustomHttpHandler.ApnsProvider apnhttp = new CustomHttpHandler.ApnsProvider("https://api.development.push.apple.com:443", "com.Rasmus-Gregersen.Isdisco");
 
         private readonly string deviceToken = "834A1C6138CD293AC464D6CBFDBC987C3F73BC691EF55702F6DE5E84F2DA7081";
@@ -20,13 +21,12 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         public NotificationControllerClass()
         {
-            token = p8.GetToken();
         }
 
         //Send message to test phone
         public async System.Threading.Tasks.Task SendNotificationAsync(string title, string msg)
         {
-            await apnhttp.SendAsync(title, msg, deviceToken1, token, false);
+            await apnhttp.SendAsync(title, msg, deviceToken, storage.p8Token, false);
         }
 
         //Send now playing message to users who have requested that track
@@ -38,12 +38,20 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             //Lambda for finding all users who match the given trackid
             usrs2Send = reqDao.GetAll().Find((obj) => obj.Track.Id == track.Id).UpvoteUsers;
             string title = "Afspiller nu..";
-            string msg = "Sangen "+ track.SongName + ", som du har ønsket spiller nu!";
+            string msg = "Sangen " + track.SongName + ", som du har ønsket spiller nu!";
 
+            /*
             foreach (User ureq in usrs2Send)
             {
-                await apnhttp.SendAsync(title, msg, ureq.AppToken, token, false);
+                await apnhttp.SendAsync(title, msg, ureq.AppToken, storage.p8Token, false);
             }
+            */
+
+            for (int i = 0; i < usrs2Send.Count; i++)
+            {
+                await apnhttp.SendAsync(title, msg, usrs2Send[i].AppToken, storage.p8Token, false);
+            }
+
         }
 
         //Send message to all users
@@ -51,12 +59,34 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         {
             List<User> a = usrDao.GetAll();
             Console.WriteLine("Foreach");
-            for (int i = 0; i <= a.Count; i++)
+            for (int i = 0; i < a.Count; i++)
             {
-                await apnhttp.SendAsync(title, msg, a[i].AppToken, token, false);
-                //await apnhttp.SendAsync(title, msg, deviceToken1, token, false);
-
+                await apnhttp.SendAsync(title, msg, storage.UserList[i].AppToken, storage.p8Token, false);
+                //await apnhttp.SendAsync(title, msg, deviceToken1, storage.p8Token, false);
             }
+        }
+
+        public void StartEvent()
+        {
+            // Create a timer with a 30 minutes interval.
+            storage.p8Token = p8.GetToken();
+            aTimer = new Timer(1800000);
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += OnTimedEvent;
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
+            Console.WriteLine("\n\n\n\nTHE START EVENT CREATED A TOKEN\n\n\n\n");
+        }
+
+        public void StopEvent()
+        {
+            aTimer.Stop();
+            Console.WriteLine("\n\n\n\nTHE START EVENT TIMER WAS STOPPED\n\n\n\n");
+        }
+
+        private void OnTimedEvent(object sender, ElapsedEventArgs e)
+        {
+            storage.p8Token = p8.GetToken();
         }
     }
 }
