@@ -120,7 +120,7 @@ namespace Isdisco_Web_API.Controllers.API
             storage.AuthorizationCodeFlowAuthCode = code;
             scc.GetAuthorizationCodeToken();
             Console.WriteLine("\n\n\n\n" + storage.LoginCallback + "\n\n\n\n");
-            Response.Redirect("https://localhost:5001/api/" + storage.LoginCallback);
+            Response.Redirect("https://isdisco.azurewebsites.net/api/" + storage.LoginCallback);
             //return scc.GetCurrentlyPlayingSong();
         }
 
