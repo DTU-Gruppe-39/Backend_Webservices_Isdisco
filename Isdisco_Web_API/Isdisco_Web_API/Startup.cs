@@ -38,7 +38,8 @@ namespace Isdisco_Web_API
                                         "http://localhost:44375",
                                         "https://localhost:44375",
                                         "https://localhost:44342",
-                                        "http://localhost:44342")
+                                        "http://localhost:44342",
+                                        "*")
                                         .AllowAnyHeader().AllowAnyMethod();
                 });
             });
