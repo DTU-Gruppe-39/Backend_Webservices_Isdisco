@@ -16,6 +16,8 @@ namespace Isdisco_Web_API.Controllers.API
         StorageSingleton storage = StorageSingleton.GetInstance();
         Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
         SettingsController ss = new SettingsController();
+        private Businesslogic.NotificationControllerClass ncc = new Businesslogic.NotificationControllerClass();
+
         // GET: api/values
         //[HttpGet]
         //public IEnumerable<string> Get()
@@ -45,6 +47,7 @@ namespace Isdisco_Web_API.Controllers.API
                 scc.GetAuthorizationCodeToken();
             }
             ss.StartEvent();
+            ncc.StartEvent();
             return "started";
         }
 
@@ -52,6 +55,7 @@ namespace Isdisco_Web_API.Controllers.API
         public string StopEvent()
         {
             ss.StopEvent();
+            ncc.StopEvent();
             return "stopped";
         }
 
