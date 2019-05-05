@@ -31,6 +31,8 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             Console.WriteLine("\n\n\n\nTHE START EVENT TIMER WAS STARTED\n\n\n\n");
 
             refreshTimer = new Timer(1800000);
+            //To get token before 30 min.
+            storage.p8Token = p8.GetToken();
 
             // Hook up the Elapsed event for the timer. 
             refreshTimer.Elapsed += RefreshEvent;
@@ -66,7 +68,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             //Console.WriteLine("\nCurrently playing pinged");
         }
 
-        private void RefreshEvent(object sender, ElapsedEventArgs e)
+        private void RefreshEvent(Object sender, ElapsedEventArgs e)
         {
             storage.p8Token = p8.GetToken();
             auth.GetAuthorizationCodeFlowAuthToken();
