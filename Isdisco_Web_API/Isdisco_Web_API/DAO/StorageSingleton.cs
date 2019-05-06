@@ -36,6 +36,15 @@ namespace Isdisco_Web_API.DAO
             }
         }
 
+        private List<Feedback> feedbackList = new List<Feedback>();
+        public List<Feedback> FeedbackList
+        {
+            get
+            {
+                return feedbackList;
+            }
+        }
+
         public string p8Token { get; set; }
         public string ClientCredentialsFlowAuthToken { get; set; }
         public string AuthorizationCodeFlowAuthToken { get; set; }

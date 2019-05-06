@@ -12,9 +12,9 @@ namespace Isdisco_Web_API.Controllers.API
         Businesslogic.FeedbackController fc = new FeedbackController();
 
         [HttpPost("upload")]
-        public void PostFeedback()
+        public void PostFeedback(int id, string title, string msg)
         {
-
+            fc.PostFeedback(id, title, msg);
         }
 
     }
