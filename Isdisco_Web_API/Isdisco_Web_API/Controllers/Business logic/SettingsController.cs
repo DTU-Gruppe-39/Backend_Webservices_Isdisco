@@ -80,7 +80,9 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             apnhttp.SendAsync("Timer1", "Test før timer event", deviceToken, storage.p8Token, false);
             storage.p8Token = p8.GetToken();
             apnhttp.SendAsync("Timer2", "Test efter timer", deviceToken, storage.p8Token, false);
-            auth.GetAuthorizationCodeFlowAuthToken();
+
+            auth.GetRefreshAuthorizationCodeFlowAuthToken();
+            //auth.GetAuthorizationCodeFlowAuthToken();
             auth.GetClientCredentialsFlowAuthToken();
         }
     }
