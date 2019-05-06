@@ -40,10 +40,18 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             string title = "Afspiller nu..";
             string msg = "Sangen " + track.SongName + ", som du har ønsket spiller nu!";
 
+            /*
             foreach (User ureq in usrs2Send)
             {
                 await apnhttp.SendAsync(title, msg, ureq.AppToken, storage.p8Token, false);
             }
+            */
+
+            for (int i = 0; i < usrs2Send.Count; i++)
+            {
+                await apnhttp.SendAsync(title, msg, usrs2Send[i].AppToken, storage.p8Token, false);
+            }
+
         }
 
         //Send message to all users
