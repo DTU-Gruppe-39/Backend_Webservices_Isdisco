@@ -47,7 +47,6 @@ namespace Isdisco_Web_API.DAO
 
         public List<Feedback> GetTag(string tag)
         {
-            //Todo Implement method
             List<Feedback> taggedFeedbackList = new List<Feedback>();
             foreach (Feedback feedback in storageSingleton.FeedbackList)
             {
