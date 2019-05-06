@@ -76,9 +76,19 @@ namespace Isdisco_Web_API.DAO
             musicrequestList.Add(new Musicrequest(FakeTracks[2], UserList[0].Id, 6, new List<int>() { 1, 2 }));
             musicrequestList.Add(new Musicrequest(FakeTracks[3], UserList[1].Id, 8, new List<int>() { 0, 13, 25 }));
 
+
+            feedbackList.Add(new Feedback(UserList[0], "Generelt", "Fedt event"));
+            feedbackList.Add(new Feedback(UserList[1], "Generelt", "Fedt event"));
+            feedbackList.Add(new Feedback(UserList[2], "Andet", "Fedt event"));
+            feedbackList.Add(new Feedback(UserList[0], "Generelt", "Fedt event"));
+            feedbackList.Add(new Feedback(UserList[2], "Generelt", "Fedt event"));
+            feedbackList.Add(new Feedback(UserList[1], "Andet", "Fedt event"));
+            feedbackList.Add(new Feedback(UserList[0], "Generelt", "Fedt event"));
+
+
         }
 
-    public static StorageSingleton GetInstance()
+        public static StorageSingleton GetInstance()
         {
             if (Singleton == null)
             {

@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using Isdisco_Web_API.DAO;
+using Isdisco_Web_API.Models;
+
 namespace Isdisco_Web_API.Controllers.Businesslogic
 {
     public class FeedbackController
@@ -9,12 +13,20 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         {
         }
 
-        internal void PostFeedback(int id, string title, string msg)
+        internal void PostFeedback(Feedback feedback)
         {
-            feedbackDAO.Add(new Models.Feedback(userDAO.Get(id),title, msg));
-            Console.WriteLine(feedbackDAO.Get(id).Title);
-            Console.WriteLine(feedbackDAO.Get(id).Messsage);
+            feedbackDAO.Add(feedback);
+        }
 
+        internal List<Feedback> GetTaggedFeedbackList(string tag)
+        {
+            return feedbackDAO.GetTag(tag);
+        }
+
+        public List<Feedback> GetFeedbackList()
+        {
+            Console.WriteLine(feedbackDAO.GetAll());
+            return feedbackDAO.GetAll();
         }
     }
 }

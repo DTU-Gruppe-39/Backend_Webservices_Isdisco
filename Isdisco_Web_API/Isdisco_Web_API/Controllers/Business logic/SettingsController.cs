@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Timers;
+using Isdisco_Web_API.Controllers.Business_logic;
 using Isdisco_Web_API.DAO;
 using Isdisco_Web_API.Models;
 
@@ -11,9 +12,12 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         private static Timer refreshTimer;
         SpotifyControllerClass sc = new SpotifyControllerClass();
         SpotifyAuthController auth = new SpotifyAuthController();
+        private CustomHttpHandler.ApnsProvider apnhttp = new CustomHttpHandler.ApnsProvider("https://api.development.push.apple.com:443", "com.Rasmus-Gregersen.Isdisco");
         private JwtFromP8 p8 = new JwtFromP8();
         //NotificationControllerClass ncc = new NotificationControllerClass();
         StorageSingleton storage = StorageSingleton.GetInstance();
+        private readonly string deviceToken = "834A1C6138CD293AC464D6CBFDBC987C3F73BC691EF55702F6DE5E84F2DA7081";
+
 
         public SettingsController()
         {
@@ -21,6 +25,9 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         public void StartEvent()
         {
+            //Create p8 token
+            storage.p8Token = p8.GetToken();
+
             // Create a timer with a two second interval.
             aTimer = new Timer(10000);
             
@@ -30,9 +37,9 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             aTimer.Enabled = true;
             Console.WriteLine("\n\n\n\nTHE START EVENT TIMER WAS STARTED\n\n\n\n");
 
+
             refreshTimer = new Timer(1800000);
             //To get token before 30 min.
-            storage.p8Token = p8.GetToken();
 
             // Hook up the Elapsed event for the timer. 
             refreshTimer.Elapsed += RefreshEvent;
@@ -70,7 +77,9 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         private void RefreshEvent(Object sender, ElapsedEventArgs e)
         {
+            apnhttp.SendAsync("Timer1", "Test før timer event", deviceToken, storage.p8Token, false);
             storage.p8Token = p8.GetToken();
+            apnhttp.SendAsync("Timer2", "Test efter timer", deviceToken, storage.p8Token, false);
             auth.GetAuthorizationCodeFlowAuthToken();
             auth.GetClientCredentialsFlowAuthToken();
         }
