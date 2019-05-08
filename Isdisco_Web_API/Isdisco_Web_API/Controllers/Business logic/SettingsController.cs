@@ -81,6 +81,9 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             storage.p8Token = p8.GetToken();
             apnhttp.SendAsync("Timer2", "Test efter timer", deviceToken, storage.p8Token, false);
 
+            //Test to see if timer runs 30 min everytime.¨
+            refreshTimer.Elapsed -= RefreshEvent;
+
             auth.GetRefreshAuthorizationCodeFlowAuthToken();
             //auth.GetAuthorizationCodeFlowAuthToken();
             auth.GetClientCredentialsFlowAuthToken();
