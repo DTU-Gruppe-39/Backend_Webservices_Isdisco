@@ -46,7 +46,7 @@ namespace Isdisco_Web_API.Controllers.API
         }
 
         [HttpGet("search")]
-        public JObject GetSearch(String songName)
+        public ListOfTracks GetSearch(String songName)
         {
             //Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
             Response.Headers.Add("Acess-Control-Allow-Origin", "*");
@@ -54,7 +54,7 @@ namespace Isdisco_Web_API.Controllers.API
         }
 
         [HttpGet("playlist")]
-        public JObject GetPlaylist(String id)
+        public ListOfTracks GetPlaylist(String id)
         {
             //Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
             switch (id)
@@ -97,7 +97,7 @@ namespace Isdisco_Web_API.Controllers.API
         }
 
         [HttpGet("my-top")]
-        public JObject GetMyTop()
+        public ListOfTracks GetMyTop()
         {
             if (storage.AuthorizationCodeFlowAuthCode == null)
             {
