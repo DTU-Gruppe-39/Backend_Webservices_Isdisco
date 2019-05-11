@@ -21,7 +21,7 @@ namespace Isdisco_Web_API.Models
             set { downvotes = value; }
         }
         
-        public List<User> DowntoeUsers
+        public List<User> DownvoteUsers
         {
             get { return downvoteUsers; }
             set { downvoteUsers = value; }

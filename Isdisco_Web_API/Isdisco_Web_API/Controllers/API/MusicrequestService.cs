@@ -29,8 +29,6 @@ namespace Isdisco_Web_API.Controllers.API
         [HttpGet("{id}")]
         public Musicrequest Get(int id)
         {
-            throw new APIException(StatusCodes.Status304NotModified, @"Testing");
-
             return musicrequestController.GetMusicrequest(id);
         }
 
@@ -41,7 +39,7 @@ namespace Isdisco_Web_API.Controllers.API
             musicrequestController.AddMusicrequest(musicRequest);
         }
 
-        // POST api/musicrequest/5/upvote
+        // PUT api/musicrequest/5/upvote/1
         [HttpPut("{id}/upvote/{userid}")]
         public void Upvote(int id, int userid)
         {

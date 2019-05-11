@@ -38,6 +38,20 @@ namespace Isdisco_Web_API.DAO
                     }
                 }
             }
+
+            for (int i = 0; i < storageSingleton.MusicrequestList.Count; i++)
+            {
+                if (storageSingleton.MusicrequestList[i].Id.Equals(id))
+                {
+                    for (int j = 0; j < storageSingleton.MusicrequestList[i].UpvoteUsers.Count; j++)
+                    {
+                        if (storageSingleton.MusicrequestList[i].UpvoteUsers[j].Equals(userid))
+                        {
+                            storageSingleton.MusicrequestList[i].UpvoteUsers.RemoveAt(j);
+                        }
+                    }
+                }
+            }
         }
 
         public void AddDownvote (int id, User user)
@@ -47,7 +61,7 @@ namespace Isdisco_Web_API.DAO
                 if (storageSingleton.MusicrequestList[i].Id.Equals(id))
                 {
                     storageSingleton.MusicrequestList[i].Downvotes.Add(user.Id);
-                    storageSingleton.MusicrequestList[i].DowntoeUsers.Add(user);
+                    storageSingleton.MusicrequestList[i].DownvoteUsers.Add(user);
                 }
             }
         }
@@ -63,6 +77,20 @@ namespace Isdisco_Web_API.DAO
                         if (storageSingleton.MusicrequestList[i].Downvotes[j].Equals(userid))
                         {
                             storageSingleton.MusicrequestList[i].Downvotes.RemoveAt(j);
+                        }
+                    }
+                }
+            }
+
+            for (int i = 0; i < storageSingleton.MusicrequestList.Count; i++)
+            {
+                if (storageSingleton.MusicrequestList[i].Id.Equals(id))
+                {
+                    for (int j = 0; j < storageSingleton.MusicrequestList[i].DownvoteUsers.Count; j++)
+                    {
+                        if (storageSingleton.MusicrequestList[i].DownvoteUsers[j].Equals(userid))
+                        {
+                            storageSingleton.MusicrequestList[i].DownvoteUsers.RemoveAt(j);
                         }
                     }
                 }
