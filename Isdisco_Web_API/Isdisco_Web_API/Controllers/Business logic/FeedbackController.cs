@@ -12,7 +12,6 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         //private DAO.StorageSingleton storage = DAO.StorageSingleton.GetInstance();
 
         UserController usrCon = new UserController();
-        FeedbackController feedCon = new FeedbackController();
 
         public FeedbackController()
         {
@@ -21,7 +20,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         internal void PostFeedback(Feedback feedbackFromApp)
         {
             Feedback feedback = new Feedback(usrCon.GetUser(feedbackFromApp.User.Id), feedbackFromApp.Tag, feedbackFromApp.Message);
-            feedCon.Add(feedback);
+            Add(feedback);
         }
 
         private void Add(Feedback feedback)
