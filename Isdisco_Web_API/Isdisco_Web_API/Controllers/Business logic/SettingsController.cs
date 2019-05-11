@@ -84,7 +84,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                 //Send notifications
 
                 //bool x = await ncc.SendNowPlayingNotificationAsync(currentlyPlaying.Track);
-                bool x = await ncc.SendNowPlayingNotificationAsync(currentlyPlaying.Track);
+                //bool x = await ncc.SendNowPlayingNotificationAsync(currentlyPlaying.Track);
 
                 Console.WriteLine("\n\n\n\nSONG UPDATED!!!!!!!!\n\n\n\n");
             }
