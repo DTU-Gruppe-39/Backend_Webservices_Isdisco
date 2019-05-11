@@ -5,13 +5,15 @@ using Isdisco_Web_API.Models;
 using System.Collections.Generic;
 using System.Timers;
 using System.Threading.Tasks;
+using Isdisco_Web_API.DAO;
 
 namespace Isdisco_Web_API.Controllers.Businesslogic
 {
     public class NotificationControllerClass
     {
-        private DAO.StorageSingleton storage = DAO.StorageSingleton.GetInstance();
+        //private DAO.StorageSingleton storage = DAO.StorageSingleton.GetInstance();
         //private DAO.UserDAO usrDao = new DAO.UserDAO();
+        private NotificationDAO notificationDAO = new NotificationDAO();
         private UserController usrCon = new UserController();
         private MusicrequestController mrc = new MusicrequestController();
         private CustomHttpHandler.ApnsProvider apnhttp = new CustomHttpHandler.ApnsProvider("https://api.development.push.apple.com:443", "com.Rasmus-Gregersen.Isdisco");
@@ -25,7 +27,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         //Send message to test phone
         public async Task SendNotification(string title, string msg)
         {
-           await apnhttp.SendAsync(title, msg, deviceToken, storage.p8Token, false);
+           await apnhttp.SendAsync(title, msg, deviceToken, GetP8Token(), false);
         }
 
         //Send now playing message to users who have requested that track
@@ -41,7 +43,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
             for (int i = 0; i < usrs2Send.Count; i++)
             {
-                await apnhttp.SendAsync(title, msg, usrs2Send[i].AppToken, storage.p8Token, false);
+                await apnhttp.SendAsync(title, msg, usrs2Send[i].AppToken, GetP8Token(), false);
             }
         }
 
@@ -53,8 +55,13 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
             for (int i = 0; i < a.Count; i++)
             {   
-                await apnhttp.SendAsync(title, msg, a[i].AppToken, storage.p8Token, false);
+                await apnhttp.SendAsync(title, msg, a[i].AppToken, GetP8Token(), false);
             }
+        }
+
+        public String GetP8Token()
+        {
+            return notificationDAO.GetP8Token();
         }
     }
 }
