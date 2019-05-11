@@ -36,7 +36,18 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             List<User> usrs2Send = new List<User>();
 
             //Lambda for finding all users who match the given trackid
-            usrs2Send = mrc.GetAllMusicRequests().Find((Musicrequest obj) => obj.Track.Id.Equals(track.Id)).UpvoteUsers;
+            //usrs2Send = mrc.GetAllMusicRequests().Find((Musicrequest obj) => obj.Track.Id.Equals(track.Id)).UpvoteUsers;
+            List<Musicrequest> musicrequests = mrc.GetAllMusicRequests();
+            for (int i = 0; i < musicrequests.Count; i++)
+            {
+                if (track.Id.Equals(musicrequests[i].Track.Id))
+                {
+                    for (int j = 0; j < musicrequests[i].UpvoteUsers.Count; j++)
+                    {
+                        usrs2Send.Add(musicrequests[i].UpvoteUsers[j]);
+                    }
+                }
+            }
 
             string title = "Afspiller nu..";
             string msg = "Sangen " + track.SongName + ", som du har ønsket spiller nu!";
