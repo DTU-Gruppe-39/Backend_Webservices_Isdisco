@@ -5,14 +5,14 @@ namespace Isdisco_Web_API.Models
     {
         public User User { get; set; }
         public string Tag { get; set; }
-        public string Messsage { get; set; }
+        public string Message { get; set; }
         public int Id { get; set; }
          
         public Feedback(User user, string tag, string message)
         {
             this.User = user;
             this.Tag = tag;
-            this.Messsage = message;
+            this.Message = message;
             Id = user.Id;
         }
     }
