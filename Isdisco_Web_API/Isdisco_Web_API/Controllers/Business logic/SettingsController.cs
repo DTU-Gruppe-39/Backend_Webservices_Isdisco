@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Timers;
 using Isdisco_Web_API.Controllers.Business_logic;
 using Isdisco_Web_API.DAO;
@@ -43,7 +44,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             aTimer = new Timer(10000);
 
             // Hook up the Elapsed event for the timer.
-            aTimer.Elapsed += OnTimedEvent;
+            aTimer.Elapsed += OnTimedEventAsync;
             aTimer.AutoReset = true;
             aTimer.Enabled = true;
             Console.WriteLine("\n\n\n\nTHE START EVENT TIMER WAS STARTED\n\n\n\n");
@@ -53,7 +54,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             //To get token before 30 min.
 
             // Hook up the Elapsed event for the timer.
-            refreshTimer.Elapsed += RefreshEvent;
+            refreshTimer.Elapsed += RefreshEventAsync;
             refreshTimer.AutoReset = true;
             refreshTimer.Enabled = true;
         }
@@ -70,7 +71,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         }
 
 
-        private void OnTimedEvent(Object source, ElapsedEventArgs e)
+        private void OnTimedEventAsync(Object source, ElapsedEventArgs e)
         {
             //Console.WriteLine("\nAuthToken: " + storage.AuthorizationCodeFlowAuthToken + "\n");
             CurrentlyPlaying currentlyPlaying = sc.GetCurrentlyPlayingSong();
@@ -81,19 +82,20 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             else if (!(storage.currentlyPlaying.Track.Id.Equals(currentlyPlaying.Track.Id)))
             {
                 storage.currentlyPlaying = currentlyPlaying;
-                //Send notifications
 
-                ncc.SendNowPlayingNotificationAsync(currentlyPlaying.Track).Start();
+                //Send notifications
+                ncc.SendNowPlayingNotification(currentlyPlaying.Track).Start();
 
                 Console.WriteLine("\n\n\n\nSONG UPDATED!!!!!!!!\n\n\n\n");
             }
             //Console.WriteLine("\nCurrently playing pinged");
         }
 
-        private void RefreshEvent(Object sender, ElapsedEventArgs e)
+        private void RefreshEventAsync(Object sender, ElapsedEventArgs e)
         {
             storage.p8Token = p8.GetToken();
-            ncc.SendNotificationAsync("Test af timer", "Test af timer").Start();
+
+            ncc.SendNotification("Test af timer", "Test af timer").Start();
 
             auth.GetRefreshAuthorizationCodeFlowAuthToken();
             auth.GetClientCredentialsFlowAuthToken();
