@@ -55,8 +55,8 @@ namespace Isdisco_Web_API.DAO
 
         public StorageSingleton() 
         {
-            UserList.Add(new User(2, "Rasmus Gregersen", new LoginDetails("rasmus", "123"), false, "F9659290C65335689BB1F300EDDFDEC036BB3D32E78DB726879049AD487B333D"));
-            UserList.Add(new User(1, "Thomas Mattsson", new LoginDetails("thomas", "123"), false, "834A1C6138CD293AC464D6CBFDBC987C3F73BC691EF55702F6DE5E84F2DA7081"));
+            UserList.Add(new User(1, "Rasmus Gregersen", new LoginDetails("rasmus", "123"), false, "F9659290C65335689BB1F300EDDFDEC036BB3D32E78DB726879049AD487B333D"));
+            UserList.Add(new User(2, "Thomas Mattsson", new LoginDetails("thomas", "123"), false, "834A1C6138CD293AC464D6CBFDBC987C3F73BC691EF55702F6DE5E84F2DA7081"));
             UserList.Add(new User(3, "Magnus Koch", new LoginDetails("magnus", "123"), false, "0519173D80C775708E67EB89C289F57928602BC3557F246BB17B678A24738E19"));
 
             //public Track(string id, string songName, string artistName, string image_small_url, string image_medium_url, string image_large_url, string webplayerLink)
@@ -74,8 +74,8 @@ namespace Isdisco_Web_API.DAO
 
             musicrequestList.Add(new Musicrequest(FakeTracks[0], UserList[0].Id, 5, new List<int>() { 1, 2, 3 }));
             musicrequestList.Add(new Musicrequest(FakeTracks[1], UserList[1].Id, 3, new List<int>() { 1, 2, 3 }));
-            musicrequestList.Add(new Musicrequest(FakeTracks[2], UserList[0].Id, 6, new List<int>() { 1, 2 }));
-            musicrequestList.Add(new Musicrequest(FakeTracks[3], UserList[1].Id, 8, new List<int>() { 0, 13, 25 }));
+            musicrequestList.Add(new Musicrequest(FakeTracks[2], UserList[0].Id, 6, new List<int>() { 1, 2, 3 }));
+            musicrequestList.Add(new Musicrequest(FakeTracks[3], UserList[1].Id, 8, new List<int>() { 1, 2, 3 }));
 
 
             feedbackList.Add(new Feedback(UserList[0], "Generelt", "Fedt event"));

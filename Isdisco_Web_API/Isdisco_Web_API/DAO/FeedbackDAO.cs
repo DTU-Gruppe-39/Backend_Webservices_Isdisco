@@ -12,9 +12,9 @@ namespace Isdisco_Web_API.DAO
         {
         }
 
-        public void Add(Feedback element)
+        public void Add(Feedback feedback)
         {
-            storageSingleton.FeedbackList.Add(element);
+            storageSingleton.FeedbackList.Add(feedback);
         }
 
         public void Delete(int id)
