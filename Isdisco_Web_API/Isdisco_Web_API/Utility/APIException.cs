@@ -3,10 +3,10 @@ using System.Net;
 
 namespace Isdisco_Web_API.Utility
 {
-    public class APIException
+    public class APIException : Exception
     {
-        private HttpStatusCode StatusCode { get; set; }
-        private string Type { get; set; } = @"text/plain";
+        public HttpStatusCode StatusCode { get; set; }
+        public string Type { get; set; } = @"text/plain";
 
         public APIException(HttpStatusCode statusCode)
         {
