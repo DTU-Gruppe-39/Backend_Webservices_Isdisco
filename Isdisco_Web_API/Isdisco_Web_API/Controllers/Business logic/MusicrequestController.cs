@@ -34,6 +34,11 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             musicrequestDAO.Delete(id);
         }
 
+        public void DeleteAllMusicrequest()
+        {
+            musicrequestDAO.DeleteAll();
+        }
+
         public void UpvoteMusicrequest(int id, int userid)
         {
             musicrequestVotesDAO.AddUpvote(id, userid);

@@ -12,6 +12,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         private static Timer refreshTimer;
         SpotifyControllerClass sc = new SpotifyControllerClass();
         SpotifyAuthController auth = new SpotifyAuthController();
+        MusicrequestController musicrequestController = new MusicrequestController();
         private CustomHttpHandler.ApnsProvider apnhttp = new CustomHttpHandler.ApnsProvider("https://api.development.push.apple.com:443", "com.Rasmus-Gregersen.Isdisco");
         private JwtFromP8 p8 = new JwtFromP8();
         //NotificationControllerClass ncc = new NotificationControllerClass();
@@ -21,6 +22,11 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         public SettingsController()
         {
+        }
+
+        public void Reset()
+        {
+            musicrequestController.DeleteAllMusicrequest();
         }
 
         public void StartEvent()

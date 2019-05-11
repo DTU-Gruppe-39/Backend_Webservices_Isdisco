@@ -39,6 +39,12 @@ namespace Isdisco_Web_API.DAO
             }
         }
 
+        public void DeleteAll()
+        {
+           
+            storageSingleton.MusicrequestList.Clear();
+        }
+
         public List<Musicrequest> GetAll()
         {
             return storageSingleton.MusicrequestList;
