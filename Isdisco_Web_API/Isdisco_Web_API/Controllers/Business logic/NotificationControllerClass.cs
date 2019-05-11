@@ -11,7 +11,8 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
     public class NotificationControllerClass
     {
         private DAO.StorageSingleton storage = DAO.StorageSingleton.GetInstance();
-        private DAO.UserDAO usrDao = new DAO.UserDAO();
+        //private DAO.UserDAO usrDao = new DAO.UserDAO();
+        private UserController usrCon = new UserController();
         private MusicrequestController mrc = new MusicrequestController();
         private CustomHttpHandler.ApnsProvider apnhttp = new CustomHttpHandler.ApnsProvider("https://api.development.push.apple.com:443", "com.Rasmus-Gregersen.Isdisco");
 
@@ -47,7 +48,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         //Send message to all users
         public async Task SendNotificationToAllAsync(string title, string msg)
         {
-            List<User> a = usrDao.GetAll();
+            List<User> a = usrCon.GetUsers();
             Console.WriteLine("Foreach");
 
             for (int i = 0; i < a.Count; i++)
