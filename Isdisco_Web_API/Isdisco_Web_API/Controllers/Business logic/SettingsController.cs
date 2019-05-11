@@ -73,7 +73,6 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         private void OnTimedEventAsync(Object source, ElapsedEventArgs e)
         {
-            //Console.WriteLine("\nAuthToken: " + storage.AuthorizationCodeFlowAuthToken + "\n");
             CurrentlyPlaying currentlyPlaying = sc.GetCurrentlyPlayingSong();
             if (storage.currentlyPlaying == null)
             {
@@ -88,7 +87,6 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
                 Console.WriteLine("\n\n\n\nSONG UPDATED!!!!!!!!\n\n\n\n");
             }
-            //Console.WriteLine("\nCurrently playing pinged");
         }
 
         private void RefreshEventAsync(Object sender, ElapsedEventArgs e)

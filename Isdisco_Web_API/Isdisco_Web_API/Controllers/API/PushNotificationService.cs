@@ -9,9 +9,6 @@ namespace Isdisco_Web_API.Controllers.API
     [Route("api/notifications")]
     public class PushNotificationService : Controller
     {
-        //private string title, msg;
-
-        //private DAO.StorageSingleton storage = DAO.StorageSingleton.GetInstance();
         private readonly Businesslogic.NotificationControllerClass ncc = new Businesslogic.NotificationControllerClass();
 
         public PushNotificationService()
@@ -34,7 +31,6 @@ namespace Isdisco_Web_API.Controllers.API
             if (msg != null && title != null)
             {   
                 return ncc.SendNotificationToAllAsync(title, msg);
-                Console.WriteLine("SendAll");
             }
 
             return null;
