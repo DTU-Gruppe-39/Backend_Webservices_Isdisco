@@ -37,7 +37,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                 }
             }
 
-            Musicrequest musicrequest = new Musicrequest(musicrequestFromApp.Track, musicrequestFromApp.Id, musicrequestFromApp.Downvotes, musicrequestFromApp.Upvotes);
+            Musicrequest musicrequest = new Musicrequest(musicrequestFromApp.Track, musicrequestFromApp.UserId, musicrequestFromApp.Downvotes, musicrequestFromApp.Upvotes);
             musicrequestDAO.Add(musicrequest);
             UpvoteMusicrequest(musicrequest.Id, musicrequest.UserId);
         }
