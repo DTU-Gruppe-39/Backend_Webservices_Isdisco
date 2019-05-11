@@ -28,6 +28,11 @@ namespace Isdisco_Web_API.DAO
             }
         }
 
+        public void DeleteAll()
+        {
+            storageSingleton.FeedbackList.Clear();
+        }
+
         public List<Feedback> GetAll()
         {
             return storageSingleton.FeedbackList;

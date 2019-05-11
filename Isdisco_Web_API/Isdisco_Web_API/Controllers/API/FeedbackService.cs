@@ -31,5 +31,19 @@ namespace Isdisco_Web_API.Controllers.API
             fc.PostFeedback(feedback);
             return "Sent";
         }
+
+        [HttpDelete("delete/{id}")]
+        public string RemoveFeedback(int id)
+        {
+            fc.RemoveFeedback(id);
+            return "Deleted";
+        }
+
+        [HttpDelete("delete-all")]
+        public string RemoveAllFeedback()
+        {
+            fc.RemoveAllFeedback();
+            return "Deleted";
+        }
     }
 }

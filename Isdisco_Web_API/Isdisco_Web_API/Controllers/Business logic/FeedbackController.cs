@@ -28,5 +28,15 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             Console.WriteLine(feedbackDAO.GetAll());
             return feedbackDAO.GetAll();
         }
+
+        public void RemoveFeedback(int id)
+        {
+            feedbackDAO.Delete(id);
+        }
+
+        public void RemoveAllFeedback()
+        {
+            feedbackDAO.DeleteAll();
+        }
     }
 }
