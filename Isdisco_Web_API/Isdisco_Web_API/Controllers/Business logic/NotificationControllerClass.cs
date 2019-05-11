@@ -40,6 +40,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             //Lambda for finding all users who match the given trackid
             usrs2Send = mrc.GetAllMusicRequests().Find((Musicrequest obj) => obj.Track.Id.Equals(track.Id)).UpvoteUsers;
 
+
             
             string title = "Afspiller nu..";
             string msg = "Sangen " + track.SongName + ", som du har ønsket spiller nu!";
