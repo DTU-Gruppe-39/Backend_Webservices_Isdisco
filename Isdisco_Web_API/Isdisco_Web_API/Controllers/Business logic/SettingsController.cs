@@ -27,6 +27,8 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         {
             //Create p8 token
             storage.p8Token = p8.GetToken();
+            auth.GetRefreshAuthorizationCodeFlowAuthToken();
+            auth.GetClientCredentialsFlowAuthToken();
 
             // Create a timer with a two second interval.
             aTimer = new Timer(10000);
@@ -53,6 +55,9 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             Console.WriteLine("\n\n\n\nTHE START EVENT TIMER WAS STOPPED\n\n\n\n");
 
             refreshTimer.Stop();
+
+            //storage.AuthorizationCodeFlowAuthCode = null;
+            storage.AuthorizationCodeFlowAuthToken = null;
         }
 
 
@@ -81,7 +86,6 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             //apnhttp.SendAsync("Timer2", "Test efter timer", deviceToken, storage.p8Token, false);
 
             auth.GetRefreshAuthorizationCodeFlowAuthToken();
-            //auth.GetAuthorizationCodeFlowAuthToken();
             auth.GetClientCredentialsFlowAuthToken();
         }
     }
