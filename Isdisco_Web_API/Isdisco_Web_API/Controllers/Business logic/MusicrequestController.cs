@@ -37,6 +37,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         public void AddMusicrequest(Musicrequest musicrequest)
         {
+            musicrequest.Upvotes.Add(musicrequest.UserId);
             musicrequestDAO.Add(musicrequest);
         }
 
