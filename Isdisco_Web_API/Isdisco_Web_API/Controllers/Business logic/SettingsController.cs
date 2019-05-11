@@ -12,7 +12,10 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         private static Timer refreshTimer;
         SpotifyControllerClass sc = new SpotifyControllerClass();
         SpotifyAuthController auth = new SpotifyAuthController();
+
         NotificationControllerClass ncc = new NotificationControllerClass();
+        MusicrequestController musicrequestController = new MusicrequestController();
+
         private CustomHttpHandler.ApnsProvider apnhttp = new CustomHttpHandler.ApnsProvider("https://api.development.push.apple.com:443", "com.Rasmus-Gregersen.Isdisco");
         private JwtFromP8 p8 = new JwtFromP8();
         //NotificationControllerClass ncc = new NotificationControllerClass();
@@ -24,6 +27,11 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         {
         }
 
+        public void Reset()
+        {
+            musicrequestController.DeleteAllMusicrequest();
+        }
+
         public void StartEvent()
         {
             //Create p8 token
@@ -33,8 +41,8 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
             // Create a timer with a two second interval.
             aTimer = new Timer(10000);
-            
-            // Hook up the Elapsed event for the timer. 
+
+            // Hook up the Elapsed event for the timer.
             aTimer.Elapsed += OnTimedEventAsync;
             aTimer.AutoReset = true;
             aTimer.Enabled = true;
@@ -44,7 +52,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             refreshTimer = new Timer(1800000);
             //To get token before 30 min.
 
-            // Hook up the Elapsed event for the timer. 
+            // Hook up the Elapsed event for the timer.
             refreshTimer.Elapsed += RefreshEvent;
             refreshTimer.AutoReset = true;
             refreshTimer.Enabled = true;

@@ -57,6 +57,13 @@ namespace Isdisco_Web_API.Controllers.API
             return "stopped";
         }
 
+        // DELETE api/settings/reset
+        [HttpDelete("reset")]
+        public void Reset()
+        {
+            ss.Reset();
+        }
+
         // PUT api/values/5
         //[HttpPut("{id}")]
         //public void Put(int id, [FromBody]string value)
