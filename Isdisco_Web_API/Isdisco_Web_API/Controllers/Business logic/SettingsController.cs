@@ -78,7 +78,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         private void RefreshEvent(Object sender, ElapsedEventArgs e)
         {
             storage.p8Token = p8.GetToken();
-            apnhttp.SendAsync("Timer2", "Test efter timer", deviceToken, storage.p8Token, false);
+            //apnhttp.SendAsync("Timer2", "Test efter timer", deviceToken, storage.p8Token, false);
 
             auth.GetRefreshAuthorizationCodeFlowAuthToken();
             //auth.GetAuthorizationCodeFlowAuthToken();
