@@ -16,6 +16,8 @@ namespace Isdisco_Web_API.Controllers.API
         StorageSingleton storage = StorageSingleton.GetInstance();
         Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
         SettingsController ss = new SettingsController();
+        private Businesslogic.NotificationControllerClass ncc = new Businesslogic.NotificationControllerClass();
+
         // GET: api/values
         //[HttpGet]
         //public IEnumerable<string> Get()

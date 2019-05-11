@@ -29,6 +29,13 @@ namespace Isdisco_Web_API.Controllers.API
         //{
         //    return new string[] { "value1", "value2" };
         //}
+        [HttpGet("test")]
+        public List<Musicrequest> GetTest()
+        {
+            //Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
+            return storage.MusicrequestList;
+        }
+
 
         // GET api/values/5
         [HttpGet()]
@@ -39,7 +46,7 @@ namespace Isdisco_Web_API.Controllers.API
         }
 
         [HttpGet("search")]
-        public JObject GetSearch(String songName)
+        public ListOfTracks GetSearch(String songName)
         {
             //Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
             Response.Headers.Add("Acess-Control-Allow-Origin", "*");
@@ -47,7 +54,7 @@ namespace Isdisco_Web_API.Controllers.API
         }
 
         [HttpGet("playlist")]
-        public JObject GetPlaylist(String id)
+        public ListOfTracks GetPlaylist(String id)
         {
             //Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
             switch (id)
@@ -90,7 +97,7 @@ namespace Isdisco_Web_API.Controllers.API
         }
 
         [HttpGet("my-top")]
-        public JObject GetMyTop()
+        public ListOfTracks GetMyTop()
         {
             if (storage.AuthorizationCodeFlowAuthCode == null)
             {
@@ -113,7 +120,7 @@ namespace Isdisco_Web_API.Controllers.API
             storage.AuthorizationCodeFlowAuthCode = code;
             scc.GetAuthorizationCodeToken();
             Console.WriteLine("\n\n\n\n" + storage.LoginCallback + "\n\n\n\n");
-            Response.Redirect("https://localhost:5001/api/" + storage.LoginCallback);
+            Response.Redirect("https://isdisco.azurewebsites.net/api/" + storage.LoginCallback);
             //return scc.GetCurrentlyPlayingSong();
         }
 

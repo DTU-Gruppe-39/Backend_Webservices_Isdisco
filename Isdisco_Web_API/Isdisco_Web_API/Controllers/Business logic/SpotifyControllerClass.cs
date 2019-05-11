@@ -42,7 +42,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             return track;
         }
 
-        public JObject GetPlaylist(string id)
+        public ListOfTracks GetPlaylist(string id)
         {
             if (storage.ClientCredentialsFlowAuthToken == null)
             {
@@ -72,11 +72,11 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                 listTracks.Tracks.Add(new Track(trackId, thesongName, artistName, image_small_url, image_medium_url, image_large_url, webplayerLink));
             }
 
-            return JObject.FromObject(listTracks);
+            return listTracks;
             //return JObject.Parse(GetResponse);
         }
 
-        public JObject GetSearch(String songName)
+        public ListOfTracks GetSearch(String songName)
         {
             if (storage.ClientCredentialsFlowAuthToken == null)
             {
@@ -89,7 +89,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             //webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
             webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + AuthToken);
             var limit = "10";    //Number of songs that Spotify returns
-            var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/search?q=" + Uri.EscapeUriString(songName) + "&type=track&market=DK&limit=" + limit + "&offset=0");
+            var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/search?q=" + Uri.EscapeUriString(songName) + "*&type=track&market=DK&limit=" + limit + "&offset=0");
 
             var jsonTracks = JObject.Parse(GetResponse);
             JArray tracks = (JArray)jsonTracks["tracks"]["items"];
@@ -106,7 +106,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                 listTracks.Tracks.Add(new Track(trackId, thesongName, artistName, image_small_url, image_medium_url, image_large_url, webplayerLink));
             }
 
-            return JObject.FromObject(listTracks);
+            return listTracks;
             //return GetResponse;
         }
 
@@ -155,7 +155,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             //return GetResponse;
         }
 
-        public JObject GetMyTopTracks()
+        public ListOfTracks GetMyTopTracks()
         {
             var webClient = new WebClient();
             JObject jObject = JObject.Parse(storage.AuthorizationCodeFlowAuthToken);
@@ -182,7 +182,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                 listTracks.Tracks.Add(new Track(trackId, thesongName, artistName, image_small_url, image_medium_url, image_large_url, webplayerLink));
             }
 
-            return JObject.FromObject(listTracks);
+            return listTracks;
 
             //return JObject.Parse(GetResponse);
         }
@@ -201,17 +201,6 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             //    return auth.GetAuthorizationCodeFlowAuthToken();
             //}
             auth.GetAuthorizationCodeFlowAuthToken();
-        }
-
-
-        private class ListOfTracks
-        {
-            private List<Track> tracks = new List<Track>();
-            public List<Track> Tracks
-            {
-                get { return tracks; }
-                set { tracks = value; }
-            }
         }
     }
 }

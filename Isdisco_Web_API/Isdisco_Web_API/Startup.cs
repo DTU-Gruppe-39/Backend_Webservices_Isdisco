@@ -33,14 +33,7 @@ namespace Isdisco_Web_API
                 options.AddPolicy(MyAllowSpecificOrigins,
                 builder =>
                 {
-                    builder.WithOrigins("https://isdisco-web-api.azurewebsites.net",
-                                        "http://www.contoso.com",
-                                        "http://localhost:44375",
-                                        "https://localhost:44375",
-                                        "https://localhost:44342",
-                                        "http://localhost:44342",
-                                        "http://localhost:5001",
-                                        "https://localhost:5001")
+                    builder.AllowAnyOrigin()
                                         .AllowAnyHeader().AllowAnyMethod();
                 });
             });
