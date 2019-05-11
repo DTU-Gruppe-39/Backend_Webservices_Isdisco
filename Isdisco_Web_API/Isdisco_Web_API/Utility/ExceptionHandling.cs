@@ -19,9 +19,9 @@ namespace Isdisco_Web_API.Utility
             _next = next;
         }
 
-        public Task Invoke(HttpContext httpContext)
+        public async Task InvokeAsync(HttpContext httpContext)
         {
-            /*try 
+            try 
             {
                 await _next(httpContext);
             }
@@ -29,20 +29,22 @@ namespace Isdisco_Web_API.Utility
             {
                 if (httpContext.Response.HasStarted)
                 {
-                    logger.LogWarning();
+                    logger.LogWarning("response sended, http status code will not be executed");
                     throw;
                 }
                 httpContext.Response.Clear();
                 httpContext.Response.StatusCode = exception.StatusCode;
-            }*/
-            return _next(httpContext);
+                await httpContext.Response.WriteAsync(exception.Message);
+
+                return;
+            }
         }
     }
 
     // Extension method used to add the middleware to the HTTP request pipeline.
     public static class ExceptionHandlingExtensions
     {
-        public static IApplicationBuilder UseMiddlewareClassTemplate(this IApplicationBuilder builder)
+        public static IApplicationBuilder UseCustomAPIExceptionHandling(this IApplicationBuilder builder)
         {
             return builder.UseMiddleware<ExceptionHandling>();
         }

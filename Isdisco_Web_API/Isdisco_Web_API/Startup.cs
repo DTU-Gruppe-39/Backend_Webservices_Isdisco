@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Isdisco_Web_API.Utility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -52,10 +53,12 @@ namespace Isdisco_Web_API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseCustomAPIExceptionHandling();
             }
             else
             {
-                app.UseHsts();
+                app.UseCustomAPIExceptionHandling();
+                app.UseExceptionHandler();
             }
             app.UseCors(MyAllowSpecificOrigins);
             app.UseHttpsRedirection();
