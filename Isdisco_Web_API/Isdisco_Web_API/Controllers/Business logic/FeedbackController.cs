@@ -8,8 +8,11 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
     public class FeedbackController
     {
         DAO.FeedbackDAO feedbackDAO = new DAO.FeedbackDAO();
-        DAO.UserDAO userDAO = new DAO.UserDAO();
-        private DAO.StorageSingleton storage = DAO.StorageSingleton.GetInstance();
+        //DAO.UserDAO userDAO = new DAO.UserDAO();
+        //private DAO.StorageSingleton storage = DAO.StorageSingleton.GetInstance();
+
+        UserController usrCon = new UserController();
+        FeedbackController feedCon = new FeedbackController();
 
         public FeedbackController()
         {
@@ -17,7 +20,12 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         internal void PostFeedback(Feedback feedbackFromApp)
         {
-            Feedback feedback = new Feedback(userDAO.Get(feedbackFromApp.Id), feedbackFromApp.Tag, feedbackFromApp.Message);
+            Feedback feedback = new Feedback(usrCon.GetUser(feedbackFromApp.User.Id), feedbackFromApp.Tag, feedbackFromApp.Message);
+            feedCon.Add(feedback);
+        }
+
+        private void Add(Feedback feedback)
+        {
             feedbackDAO.Add(feedback);
         }
 
@@ -28,7 +36,6 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         public List<Feedback> GetFeedbackList()
         {
-            Console.WriteLine(feedbackDAO.GetAll());
             return feedbackDAO.GetAll();
         }
 
