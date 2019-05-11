@@ -19,7 +19,7 @@ namespace Isdisco_Web_API.Controllers.API
             return fc.GetFeedbackList();
         }
 
-        [HttpGet("tag")]
+        [HttpGet("{tag}")]
         public List<Feedback> Get(string tag)
         {
             return fc.GetTaggedFeedbackList(tag);
