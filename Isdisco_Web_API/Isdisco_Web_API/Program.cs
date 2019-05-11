@@ -21,6 +21,6 @@ namespace Isdisco_Web_API
             WebHost.CreateDefaultBuilder(args)
                 
                 .UseStartup<Startup>()
-                .UseUrls("https://localhost:44342");
+                .UseUrls("https://localhost:5001");
     }
 }
