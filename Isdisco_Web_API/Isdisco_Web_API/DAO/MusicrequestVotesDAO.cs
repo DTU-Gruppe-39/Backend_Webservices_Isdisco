@@ -1,4 +1,6 @@
 ﻿using System;
+using Isdisco_Web_API.Models;
+
 namespace Isdisco_Web_API.DAO
 {
     public class MusicrequestVotesDAO
@@ -9,13 +11,14 @@ namespace Isdisco_Web_API.DAO
         {
         }
 
-        public void AddUpvote (int id, int userid)
+        public void AddUpvote (int id, User user)
         {
             for (int i = 0; i < storageSingleton.MusicrequestList.Count; i++)
             {
                 if (storageSingleton.MusicrequestList[i].Id.Equals(id))
                 {
-                    storageSingleton.MusicrequestList[i].Upvotes.Add(userid);
+                    storageSingleton.MusicrequestList[i].Upvotes.Add(user.Id);
+                    storageSingleton.MusicrequestList[i].UpvoteUsers.Add(user);
                 }
             }
         }

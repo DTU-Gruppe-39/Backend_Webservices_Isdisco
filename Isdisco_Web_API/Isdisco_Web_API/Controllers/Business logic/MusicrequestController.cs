@@ -54,7 +54,8 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         public void UpvoteMusicrequest(int id, int userid)
         {
-            musicrequestVotesDAO.AddUpvote(id, userid);
+            musicrequestVotesDAO.AddUpvote(id, userController.GetUser(id));
+
         }
 
         public void RemoveUpvoteMusicrequest(int id, int userid)
