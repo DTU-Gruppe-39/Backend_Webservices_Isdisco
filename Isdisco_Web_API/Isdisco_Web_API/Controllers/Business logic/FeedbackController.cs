@@ -20,7 +20,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         internal void PostFeedback(Feedback feedbackFromApp)
         {
-            Feedback feedback = new Feedback(usrCon.GetUser(feedbackFromApp.Id), feedbackFromApp.Tag, feedbackFromApp.Message);
+            Feedback feedback = new Feedback(usrCon.GetUser(feedbackFromApp.User.Id), feedbackFromApp.Tag, feedbackFromApp.Message);
             feedCon.Add(feedback);
         }
 
