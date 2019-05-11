@@ -57,17 +57,17 @@ namespace Isdisco_Web_API.Controllers.API
 
 
         // PUT api/musicrequest/5/downvote
-        [HttpPut("{id}/downvote")]
-        public void Downvote(int id)
+        [HttpPut("{id}/downvote/{userid}")]
+        public void Downvote(int id, int userid)
         {
-            musicrequestController.DownvoteMusicrequest(id);
+            musicrequestController.DownvoteMusicrequest(id, userid);
         }
 
         // PUT api/musicrequest/5/downvote
-        [HttpDelete("{id}/downvote")]
-        public void RemoveDownvote(int id)
+        [HttpDelete("{id}/downvote/{userid}")]
+        public void RemoveDownvote(int id, int userid)
         {
-            musicrequestController.RemoveDownvoteMusicrequest(id);
+            musicrequestController.RemoveDownvoteMusicrequest(id, userid);
         }
 
         // DELETE api/musicrequest/5

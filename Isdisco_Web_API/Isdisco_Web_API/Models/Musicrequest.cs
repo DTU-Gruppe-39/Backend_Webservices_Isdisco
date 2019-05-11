@@ -10,9 +10,22 @@ namespace Isdisco_Web_API.Models
         public Track Track { get; set; }
         public int UserId { get; set; }
         public DateTime Timestamp { get; set; }
-        public int Downvotes { get; set; }
+        private List<int> downvotes = new List<int>();
+        private List<User> downvoteUsers = new List<User>();
         private List<int> upvotes = new List<int>();
         private List<User> upvoteUsers = new List<User>();
+
+        public List<int> Downvotes
+        {
+            get { return downvotes; }
+            set { downvotes = value; }
+        }
+        
+        public List<User> DowntoeUsers
+        {
+            get { return downvoteUsers; }
+            set { downvoteUsers = value; }
+        }
 
         public List<int> Upvotes
         {
@@ -42,7 +55,7 @@ namespace Isdisco_Web_API.Models
             Timestamp = DateTime.Now;
         }
 
-        public Musicrequest(Track track, int userId, int downvotes, List<int> upvotes)
+        public Musicrequest(Track track, int userId, List<int> downvotes, List<int> upvotes)
         {
             Counter++;
             Id = Counter;

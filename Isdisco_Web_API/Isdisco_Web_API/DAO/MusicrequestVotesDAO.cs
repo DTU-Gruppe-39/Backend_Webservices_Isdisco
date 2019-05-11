@@ -40,24 +40,31 @@ namespace Isdisco_Web_API.DAO
             }
         }
 
-        public void AddDownvote (int id)
+        public void AddDownvote (int id, User user)
         {
             for (int i = 0; i < storageSingleton.MusicrequestList.Count; i++)
             {
                 if (storageSingleton.MusicrequestList[i].Id.Equals(id))
                 {
-                    storageSingleton.MusicrequestList[i].Downvotes++;
+                    storageSingleton.MusicrequestList[i].Downvotes.Add(user.Id);
+                    storageSingleton.MusicrequestList[i].DowntoeUsers.Add(user);
                 }
             }
         }
 
-        public void RemoveDownvote(int id)
+        public void RemoveDownvote(int id, int userid)
         {
             for (int i = 0; i < storageSingleton.MusicrequestList.Count; i++)
             {
                 if (storageSingleton.MusicrequestList[i].Id.Equals(id))
                 {
-                    storageSingleton.MusicrequestList[i].Downvotes--;
+                    for (int j = 0; j < storageSingleton.MusicrequestList[i].Downvotes.Count; j++)
+                    {
+                        if (storageSingleton.MusicrequestList[i].Downvotes[j].Equals(userid))
+                        {
+                            storageSingleton.MusicrequestList[i].Downvotes.RemoveAt(j);
+                        }
+                    }
                 }
             }
         }

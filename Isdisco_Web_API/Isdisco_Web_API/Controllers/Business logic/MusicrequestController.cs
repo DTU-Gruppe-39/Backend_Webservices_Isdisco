@@ -54,7 +54,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         public void UpvoteMusicrequest(int id, int userid)
         {
-            musicrequestVotesDAO.AddUpvote(id, userController.GetUser(id));
+            musicrequestVotesDAO.AddUpvote(id, userController.GetUser(userid));
 
         }
 
@@ -63,14 +63,14 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             musicrequestVotesDAO.RemoveUpvote(id, userid);
         }
 
-        public void DownvoteMusicrequest(int id)
+        public void DownvoteMusicrequest(int id, int userid)
         {
-            musicrequestVotesDAO.AddDownvote(id);
+            musicrequestVotesDAO.AddDownvote(id, userController.GetUser(userid));
         }
 
-        public void RemoveDownvoteMusicrequest (int id)
+        public void RemoveDownvoteMusicrequest (int id, int userid)
         {
-            musicrequestVotesDAO.RemoveDownvote(id);
+            musicrequestVotesDAO.RemoveDownvote(id, userid);
         }
     }
 }
