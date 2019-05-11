@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 //https://docs.microsoft.com/en-us/azure/notification-hubs/notification-hubs-push-notification-http2-token-authentification
 namespace Isdisco_Web_API.Controllers.API
@@ -11,19 +12,33 @@ namespace Isdisco_Web_API.Controllers.API
         //private string title, msg;
 
         //private DAO.StorageSingleton storage = DAO.StorageSingleton.GetInstance();
-        private Businesslogic.NotificationControllerClass ncc = new Businesslogic.NotificationControllerClass();
+        private readonly Businesslogic.NotificationControllerClass ncc = new Businesslogic.NotificationControllerClass();
 
         public PushNotificationService()
         {
         }
 
         [HttpGet("push")]
-        public async System.Threading.Tasks.Task SendNotificationAsync(string title, string msg)
+        public async Task<bool> SendNotificationAsync(string title, string msg)
         {
-            if (msg != null || title != null)
+            bool isSuccess = false;
+            if (msg != null && title != null)
             {
-                await ncc.SendNotificationAsync(title, msg);
-            } 
+                isSuccess = await ncc.SendNotificationAsync(title, msg);
+            }
+            return isSuccess;
+        }
+
+        [HttpGet("pushall")]
+        public async Task<bool> SendNotificationToAllAsync(string title, string msg)
+        {
+            bool isSuccess = false;
+            if (msg != null && title != null)
+            {
+                isSuccess = await ncc.SendNotificationToAllAsync(title, msg);
+                Console.WriteLine("SendAll");
+            }
+            return isSuccess;
         }
     }
 }

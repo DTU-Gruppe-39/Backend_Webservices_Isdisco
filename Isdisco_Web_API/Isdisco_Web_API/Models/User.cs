@@ -44,7 +44,7 @@ namespace Isdisco_Web_API.Models
             Fullname = fullname;
             LoginDetails = loginDetails;
             VIP = vip;
-            AppToken = AppToken;
+            AppToken = appToken;
         }
 
         public User(int id, string fullname, LoginDetails loginDetails, bool vip, string appToken)
@@ -53,7 +53,7 @@ namespace Isdisco_Web_API.Models
             Fullname = fullname;
             LoginDetails = loginDetails;
             VIP = vip;
-            AppToken = AppToken;
+            AppToken = appToken;
         }
 
         public User(string fullname, LoginDetails loginDetails, bool vip, string appToken, string facebookToken)
@@ -64,7 +64,7 @@ namespace Isdisco_Web_API.Models
             Fullname = fullname;
             LoginDetails = loginDetails;
             VIP = vip;
-            AppToken = AppToken;
+            AppToken = appToken;
             FacebookToken = facebookToken;
         }
 
@@ -75,7 +75,7 @@ namespace Isdisco_Web_API.Models
             Fullname = fullname;
             LoginDetails = loginDetails;
             VIP = vip;
-            AppToken = AppToken;
+            AppToken = appToken;
             FacebookToken = facebookToken;
         }
 
