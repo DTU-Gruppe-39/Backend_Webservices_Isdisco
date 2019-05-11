@@ -75,7 +75,7 @@ namespace Isdisco_Web_API.Models
             Timestamp = DateTime.Now;
             Downvotes = downvotes;
             Upvotes = upvotes;
-            UpvoteUsers = upvoteUsers;
+            UpvoteUsers = upVoteUsers;
             DownvoteUsers = downVoteUsers;
         }
     }
