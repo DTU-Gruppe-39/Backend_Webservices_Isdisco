@@ -78,13 +78,13 @@ namespace Isdisco_Web_API.DAO
             musicrequestList.Add(new Musicrequest(FakeTracks[3], UserList[1].Id, new List<int>() { }, new List<int>() { 1, 2, 3 }));
 
 
-            feedbackList.Add(new Feedback(UserList[0], "Generelt", "Fedt event"));
-            feedbackList.Add(new Feedback(UserList[1], "Generelt", "Fedt event"));
-            feedbackList.Add(new Feedback(UserList[2], "Andet", "Fedt event"));
-            feedbackList.Add(new Feedback(UserList[0], "Generelt", "Fedt event"));
-            feedbackList.Add(new Feedback(UserList[2], "Generelt", "Fedt event"));
-            feedbackList.Add(new Feedback(UserList[1], "Andet", "Fedt event"));
-            feedbackList.Add(new Feedback(UserList[0], "Generelt", "Fedt event"));
+            FeedbackList.Add(new Feedback(UserList[0], "Generelt", "Fedt event"));
+            FeedbackList.Add(new Feedback(UserList[1], "Generelt", "Fedt event"));
+            FeedbackList.Add(new Feedback(UserList[2], "Andet", "Fedt event"));
+            FeedbackList.Add(new Feedback(UserList[0], "Generelt", "Fedt event"));
+            FeedbackList.Add(new Feedback(UserList[2], "Generelt", "Fedt event"));
+            FeedbackList.Add(new Feedback(UserList[1], "Andet", "Fedt event"));
+            FeedbackList.Add(new Feedback(UserList[0], "Generelt", "Fedt event"));
 
 
         }
