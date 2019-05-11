@@ -37,6 +37,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
             //Lambda for finding all users who match the given trackid
             //usrs2Send = mrc.GetAllMusicRequests().Find((Musicrequest obj) => obj.Track.Id.Equals(track.Id)).UpvoteUsers;
+           
             List<Musicrequest> musicrequests = mrc.GetAllMusicRequests();
             for (int i = 0; i < musicrequests.Count; i++)
             {
