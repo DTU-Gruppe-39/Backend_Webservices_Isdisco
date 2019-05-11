@@ -15,7 +15,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         {
         }
 
-        public List<Musicrequest> GetAllMusicRequests ()
+        public List<Musicrequest> GetAllMusicRequests()
         {
             List<Musicrequest> listToReturn = musicrequestDAO.GetAll();
 

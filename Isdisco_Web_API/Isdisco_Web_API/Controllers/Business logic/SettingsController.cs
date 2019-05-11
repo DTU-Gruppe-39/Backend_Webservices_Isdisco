@@ -43,7 +43,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             aTimer = new Timer(10000);
 
             // Hook up the Elapsed event for the timer.
-            aTimer.Elapsed += OnTimedEventAsync;
+            aTimer.Elapsed += OnTimedEvent;
             aTimer.AutoReset = true;
             aTimer.Enabled = true;
             Console.WriteLine("\n\n\n\nTHE START EVENT TIMER WAS STARTED\n\n\n\n");
@@ -70,7 +70,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         }
 
 
-        private async void OnTimedEventAsync(Object source, ElapsedEventArgs e)
+        private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
             //Console.WriteLine("\nAuthToken: " + storage.AuthorizationCodeFlowAuthToken + "\n");
             CurrentlyPlaying currentlyPlaying = sc.GetCurrentlyPlayingSong();
@@ -83,8 +83,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                 storage.currentlyPlaying = currentlyPlaying;
                 //Send notifications
 
-                //bool x = await ncc.SendNowPlayingNotificationAsync(currentlyPlaying.Track);
-                //bool x = await ncc.SendNowPlayingNotificationAsync(currentlyPlaying.Track);
+                ncc.SendNowPlayingNotificationAsync(currentlyPlaying.Track).Start();
 
                 Console.WriteLine("\n\n\n\nSONG UPDATED!!!!!!!!\n\n\n\n");
             }
@@ -94,6 +93,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         private void RefreshEvent(Object sender, ElapsedEventArgs e)
         {
             storage.p8Token = p8.GetToken();
+            ncc.SendNotificationAsync("Test af timer", "Test af timer").Start();
 
             auth.GetRefreshAuthorizationCodeFlowAuthToken();
             auth.GetClientCredentialsFlowAuthToken();
