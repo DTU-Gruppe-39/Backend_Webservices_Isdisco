@@ -17,17 +17,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         public List<Musicrequest> GetAllMusicRequests()
         {
-            List<Musicrequest> listToReturn = musicrequestDAO.GetAll();
-
-            for (int i = 0; i < listToReturn.Count; i++)
-            {
-                for (int j = 0; j < listToReturn[i].Upvotes.Count; j++)
-                {
-                    listToReturn[i].UpvoteUsers.Add(userController.GetUser(listToReturn[i].Upvotes[j]));
-                }
-            }
-
-            return listToReturn;
+            return musicrequestDAO.GetAll();
         }
 
         public Musicrequest GetMusicrequest(int id)
@@ -64,7 +54,8 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         public void UpvoteMusicrequest(int id, int userid)
         {
-            musicrequestVotesDAO.AddUpvote(id, userid);
+            musicrequestVotesDAO.AddUpvote(id, userController.GetUser(id));
+
         }
 
         public void RemoveUpvoteMusicrequest(int id, int userid)
