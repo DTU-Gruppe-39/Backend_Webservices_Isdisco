@@ -12,6 +12,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         private static Timer refreshTimer;
         SpotifyControllerClass sc = new SpotifyControllerClass();
         SpotifyAuthController auth = new SpotifyAuthController();
+        NotificationControllerClass ncc = new NotificationControllerClass();
         private CustomHttpHandler.ApnsProvider apnhttp = new CustomHttpHandler.ApnsProvider("https://api.development.push.apple.com:443", "com.Rasmus-Gregersen.Isdisco");
         private JwtFromP8 p8 = new JwtFromP8();
         //NotificationControllerClass ncc = new NotificationControllerClass();
@@ -34,7 +35,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             aTimer = new Timer(10000);
             
             // Hook up the Elapsed event for the timer. 
-            aTimer.Elapsed += OnTimedEvent;
+            aTimer.Elapsed += OnTimedEventAsync;
             aTimer.AutoReset = true;
             aTimer.Enabled = true;
             Console.WriteLine("\n\n\n\nTHE START EVENT TIMER WAS STARTED\n\n\n\n");
@@ -61,7 +62,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         }
 
 
-        private void OnTimedEvent(Object source, ElapsedEventArgs e)
+        private async void OnTimedEventAsync(Object source, ElapsedEventArgs e)
         {
             //Console.WriteLine("\nAuthToken: " + storage.AuthorizationCodeFlowAuthToken + "\n");
             CurrentlyPlaying currentlyPlaying = sc.GetCurrentlyPlayingSong();
@@ -73,7 +74,9 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             {
                 storage.currentlyPlaying = currentlyPlaying;
                 //Send notifications
-                //ncc.SendNowPlayingNotificationAsync(currentlyPlaying);
+
+                //bool x = await ncc.SendNowPlayingNotificationAsync(currentlyPlaying.Track);
+                bool x = await ncc.SendNowPlayingNotificationAsync(currentlyPlaying.Track);
 
                 Console.WriteLine("\n\n\n\nSONG UPDATED!!!!!!!!\n\n\n\n");
             }
@@ -83,7 +86,6 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         private void RefreshEvent(Object sender, ElapsedEventArgs e)
         {
             storage.p8Token = p8.GetToken();
-            //apnhttp.SendAsync("Timer2", "Test efter timer", deviceToken, storage.p8Token, false);
 
             auth.GetRefreshAuthorizationCodeFlowAuthToken();
             auth.GetClientCredentialsFlowAuthToken();

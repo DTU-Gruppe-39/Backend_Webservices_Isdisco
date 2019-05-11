@@ -4,6 +4,7 @@ using Isdisco_Web_API.Controllers.Business_logic;
 using Isdisco_Web_API.Models;
 using System.Collections.Generic;
 using System.Timers;
+using System.Threading.Tasks;
 
 namespace Isdisco_Web_API.Controllers.Businesslogic
 {
@@ -22,21 +23,25 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         }
 
         //Send message to test phone
-        public async System.Threading.Tasks.Task SendNotificationAsync(string title, string msg)
+        public async Task<bool> SendNotificationAsync(string title, string msg)
         {
-            await apnhttp.SendAsync(title, msg, deviceToken, storage.p8Token, false);
+            bool isSuccess = await apnhttp.SendAsync(title, msg, deviceToken, storage.p8Token, false);
+
+            return isSuccess;
         }
 
         //Send now playing message to users who have requested that track
-        public async System.Threading.Tasks.Task SendNowPlayingNotificationAsync(Track track)
+        public async Task<bool> SendNowPlayingNotificationAsync(Track track)
         {
             List<User> usrs2Send = new List<User>();
             //req = reqDao.GetAll().FindAll((Musicrequest obj) => obj.Track.Id == track.Id);
 
             //Lambda for finding all users who match the given trackid
-            usrs2Send = reqDao.GetAll().Find((obj) => obj.Track.Id == track.Id).UpvoteUsers;
+            usrs2Send = reqDao.GetAll().Find((obj) => obj.Track.Id.Equals(track.Id)).UpvoteUsers;
             string title = "Afspiller nu..";
             string msg = "Sangen " + track.SongName + ", som du har ønsket spiller nu!";
+            bool isSuccess = false;
+
 
             /*
             foreach (User ureq in usrs2Send)
@@ -47,20 +52,26 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
             for (int i = 0; i < usrs2Send.Count; i++)
             {
-                await apnhttp.SendAsync(title, msg, usrs2Send[i].AppToken, storage.p8Token, false);
+                isSuccess = await apnhttp.SendAsync(title, msg, usrs2Send[i].AppToken, storage.p8Token, false);
             }
+
+            return isSuccess;
         }
 
         //Send message to all users
-        public async System.Threading.Tasks.Task SendNotificationToAllAsync(string title, string msg)
+        public async Task<bool> SendNotificationToAllAsync(string title, string msg)
         {
             List<User> a = usrDao.GetAll();
             Console.WriteLine("Foreach");
+            bool isSuccess = false;
+
             for (int i = 0; i < a.Count; i++)
             {
-                await apnhttp.SendAsync(title, msg, storage.UserList[i].AppToken, storage.p8Token, false);
+                isSuccess = await apnhttp.SendAsync(title, msg, storage.UserList[i].AppToken, storage.p8Token, false);
                 //await apnhttp.SendAsync(title, msg, deviceToken1, storage.p8Token, false);
             }
+
+            return isSuccess;
         }
     }
 }
