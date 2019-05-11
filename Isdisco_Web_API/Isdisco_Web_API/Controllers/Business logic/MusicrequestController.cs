@@ -35,8 +35,18 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             return musicrequestDAO.Get(id);
         }
 
-        public void AddMusicrequest(Musicrequest musicrequest)
+        public void AddMusicrequest(Musicrequest musicrequestFromApp)
         {
+            for (int i = 0; i < musicrequestDAO.GetAll().Count; i++)
+            {
+                if (musicrequestFromApp.Track.Id.Equals(musicrequestDAO.Get(i).Track.Id))
+                {
+                    UpvoteMusicrequest(musicrequestDAO.Get(i).Id, musicrequestFromApp.UserId);
+                    return;
+                }
+            }
+
+            Musicrequest musicrequest = new Musicrequest(musicrequestFromApp.Track, musicrequestFromApp.Id, musicrequestFromApp.Downvotes, musicrequestFromApp.Upvotes);
             musicrequest.Upvotes.Add(musicrequest.UserId);
             musicrequestDAO.Add(musicrequest);
         }
