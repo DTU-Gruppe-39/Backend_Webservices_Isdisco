@@ -63,7 +63,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             musicrequestDAO.Add(musicrequest);
             UpvoteMusicrequest(musicrequest.Id, musicrequest.UserId);
             AddLiveRequest(liverequest1);
-            UpvoteLiveRequest(musicrequest.Id, musicrequest.UserId);
+            UpvoteLiveRequest(liverequest1.Id, liverequest1.UserId);
 
         }
 
