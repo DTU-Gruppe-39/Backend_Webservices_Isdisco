@@ -26,7 +26,7 @@ namespace Isdisco_Web_API.Controllers.API
         }
 
         [HttpGet("live")]
-        public List<Musicrequest> GetLive()
+        public List<LiveRequest> GetLive()
         {
             return musicrequestController.GetAllLiveRequests();
         }
