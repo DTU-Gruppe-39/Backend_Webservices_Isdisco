@@ -10,6 +10,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         MusicrequestDAO musicrequestDAO = new MusicrequestDAO();
         MusicrequestVotesDAO musicrequestVotesDAO = new MusicrequestVotesDAO();
         UserController userController = new UserController();
+        BlacklistController blacklistController = new BlacklistController();
 
         public MusicrequestController()
         {
@@ -28,6 +29,14 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         public void AddMusicrequest(Musicrequest musicrequestFromApp)
         {
             List<Musicrequest> musicrequests = GetAllMusicRequests();
+            for (int j = 0; j < blacklistController.GetBlacklist().Count; j++)
+            {
+                if (musicrequestFromApp.Track.Id == blacklistController.GetBlacklist()[j].Track.Id)
+                {
+                    throw new Exception();
+                }
+            }
+
             for (int i = 0; i < musicrequests.Count; i++)
             {
                 if (musicrequestFromApp.Track.Id.Equals(musicrequests[i].Track.Id))
