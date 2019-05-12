@@ -36,40 +36,85 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         public void AddMusicrequest(Musicrequest musicrequestFromApp)
         {
-            List<Musicrequest> musicrequests = GetAllMusicRequests();
-            for (int j = 0; j < ControllerRegistry.GetBlacklistController().GetBlacklist().Count; j++)
+            if (musicrequestFromApp != null) 
             {
-                if (musicrequestFromApp.Track.Id == ControllerRegistry.GetBlacklistController().GetBlacklist()[j].Track.Id)
+                List<Musicrequest> musicrequests = GetAllMusicRequests();
+                //Går igennem blacklisten
+                for (int j = 0; j < ControllerRegistry.GetBlacklistController().GetBlacklist().Count; j++)
                 {
-                    throw new APIException(StatusCodes.Status302Found, "The track is blacklisted by the admin");
+                    //Hvis sangen findes i blacklist
+                    if (musicrequestFromApp.Track.Id.Equals(ControllerRegistry.GetBlacklistController().GetBlacklist()[j].Track.Id))
+                    {
+                        throw new APIException(StatusCodes.Status403Forbidden, "The track is blacklisted by the admin");
+                    }
                 }
+
+                // Går igennem alle musicrequests
+                for (int i = 0; i < musicrequests.Count; i++)
+                {
+                    // Hvis sangen allerede er under musicrequests
+                    if (musicrequestFromApp.Track.Id.Equals(musicrequests[i].Track.Id))
+                    {
+                        //Hvis brugeren ejer den allerede eksiterende musicrequest
+                        if (musicrequests[i].UserId.Equals(musicrequestFromApp.UserId))
+                        {
+                            throw new APIException(StatusCodes.Status208AlreadyReported);
+                        }
+                        //Går alle Upvotes på den enkle allerede eksiterende musicrequest igennem
+                        for (int j = 0; j < musicrequests[i].Upvotes.Count; j++)
+                        {
+                            //Hvis brugeren allerede har upvoted sangen
+                            if (musicrequests[i].Upvotes[j].Equals(musicrequestFromApp.UserId))
+                            {
+                                throw new APIException(StatusCodes.Status302Found);
+                            }
+                        }
+
+                        //Går alle Downvotes på den enkle allerede eksiterende musicrequest igennem
+                        for (int k = 0; k < musicrequests[i].Downvotes.Count; k++)
+                        {
+                            //Hvis brugeren allerede har downvoted sangen
+                            if (musicrequests[i].Downvotes[k].Equals(musicrequestFromApp.UserId))
+                            {
+                                //Brugerens downvote bliver fjernet fra musicrequesten
+                                RemoveDownvoteMusicrequest(musicrequests[i].Id, musicrequestFromApp.UserId);
+
+                                //Brugeren upvoter musicrequesten
+                                UpvoteMusicrequest(musicrequests[i].Id, musicrequestFromApp.UserId);
+                                LiveRequest liverequest = new LiveRequest(musicrequestFromApp.Track, musicrequestFromApp.UserId, musicrequestFromApp.Downvotes, musicrequestFromApp.Upvotes);
+                                AddLiveRequest(liverequest);
+                                UpvoteLiveRequest(liverequest.Id, liverequest.UserId);
+                                throw new APIException(StatusCodes.Status202Accepted);
+                            }
+                        }
+
+                        //Brugeren upvoter musicrequesten
+                        UpvoteMusicrequest(musicrequests[i].Id, musicrequestFromApp.UserId);
+                        LiveRequest liverequest2 = new LiveRequest(musicrequestFromApp.Track, musicrequestFromApp.UserId, musicrequestFromApp.Downvotes, musicrequestFromApp.Upvotes);
+                        AddLiveRequest(liverequest2);
+                        UpvoteLiveRequest(liverequest2.Id, liverequest2.UserId);
+                        throw new APIException(StatusCodes.Status202Accepted);
+                    }
+                }
+                throw new APIException(StatusCodes.Status422UnprocessableEntity);
             }
 
-            for (int i = 0; i < musicrequests.Count; i++)
-            {
-                if (musicrequestFromApp.Track.Id.Equals(musicrequests[i].Track.Id))
-                {
-                    //Song is already requested
-                    UpvoteMusicrequest(musicrequests[i].Id, musicrequestFromApp.UserId);
-                    LiveRequest liverequest = new LiveRequest(musicrequestFromApp.Track, musicrequestFromApp.UserId, musicrequestFromApp.Downvotes, musicrequestFromApp.Upvotes);
-                    AddLiveRequest(liverequest);
-                    UpvoteLiveRequest(liverequest.Id, liverequest.UserId);
-                    throw new APIException(StatusCodes.Status202Accepted);
-                }
-            }
-
+            //Opreter en ny musicrequest, da den ikke allerede eksitere
             Musicrequest musicrequest = new Musicrequest(musicrequestFromApp.Track, musicrequestFromApp.UserId, musicrequestFromApp.Downvotes, musicrequestFromApp.Upvotes);
             LiveRequest liverequest1 = new LiveRequest(musicrequestFromApp.Track, musicrequestFromApp.UserId, musicrequestFromApp.Downvotes, musicrequestFromApp.Upvotes);
             musicrequestDAO.Add(musicrequest);
             UpvoteMusicrequest(musicrequest.Id, musicrequest.UserId);
             AddLiveRequest(liverequest1);
             UpvoteLiveRequest(liverequest1.Id, liverequest1.UserId);
-
         }
 
         public void AddLiveRequest(LiveRequest musicrequestFromApp)
         {
-            liveRequestDAO.Add(musicrequestFromApp);
+            if (musicrequestFromApp != null)
+            {
+                liveRequestDAO.Add(musicrequestFromApp);
+            }
+            throw new APIException(StatusCodes.Status422UnprocessableEntity);
         }
 
         public void DeleteLiveRequest(int id)

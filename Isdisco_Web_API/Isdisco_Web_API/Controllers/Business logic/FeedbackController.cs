@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Isdisco_Web_API.DAO;
 using Isdisco_Web_API.Models;
+using Isdisco_Web_API.Utility;
+using Microsoft.AspNetCore.Http;
 
 namespace Isdisco_Web_API.Controllers.Businesslogic
 {
@@ -19,8 +21,12 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         internal void PostFeedback(Feedback feedbackFromApp)
         {
-            Feedback feedback = new Feedback(usrCon.GetUser(feedbackFromApp.User.Id), feedbackFromApp.Tag, feedbackFromApp.Message);
-            Add(feedback);
+            if (feedbackFromApp != null)
+            {
+                Feedback feedback = new Feedback(usrCon.GetUser(feedbackFromApp.User.Id), feedbackFromApp.Tag, feedbackFromApp.Message);
+                Add(feedback);
+            }
+            throw new APIException(StatusCodes.Status422UnprocessableEntity);
         }
 
         private void Add(Feedback feedback)

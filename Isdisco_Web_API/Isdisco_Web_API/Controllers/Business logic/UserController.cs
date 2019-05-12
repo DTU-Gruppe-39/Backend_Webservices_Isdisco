@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Isdisco_Web_API.DAO;
 using Isdisco_Web_API.Models;
+using Isdisco_Web_API.Utility;
+using Microsoft.AspNetCore.Http;
 
 namespace Isdisco_Web_API.Controllers.Businesslogic
 {
@@ -15,7 +17,11 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         public void AddUser (User user)
         {
-            userDAO.Add(user);
+            if (user != null)
+            {
+                userDAO.Add(user);
+            }
+            throw new APIException(StatusCodes.Status422UnprocessableEntity);
         }
 
         public User GetUser (int id)
@@ -35,7 +41,11 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         public void UpdateUser (User user)
         {
-            userDAO.Update(user);
+            if (user != null)
+            {
+                userDAO.Update(user);
+            }
+            throw new APIException(StatusCodes.Status422UnprocessableEntity);
         }
     }
 }
