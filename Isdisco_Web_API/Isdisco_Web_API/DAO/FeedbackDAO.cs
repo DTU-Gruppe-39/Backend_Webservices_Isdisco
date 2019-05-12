@@ -4,7 +4,7 @@ using Isdisco_Web_API.Models;
 
 namespace Isdisco_Web_API.DAO
 {
-    public class FeedbackDAO
+    public class FeedbackDAO : DefaultDAO<Feedback>
     {
         StorageSingleton storageSingleton = StorageSingleton.GetInstance();
 
@@ -61,6 +61,11 @@ namespace Isdisco_Web_API.DAO
                 }
             }
             return taggedFeedbackList;
+        }
+
+        public void Update(Feedback element)
+        {
+            throw new NotImplementedException();
         }
     }
 }
