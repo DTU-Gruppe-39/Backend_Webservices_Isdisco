@@ -11,6 +11,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
     {
         MusicrequestDAO musicrequestDAO = new MusicrequestDAO();
         MusicrequestVotesDAO musicrequestVotesDAO = new MusicrequestVotesDAO();
+        LiveRequestDAO liveRequestDAO = new LiveRequestDAO();
         UserController userController = ControllerRegistry.GetUserController();
         //BlacklistController blacklistController = ControllerRegistry.GetBlacklistController();
 
@@ -21,6 +22,11 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         public List<Musicrequest> GetAllMusicRequests()
         {
             return musicrequestDAO.GetAll();
+        }
+
+        public List<Musicrequest> GetAllLiveRequests()
+        {
+            return liveRequestDAO.GetAll();
         }
 
         public Musicrequest GetMusicrequest(int id)
@@ -51,6 +57,23 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             Musicrequest musicrequest = new Musicrequest(musicrequestFromApp.Track, musicrequestFromApp.UserId, musicrequestFromApp.Downvotes, musicrequestFromApp.Upvotes);
             musicrequestDAO.Add(musicrequest);
             UpvoteMusicrequest(musicrequest.Id, musicrequest.UserId);
+            AddLiveRequest(musicrequest);
+
+        }
+
+        public void AddLiveRequest(Musicrequest musicrequestFromApp)
+        {
+            liveRequestDAO.Add(musicrequestFromApp);
+        }
+
+        public void DeleteLiveRequest(int id)
+        {
+            liveRequestDAO.Delete(id);
+        }
+
+        public void DeleteAllLiveRequest()
+        {
+            liveRequestDAO.DeleteAll();
         }
 
         public void DeleteMusicrequest(int id)

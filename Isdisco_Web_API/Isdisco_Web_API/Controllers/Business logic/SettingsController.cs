@@ -31,6 +31,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         public void Reset()
         {
             musicrequestController.DeleteAllMusicrequest();
+            musicrequestController.DeleteAllLiveRequest();
         }
 
         public void StartEvent()

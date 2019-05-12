@@ -24,7 +24,13 @@ namespace Isdisco_Web_API.Controllers.API
         {
             return musicrequestController.GetAllMusicRequests();
         }
-        
+
+        [HttpGet("live")]
+        public List<Musicrequest> GetLive()
+        {
+            return musicrequestController.GetAllLiveRequests();
+        }
+
         // GET api/musicrequest/5
         [HttpGet("{id}")]
         public Musicrequest Get(int id)
