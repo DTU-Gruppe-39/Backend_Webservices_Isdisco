@@ -65,5 +65,18 @@ namespace Isdisco_Web_API.Models
             Downvotes = downvotes;
             Upvotes = upvotes;
         }
+
+        public Musicrequest(Track track, int userId, List<int> downvotes, List<int> upvotes, List<User> upVoteUsers, List<User> downVoteUsers)
+        {
+            Counter++;
+            Id = Counter;
+            Track = track;
+            UserId = userId;
+            Timestamp = DateTime.Now;
+            Downvotes = downvotes;
+            Upvotes = upvotes;
+            UpvoteUsers = upVoteUsers;
+            DownvoteUsers = downVoteUsers;
+        }
     }
 }

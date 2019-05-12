@@ -72,10 +72,10 @@ namespace Isdisco_Web_API.DAO
             //FakeTracks.Add(new Track("Nede Mette", "Blak", "1Test", "https://open.spotify.com/track/2gFaHRqjAE5ZNNnGr9eYG4?si=Oo4fJD0ZSsq45tFeVvApLw"));
             //FakeTracks.Add(new Track("Model", "Gulddreng", "2Test", "https://open.spotify.com/track/7Gf2vkf59IaWPu3Kb5Tdmx?si=dNnR67GKRzeWYyxK7JnqxQ"));
 
-            musicrequestList.Add(new Musicrequest(FakeTracks[0], UserList[0].Id, new List<int>() { }, new List<int>() { 1, 2, 3 }));
-            musicrequestList.Add(new Musicrequest(FakeTracks[1], UserList[1].Id, new List<int>() { }, new List<int>() { 1, 2, 3 }));
-            musicrequestList.Add(new Musicrequest(FakeTracks[2], UserList[0].Id, new List<int>() { }, new List<int>() { 1, 2, 3 }));
-            musicrequestList.Add(new Musicrequest(FakeTracks[3], UserList[1].Id, new List<int>() { }, new List<int>() { 1, 2, 3 }));
+            musicrequestList.Add(new Musicrequest(FakeTracks[0], UserList[0].Id, new List<int>() { }, new List<int>() { 1, 2, 3 }, UserList, new List<User>() { }));
+            musicrequestList.Add(new Musicrequest(FakeTracks[1], UserList[1].Id, new List<int>() { }, new List<int>() { 1, 2, 3 }, UserList, new List<User>() { }));
+            musicrequestList.Add(new Musicrequest(FakeTracks[2], UserList[0].Id, new List<int>() { }, new List<int>() { 1, 2, 3 }, UserList, new List<User>() { }));
+            musicrequestList.Add(new Musicrequest(FakeTracks[3], UserList[1].Id, new List<int>() { }, new List<int>() { 1, 2, 3 }, UserList, new List<User>() { }));
 
 
             FeedbackList.Add(new Feedback(UserList[0], "Generelt", "Fedt event"));
