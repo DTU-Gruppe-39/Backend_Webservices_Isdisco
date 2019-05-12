@@ -41,7 +41,11 @@ namespace Isdisco_Web_API.Models
 
         public Musicrequest()
         {
-            Timestamp = DateTime.;
+            //Timestamp = DateTime.UtcNow;
+            DateTime utcTime = DateTime.UtcNow;
+            TimeZoneInfo tzi = TimeZoneInfo.FindSystemTimeZoneById("Romance Standard Time");
+            DateTime localTime = TimeZoneInfo.ConvertTimeFromUtc(utcTime, tzi); // convert from utc to local
+            Timestamp = localTime;
         }
        
         public Musicrequest(Track track, int userId)
