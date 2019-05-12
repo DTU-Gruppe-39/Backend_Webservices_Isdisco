@@ -18,10 +18,9 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         public void AddUser (User user)
         {
             if (user != null)
-            {
                 userDAO.Add(user);
-            }
-            throw new APIException(StatusCodes.Status422UnprocessableEntity);
+            else 
+                throw new APIException(StatusCodes.Status422UnprocessableEntity);
         }
 
         public User GetUser (int id)
@@ -42,10 +41,9 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         public void UpdateUser (User user)
         {
             if (user != null)
-            {
                 userDAO.Update(user);
-            }
-            throw new APIException(StatusCodes.Status422UnprocessableEntity);
+            else
+                throw new APIException(StatusCodes.Status422UnprocessableEntity);
         }
     }
 }

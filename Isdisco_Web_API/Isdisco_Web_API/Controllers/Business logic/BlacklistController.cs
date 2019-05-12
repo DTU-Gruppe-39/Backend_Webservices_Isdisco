@@ -29,7 +29,8 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                     }
                 }
             }
-            throw new APIException(StatusCodes.Status422UnprocessableEntity);
+            else
+                throw new APIException(StatusCodes.Status422UnprocessableEntity);
         }
 
         public Blacklist GetBlacklistItem (int id)

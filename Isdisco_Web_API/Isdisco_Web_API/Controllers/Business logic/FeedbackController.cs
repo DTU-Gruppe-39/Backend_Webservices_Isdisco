@@ -26,7 +26,8 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                 Feedback feedback = new Feedback(usrCon.GetUser(feedbackFromApp.User.Id), feedbackFromApp.Tag, feedbackFromApp.Message);
                 Add(feedback);
             }
-            throw new APIException(StatusCodes.Status422UnprocessableEntity);
+            else
+                throw new APIException(StatusCodes.Status422UnprocessableEntity);
         }
 
         private void Add(Feedback feedback)

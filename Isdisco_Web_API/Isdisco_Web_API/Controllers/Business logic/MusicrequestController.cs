@@ -36,7 +36,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         public void AddMusicrequest(Musicrequest musicrequestFromApp)
         {
-            if (musicrequestFromApp != null) 
+            if (musicrequestFromApp != null)
             {
                 List<Musicrequest> musicrequests = GetAllMusicRequests();
                 //Går igennem blacklisten
@@ -96,25 +96,25 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                         throw new APIException(StatusCodes.Status202Accepted);
                     }
                 }
-                throw new APIException(StatusCodes.Status422UnprocessableEntity);
-            }
 
-            //Opreter en ny musicrequest, da den ikke allerede eksitere
-            Musicrequest musicrequest = new Musicrequest(musicrequestFromApp.Track, musicrequestFromApp.UserId, musicrequestFromApp.Downvotes, musicrequestFromApp.Upvotes);
-            LiveRequest liverequest1 = new LiveRequest(musicrequestFromApp.Track, musicrequestFromApp.UserId, musicrequestFromApp.Downvotes, musicrequestFromApp.Upvotes);
-            musicrequestDAO.Add(musicrequest);
-            UpvoteMusicrequest(musicrequest.Id, musicrequest.UserId);
-            AddLiveRequest(liverequest1);
-            UpvoteLiveRequest(liverequest1.Id, liverequest1.UserId);
+                //Opreter en ny musicrequest, da den ikke allerede eksitere
+                Musicrequest musicrequest = new Musicrequest(musicrequestFromApp.Track, musicrequestFromApp.UserId, musicrequestFromApp.Downvotes, musicrequestFromApp.Upvotes);
+                LiveRequest liverequest1 = new LiveRequest(musicrequestFromApp.Track, musicrequestFromApp.UserId, musicrequestFromApp.Downvotes, musicrequestFromApp.Upvotes);
+                musicrequestDAO.Add(musicrequest);
+                UpvoteMusicrequest(musicrequest.Id, musicrequest.UserId);
+                AddLiveRequest(liverequest1);
+                UpvoteLiveRequest(liverequest1.Id, liverequest1.UserId);
+            }
+            else 
+                throw new APIException(StatusCodes.Status422UnprocessableEntity); 
         }
 
         public void AddLiveRequest(LiveRequest musicrequestFromApp)
         {
             if (musicrequestFromApp != null)
-            {
                 liveRequestDAO.Add(musicrequestFromApp);
-            }
-            throw new APIException(StatusCodes.Status422UnprocessableEntity);
+            else
+                throw new APIException(StatusCodes.Status422UnprocessableEntity);
         }
 
         public void DeleteLiveRequest(int id)
