@@ -11,6 +11,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         private static SettingsController settingsController;
         private static SpotifyControllerClass spotifyControllerClass;
         private static UserController userController;
+        private static SpotifyAuthController spotifyAuthController;
 
         public static AuthenticationController GetAuthenticationController()
         {
@@ -59,6 +60,13 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             if (spotifyControllerClass == null)
                 spotifyControllerClass = new SpotifyControllerClass();
             return spotifyControllerClass;
+        }
+
+        public static SpotifyAuthController GetSpotifyAuthController()
+        {
+            if (spotifyAuthController == null)
+                spotifyAuthController = new SpotifyAuthController();
+            return spotifyAuthController;
         }
 
         public static UserController GetUserController()

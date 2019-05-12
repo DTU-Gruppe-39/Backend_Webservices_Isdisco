@@ -11,7 +11,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         //DAO.UserDAO userDAO = new DAO.UserDAO();
         //private DAO.StorageSingleton storage = DAO.StorageSingleton.GetInstance();
 
-        UserController usrCon = new UserController();
+        UserController usrCon = ControllerRegistry.GetUserController();
 
         public FeedbackController()
         {

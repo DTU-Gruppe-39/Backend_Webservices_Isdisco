@@ -14,8 +14,8 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         //private DAO.StorageSingleton storage = DAO.StorageSingleton.GetInstance();
         //private DAO.UserDAO usrDao = new DAO.UserDAO();
         private NotificationDAO notificationDAO = new NotificationDAO();
-        private UserController usrCon = new UserController();
-        private MusicrequestController mrc = new MusicrequestController();
+        private UserController usrCon = ControllerRegistry.GetUserController();
+        private MusicrequestController mrc = ControllerRegistry.GetMusicrequestController();
         private CustomHttpHandler.ApnsProvider apnhttp = new CustomHttpHandler.ApnsProvider("https://api.development.push.apple.com:443", "com.Rasmus-Gregersen.Isdisco");
 
         private readonly string deviceToken = "834A1C6138CD293AC464D6CBFDBC987C3F73BC691EF55702F6DE5E84F2DA7081";

@@ -9,7 +9,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
     public class SpotifyControllerClass
     {
         private DAO.StorageSingleton storage = DAO.StorageSingleton.GetInstance();
-        private SpotifyAuthController auth = new SpotifyAuthController();
+        private SpotifyAuthController auth = ControllerRegistry.GetSpotifyAuthController();
 
         public SpotifyControllerClass()
         {
