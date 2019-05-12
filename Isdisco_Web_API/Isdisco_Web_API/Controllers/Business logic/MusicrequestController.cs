@@ -45,29 +45,29 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                 }
             }
 
-            Musicrequest musicrequest = new Musicrequest(musicrequestFromApp.Track, musicrequestFromApp.UserId, musicrequestFromApp.Downvotes, musicrequestFromApp.Upvotes);
-
             for (int i = 0; i < musicrequests.Count; i++)
             {
                 if (musicrequestFromApp.Track.Id.Equals(musicrequests[i].Track.Id))
                 {
                     //Song is already requested
                     UpvoteMusicrequest(musicrequests[i].Id, musicrequestFromApp.UserId);
-                    //Musicrequest liverequest = new Musicrequest(musicrequestFromApp.Track, musicrequestFromApp.UserId, musicrequestFromApp.Downvotes, musicrequestFromApp.Upvotes);
-                    AddLiveRequest(musicrequest);
-                    UpvoteLiveRequest(musicrequest.Id, musicrequest.UserId);
+                    LiveRequest liverequest = new LiveRequest(musicrequestFromApp.Track, musicrequestFromApp.UserId, musicrequestFromApp.Downvotes, musicrequestFromApp.Upvotes);
+                    AddLiveRequest(liverequest);
+                    UpvoteLiveRequest(liverequest.Id, liverequest.UserId);
                     throw new APIException(StatusCodes.Status202Accepted);
                 }
             }
 
+            Musicrequest musicrequest = new Musicrequest(musicrequestFromApp.Track, musicrequestFromApp.UserId, musicrequestFromApp.Downvotes, musicrequestFromApp.Upvotes);
+            LiveRequest liverequest1 = new LiveRequest(musicrequestFromApp.Track, musicrequestFromApp.UserId, musicrequestFromApp.Downvotes, musicrequestFromApp.Upvotes);
             musicrequestDAO.Add(musicrequest);
             UpvoteMusicrequest(musicrequest.Id, musicrequest.UserId);
-            AddLiveRequest(musicrequest);
+            AddLiveRequest(liverequest1);
             UpvoteLiveRequest(musicrequest.Id, musicrequest.UserId);
 
         }
 
-        public void AddLiveRequest(Musicrequest musicrequestFromApp)
+        public void AddLiveRequest(LiveRequest musicrequestFromApp)
         {
             liveRequestDAO.Add(musicrequestFromApp);
         }
