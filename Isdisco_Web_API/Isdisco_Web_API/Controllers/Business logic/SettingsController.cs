@@ -55,7 +55,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
             // Hook up the Elapsed event for the timer.
             refreshTimer.Elapsed += RefreshEventAsync;
-            refreshTimer.AutoReset = true;
+            refreshTimer.AutoReset = false;
             refreshTimer.Enabled = true;
         }
 
@@ -91,12 +91,25 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         private void RefreshEventAsync(Object sender, ElapsedEventArgs e)
         {
-            storage.p8Token = p8.GetToken();
 
-            ncc.SendNotification("Test af timer", "Test af timer").Start();
+            try
+            {
+                storage.p8Token = p8.GetToken();
 
-            auth.GetRefreshAuthorizationCodeFlowAuthToken();
-            auth.GetClientCredentialsFlowAuthToken();
+                ncc.SendNotification("Test af timer", "Test af timer").Start();
+
+                auth.GetRefreshAuthorizationCodeFlowAuthToken();
+                auth.GetClientCredentialsFlowAuthToken();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            } 
+            finally
+            {
+                refreshTimer.Start();
+            }
         }
     }
 }
