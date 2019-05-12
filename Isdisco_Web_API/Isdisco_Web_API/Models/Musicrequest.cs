@@ -41,7 +41,7 @@ namespace Isdisco_Web_API.Models
 
         public Musicrequest()
         {
-            Timestamp = DateTime.Now;
+            Timestamp = DateTime.Now.ToLocalTime();
         }
        
         public Musicrequest(Track track, int userId)
@@ -50,7 +50,7 @@ namespace Isdisco_Web_API.Models
             Id = Counter;
             Track = track;
             UserId = userId;
-            Timestamp = DateTime.Now;
+            Timestamp = DateTime.Now.ToLocalTime().ToLocalTime();
         }
 
         public Musicrequest(Track track, int userId, List<int> downvotes, List<int> upvotes)
@@ -59,7 +59,7 @@ namespace Isdisco_Web_API.Models
             Id = Counter;
             Track = track;
             UserId = userId;
-            Timestamp = DateTime.Now;
+            Timestamp = DateTime.Now.ToLocalTime();
             Downvotes = downvotes;
             Upvotes = upvotes;
         }
@@ -70,7 +70,7 @@ namespace Isdisco_Web_API.Models
             Id = Counter;
             Track = track;
             UserId = userId;
-            Timestamp = DateTime.Now;
+            Timestamp = DateTime.Now.ToLocalTime();
             Downvotes = downvotes;
             Upvotes = upvotes;
             UpvoteUsers = upVoteUsers;
