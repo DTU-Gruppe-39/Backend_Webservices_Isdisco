@@ -108,6 +108,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             } 
             finally
             {
+                refreshTimer.Stop();
                 refreshTimer.Start();
             }
         }
