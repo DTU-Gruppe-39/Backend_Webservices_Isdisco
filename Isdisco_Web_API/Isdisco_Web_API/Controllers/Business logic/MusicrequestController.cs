@@ -12,7 +12,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         MusicrequestDAO musicrequestDAO = new MusicrequestDAO();
         MusicrequestVotesDAO musicrequestVotesDAO = new MusicrequestVotesDAO();
         UserController userController = ControllerRegistry.GetUserController();
-       //BlacklistController blacklistController = ControllerRegistry.GetBlacklistController();
+        //BlacklistController blacklistController = ControllerRegistry.GetBlacklistController();
 
         public MusicrequestController()
         {
@@ -31,13 +31,13 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         public void AddMusicrequest(Musicrequest musicrequestFromApp)
         {
             List<Musicrequest> musicrequests = GetAllMusicRequests();
-            /*for (int j = 0; j < blacklistController.GetBlacklist().Count; j++)
+            for (int j = 0; j < ControllerRegistry.GetBlacklistController().GetBlacklist().Count; j++)
             {
-                if (musicrequestFromApp.Track.Id == blacklistController.GetBlacklist()[j].Track.Id)
+                if (musicrequestFromApp.Track.Id == ControllerRegistry.GetBlacklistController().GetBlacklist()[j].Track.Id)
                 {
                     throw new APIException(StatusCodes.Status302Found, "The track is blacklisted by the admin");
                 }
-            }*/
+            }
 
             for (int i = 0; i < musicrequests.Count; i++)
             {

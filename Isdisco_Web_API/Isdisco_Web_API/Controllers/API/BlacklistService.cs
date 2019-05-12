@@ -14,7 +14,7 @@ namespace Isdisco_Web_API.Controllers.API
     [Route("api/blacklist")]
     public class BlacklistService : Controller
     {
-        BlacklistController blacklistController = new BlacklistController();
+        BlacklistController blacklistController = ControllerRegistry.GetBlacklistController();
 
         // GET: api/blacklist
         [HttpGet]

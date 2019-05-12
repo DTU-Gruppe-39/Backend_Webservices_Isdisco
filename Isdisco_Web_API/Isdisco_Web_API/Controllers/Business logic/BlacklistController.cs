@@ -9,7 +9,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
     public class BlacklistController
     {
         BlacklistDAO blacklistDAO = new BlacklistDAO();
-        MusicrequestController musicrequestController = ControllerRegistry.GetMusicrequestController();
+        //MusicrequestController musicrequestController = ControllerRegistry.GetMusicrequestController();
 
         public BlacklistController()
         {
@@ -18,13 +18,13 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         public void AddBlacklistItem (Blacklist blacklist)
         {
             blacklistDAO.Add(blacklist);
-            /*for(int i = 0; i < musicrequestController.GetAllMusicRequests().Count; i++)
+            for(int i = 0; i < ControllerRegistry.GetMusicrequestController().GetAllMusicRequests().Count; i++)
             {
-                if (musicrequestController.GetAllMusicRequests()[i].Track.Id == blacklist.Track.Id)
+                if (ControllerRegistry.GetMusicrequestController().GetAllMusicRequests()[i].Track.Id == blacklist.Track.Id)
                 {
-                    musicrequestController.DeleteMusicrequest(musicrequestController.GetAllMusicRequests()[i].Id);
+                    ControllerRegistry.GetMusicrequestController().DeleteMusicrequest(ControllerRegistry.GetMusicrequestController().GetAllMusicRequests()[i].Id);
                 }
-            }*/
+            }
         }
 
         public Blacklist GetBlacklistItem (int id)

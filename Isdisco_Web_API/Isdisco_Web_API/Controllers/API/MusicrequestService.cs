@@ -16,7 +16,7 @@ namespace Isdisco_Web_API.Controllers.API
     [Route("api/musicrequest")]
     public class MusicrequestService : Controller
     {
-        MusicrequestController musicrequestController = new MusicrequestController();
+        MusicrequestController musicrequestController = ControllerRegistry.GetMusicrequestController();
 
         // GET: api/musicrequest
         [HttpGet]

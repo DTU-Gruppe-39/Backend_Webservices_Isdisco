@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Isdisco_Web_API.Controllers.Businesslogic
 {
-    public class ControllerRegistry
+    public static class ControllerRegistry
     {
         private static AuthenticationController authenticationController;
         private static BlacklistController blacklistController;
