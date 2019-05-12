@@ -50,6 +50,9 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                 if (musicrequestFromApp.Track.Id.Equals(musicrequests[i].Track.Id))
                 {
                     UpvoteMusicrequest(musicrequests[i].Id, musicrequestFromApp.UserId);
+                    Musicrequest liverequest = new Musicrequest(musicrequestFromApp.Track, musicrequestFromApp.UserId, musicrequestFromApp.Downvotes, musicrequestFromApp.Upvotes);
+                    AddLiveRequest(liverequest);
+                    UpvoteLiveRequest(liverequest.Id, liverequest.UserId);
                     throw new APIException(StatusCodes.Status202Accepted);
                 }
             }
@@ -58,6 +61,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             musicrequestDAO.Add(musicrequest);
             UpvoteMusicrequest(musicrequest.Id, musicrequest.UserId);
             AddLiveRequest(musicrequest);
+            UpvoteLiveRequest(musicrequest.Id, musicrequest.UserId);
 
         }
 
@@ -89,6 +93,12 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         public void UpvoteMusicrequest(int id, int userid)
         {
             musicrequestVotesDAO.AddUpvote(id, userController.GetUser(userid));
+
+        }
+
+        public void UpvoteLiveRequest(int id, int userid)
+        {
+            liveRequestDAO.AddUpvote(id, userController.GetUser(userid));
 
         }
 

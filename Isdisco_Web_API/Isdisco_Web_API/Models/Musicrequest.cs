@@ -41,8 +41,6 @@ namespace Isdisco_Web_API.Models
 
         public Musicrequest()
         {
-            Counter++;
-            Id = Counter;
             Timestamp = DateTime.Now;
         }
        

@@ -61,5 +61,17 @@ namespace Isdisco_Web_API.DAO
             }
             return null;
         }
+
+        public void AddUpvote(int id, User user)
+        {
+            for (int i = 0; i < storageSingleton.LiverequestList.Count; i++)
+            {
+                if (storageSingleton.LiverequestList[i].Id.Equals(id))
+                {
+                    storageSingleton.LiverequestList[i].Upvotes.Add(user.Id);
+                    storageSingleton.LiverequestList[i].UpvoteUsers.Add(user);
+                }
+            }
+        }
     }
 }
