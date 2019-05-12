@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Isdisco_Web_API.Models;
+using Isdisco_Web_API.Utility;
+using Microsoft.AspNetCore.Http;
 
 namespace Isdisco_Web_API.DAO
 {
@@ -14,7 +16,15 @@ namespace Isdisco_Web_API.DAO
 
         public void Add(Blacklist element)
         {
-            storageSingleton.Blacklist.Add(element);
+            if (!storageSingleton.Blacklist.Contains(element))
+            {
+                storageSingleton.Blacklist.Add(element);
+            }
+            else
+            {
+                throw new APIException(StatusCodes.Status403Forbidden, "sang er allerede i blacklist");
+            }
+
         }
 
         public void Delete(int id)
