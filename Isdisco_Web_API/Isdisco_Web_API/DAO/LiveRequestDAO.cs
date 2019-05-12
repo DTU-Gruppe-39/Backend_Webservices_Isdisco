@@ -4,7 +4,7 @@ using Isdisco_Web_API.Models;
 
 namespace Isdisco_Web_API.DAO
 {
-    public class LiveRequestDAO : DefaultDAO<Musicrequest>
+    public class LiveRequestDAO : DefaultDAO<LiveRequest>
     {
         StorageSingleton storageSingleton = StorageSingleton.GetInstance();
 
@@ -12,12 +12,12 @@ namespace Isdisco_Web_API.DAO
         {
         }
 
-        public void Add(Musicrequest element)
+        public void Add(LiveRequest element)
         {
             storageSingleton.LiverequestList.Add(element);
         }
 
-        public void Update(Musicrequest element)
+        public void Update(LiveRequest element)
         {
             for (int i = 0; i < storageSingleton.LiverequestList.Count; i++)
             {
@@ -45,14 +45,14 @@ namespace Isdisco_Web_API.DAO
             storageSingleton.LiverequestList.Clear();
         }
 
-        public List<Musicrequest> GetAll()
+        public List<LiveRequest> GetAll()
         {
             return storageSingleton.LiverequestList;
         }
 
-        public Musicrequest Get(int id)
+        public LiveRequest Get(int id)
         {
-            foreach (Musicrequest musicRequest in storageSingleton.LiverequestList)
+            foreach (LiveRequest musicRequest in storageSingleton.LiverequestList)
             {
                 if (musicRequest.Id.Equals(id))
                 {

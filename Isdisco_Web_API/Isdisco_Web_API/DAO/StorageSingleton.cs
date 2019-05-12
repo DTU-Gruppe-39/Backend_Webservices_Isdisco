@@ -27,8 +27,8 @@ namespace Isdisco_Web_API.DAO
             }
         }
 
-        private List<Musicrequest> liverequestList = new List<Musicrequest>();
-        public List<Musicrequest> LiverequestList
+        private List<LiveRequest> liverequestList = new List<LiveRequest>();
+        public List<LiveRequest> LiverequestList
         {
             get
             {
