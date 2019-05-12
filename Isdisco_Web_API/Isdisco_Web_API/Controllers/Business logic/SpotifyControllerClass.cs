@@ -89,7 +89,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             //webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
             webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + AuthToken);
             var limit = "10";    //Number of songs that Spotify returns
-            var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/search?q=" + Uri.EscapeUriString(songName) + "*&type=track&market=DK&limit=" + limit + "&offset=0");
+            var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/search?q=track:" + Uri.EscapeUriString(songName) + "*&type=track&market=DK&limit=" + limit + "&offset=0");
 
             var jsonTracks = JObject.Parse(GetResponse);
             JArray tracks = (JArray)jsonTracks["tracks"]["items"];
