@@ -65,6 +65,10 @@ namespace Isdisco_Web_API.Controllers.API
                 //Ja dak: https://open.spotify.com/playlist/37i9dQZF1DX9vVjb8NqHzD
                 case "2": id = "37i9dQZF1DX9vVjb8NqHzD";
                     break;
+                //Fest fest fest: https://open.spotify.com/playlist/37i9dQZF1DWZByy5JrUWJv
+                case "3":
+                    id = "37i9dQZF1DWZByy5JrUWJv";
+                    break;
             }
             return scc.GetPlaylist(id);
         }
