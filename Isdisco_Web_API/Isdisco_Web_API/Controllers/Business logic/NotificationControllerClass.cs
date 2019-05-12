@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Timers;
 using System.Threading.Tasks;
 using Isdisco_Web_API.DAO;
-using Isdisco_Web_API.Controllers.API;
 
 namespace Isdisco_Web_API.Controllers.Businesslogic
 {
