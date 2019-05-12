@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Isdisco_Web_API.DAO;
 using Isdisco_Web_API.Models;
+using Isdisco_Web_API.Utility;
+using Microsoft.AspNetCore.Http;
 
 namespace Isdisco_Web_API.Controllers.Businesslogic
 {
@@ -9,8 +11,8 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
     {
         MusicrequestDAO musicrequestDAO = new MusicrequestDAO();
         MusicrequestVotesDAO musicrequestVotesDAO = new MusicrequestVotesDAO();
-        UserController userController = new UserController();
-        BlacklistController blacklistController = new BlacklistController();
+        UserController userController = ControllerRegistry.GetUserController();
+       //BlacklistController blacklistController = ControllerRegistry.GetBlacklistController();
 
         public MusicrequestController()
         {
@@ -24,25 +26,25 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         public Musicrequest GetMusicrequest(int id)
         {
             return musicrequestDAO.Get(id);
-        }
+        } 
 
         public void AddMusicrequest(Musicrequest musicrequestFromApp)
         {
             List<Musicrequest> musicrequests = GetAllMusicRequests();
-            for (int j = 0; j < blacklistController.GetBlacklist().Count; j++)
+            /*for (int j = 0; j < blacklistController.GetBlacklist().Count; j++)
             {
                 if (musicrequestFromApp.Track.Id == blacklistController.GetBlacklist()[j].Track.Id)
                 {
-                    throw new Exception();
+                    throw new APIException(StatusCodes.Status302Found, "The track is blacklisted by the admin");
                 }
-            }
+            }*/
 
             for (int i = 0; i < musicrequests.Count; i++)
             {
                 if (musicrequestFromApp.Track.Id.Equals(musicrequests[i].Track.Id))
                 {
                     UpvoteMusicrequest(musicrequests[i].Id, musicrequestFromApp.UserId);
-                    return;
+                    throw new APIException(StatusCodes.Status202Accepted);
                 }
             }
 
