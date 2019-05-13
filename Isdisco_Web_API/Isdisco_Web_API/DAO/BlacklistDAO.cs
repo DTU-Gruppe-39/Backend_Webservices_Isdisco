@@ -47,7 +47,7 @@ namespace Isdisco_Web_API.DAO
                     return blacklist;
                 }
             }
-            return null;
+            throw new APIException(StatusCodes.Status404NotFound);
         }
 
         public List<Blacklist> GetAll()
