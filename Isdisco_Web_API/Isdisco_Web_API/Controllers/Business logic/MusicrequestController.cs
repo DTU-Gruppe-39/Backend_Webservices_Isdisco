@@ -55,11 +55,6 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                     // Hvis sangen allerede er under musicrequests
                     if (musicrequestFromApp.Track.Id.Equals(musicrequests[i].Track.Id))
                     {
-                        //Hvis brugeren ejer den allerede eksiterende musicrequest
-                        if (musicrequests[i].UserId.Equals(musicrequestFromApp.UserId))
-                        {
-                            throw new APIException(StatusCodes.Status208AlreadyReported);
-                        }
                         //Går alle Upvotes på den enkle allerede eksiterende musicrequest igennem
                         for (int j = 0; j < musicrequests[i].Upvotes.Count; j++)
                         {
@@ -95,15 +90,17 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                         UpvoteLiveRequest(liverequest2.Id, liverequest2.UserId);
                         throw new APIException(StatusCodes.Status202Accepted);
                     }
+                    else
+                    {
+                        //Opreter en ny musicrequest, da den ikke allerede eksitere
+                        Musicrequest musicrequest = new Musicrequest(musicrequestFromApp.Track, musicrequestFromApp.UserId, musicrequestFromApp.Downvotes, musicrequestFromApp.Upvotes);
+                        LiveRequest liverequest1 = new LiveRequest(musicrequestFromApp.Track, musicrequestFromApp.UserId, musicrequestFromApp.Downvotes, musicrequestFromApp.Upvotes);
+                        musicrequestDAO.Add(musicrequest);
+                        UpvoteMusicrequest(musicrequest.Id, musicrequest.UserId);
+                        AddLiveRequest(liverequest1);
+                        UpvoteLiveRequest(liverequest1.Id, liverequest1.UserId);
+                    }
                 }
-
-                //Opreter en ny musicrequest, da den ikke allerede eksitere
-                Musicrequest musicrequest = new Musicrequest(musicrequestFromApp.Track, musicrequestFromApp.UserId, musicrequestFromApp.Downvotes, musicrequestFromApp.Upvotes);
-                LiveRequest liverequest1 = new LiveRequest(musicrequestFromApp.Track, musicrequestFromApp.UserId, musicrequestFromApp.Downvotes, musicrequestFromApp.Upvotes);
-                musicrequestDAO.Add(musicrequest);
-                UpvoteMusicrequest(musicrequest.Id, musicrequest.UserId);
-                AddLiveRequest(liverequest1);
-                UpvoteLiveRequest(liverequest1.Id, liverequest1.UserId);
             }
             else 
                 throw new APIException(StatusCodes.Status422UnprocessableEntity); 
