@@ -1,5 +1,7 @@
 ﻿using System;
 using Isdisco_Web_API.Models;
+using Isdisco_Web_API.Utility;
+using Microsoft.AspNetCore.Http;
 
 namespace Isdisco_Web_API.DAO
 {
@@ -21,6 +23,7 @@ namespace Isdisco_Web_API.DAO
                     storageSingleton.MusicrequestList[i].UpvoteUsers.Add(user);
                 }
             }
+            throw new APIException(StatusCodes.Status404NotFound);
         }
 
         public void RemoveUpvote (int id, int userid)

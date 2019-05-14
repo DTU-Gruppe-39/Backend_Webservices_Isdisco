@@ -12,8 +12,6 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         MusicrequestDAO musicrequestDAO = new MusicrequestDAO();
         MusicrequestVotesDAO musicrequestVotesDAO = new MusicrequestVotesDAO();
         LiveRequestDAO liveRequestDAO = new LiveRequestDAO();
-        UserController userController = ControllerRegistry.GetUserController();
-        //BlacklistController blacklistController = ControllerRegistry.GetBlacklistController();
 
         public MusicrequestController()
         {
@@ -103,6 +101,12 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                     UpvoteMusicrequest(musicrequest.Id, musicrequest.UserId);
                     AddLiveRequest(liverequest1);
                     UpvoteLiveRequest(liverequest1.Id, liverequest1.UserId);
+
+                    //Hard coded shit code
+                    if (musicrequest.Upvotes.Count.Equals(2))
+                        musicrequest.Upvotes.RemoveAt(1);
+                    if (liverequest1.Upvotes.Count.Equals(2))
+                    liverequest1.Upvotes.RemoveAt(1);
                 }
             }
             else 
@@ -139,13 +143,13 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         public void UpvoteMusicrequest(int id, int userid)
         {
-            musicrequestVotesDAO.AddUpvote(id, userController.GetUser(userid));
+            musicrequestVotesDAO.AddUpvote(id, ControllerRegistry.GetUserController().GetUser(userid));
 
         }
 
         public void UpvoteLiveRequest(int id, int userid)
         {
-            liveRequestDAO.AddUpvote(id, userController.GetUser(userid));
+            liveRequestDAO.AddUpvote(id, ControllerRegistry.GetUserController().GetUser(userid));
 
         }
 
@@ -156,7 +160,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         public void DownvoteMusicrequest(int id, int userid)
         {
-            musicrequestVotesDAO.AddDownvote(id, userController.GetUser(userid));
+            musicrequestVotesDAO.AddDownvote(id, ControllerRegistry.GetUserController().GetUser(userid));
         }
 
         public void RemoveDownvoteMusicrequest (int id, int userid)
