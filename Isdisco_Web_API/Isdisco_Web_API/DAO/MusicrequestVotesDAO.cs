@@ -43,7 +43,9 @@ namespace Isdisco_Web_API.DAO
             {
                 if (storageSingleton.MusicrequestList[i].Id.Equals(id))
                 {
-                    for (int j = 0; j < storageSingleton.MusicrequestList[i].UpvoteUsers.Count; j++)
+                    //skip index 0 because it is the user who requested it
+                    //used for showing names
+                    for (int j = 1; j < storageSingleton.MusicrequestList[i].UpvoteUsers.Count; j++)
                     {
                         if (storageSingleton.MusicrequestList[i].UpvoteUsers[j].Id.Equals(userid))
                         {
