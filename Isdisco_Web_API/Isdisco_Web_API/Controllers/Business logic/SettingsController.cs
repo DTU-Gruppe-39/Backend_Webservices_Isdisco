@@ -93,11 +93,11 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             }
         }
 
-        private void RefreshEventAsync(Object sender, ElapsedEventArgs e)
+        private async void RefreshEventAsync(Object sender, ElapsedEventArgs e)
         {
                 storage.p8Token = p8.GetToken();
 
-                ncc.SendNotification("Test af timer", "Test af timer").Start();
+                await ncc.SendNotification("Test af timer", "Test af timer");
 
                 auth.GetRefreshAuthorizationCodeFlowAuthToken();
                 auth.GetClientCredentialsFlowAuthToken();

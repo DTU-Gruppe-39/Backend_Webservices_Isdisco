@@ -51,7 +51,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             }
 
             string title = "Afspiller nu..";
-            string msg = "Sangen " + track.SongName + ", som du har ønsket spiller nu!";
+            string msg = "Sangen \"" + track.SongName + "\", som du har ønsket, spiller nu!";
 
             for (int i = 0; i < usrs2Send.Count; i++)
             {
