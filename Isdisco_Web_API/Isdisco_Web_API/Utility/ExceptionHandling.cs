@@ -35,8 +35,6 @@ namespace Isdisco_Web_API.Utility
                 httpContext.Response.Clear();
                 httpContext.Response.StatusCode = exception.StatusCode;
                 await httpContext.Response.WriteAsync(exception.Message);
-
-                return;
             }
         }
     }

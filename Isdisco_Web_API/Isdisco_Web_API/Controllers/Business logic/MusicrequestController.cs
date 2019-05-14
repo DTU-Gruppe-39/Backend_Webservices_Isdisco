@@ -90,7 +90,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                         LiveRequest liverequest2 = new LiveRequest(musicrequestFromApp.Track, musicrequestFromApp.UserId, musicrequestFromApp.Downvotes, musicrequestFromApp.Upvotes);
                         AddLiveRequest(liverequest2);
                         UpvoteLiveRequest(liverequest2.Id, liverequest2.UserId);
-                        throw new APIException(StatusCodes.Status202Accepted);
+                        throw new APIException(StatusCodes.Status201Created);
                     }
                 }
 
