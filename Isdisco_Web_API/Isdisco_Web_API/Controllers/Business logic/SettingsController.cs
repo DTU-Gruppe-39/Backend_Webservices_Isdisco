@@ -55,7 +55,8 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             //To get token before 30 min.
 
             // Hook up the Elapsed event for the timer.
-            refreshTimer.Elapsed += RefreshEventAsync;
+            //refreshTimer.Elapsed += async RefreshEventAsync;
+            refreshTimer.Elapsed += async (sender, e) => await RefreshEventAsync(sender, e);
             refreshTimer.AutoReset = true;
             refreshTimer.Enabled = true;
         }
@@ -93,7 +94,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             }
         }
 
-        private async void RefreshEventAsync(Object sender, ElapsedEventArgs e)
+        private async Task RefreshEventAsync(Object sender, ElapsedEventArgs e)
         {
                 storage.p8Token = p8.GetToken();
 
