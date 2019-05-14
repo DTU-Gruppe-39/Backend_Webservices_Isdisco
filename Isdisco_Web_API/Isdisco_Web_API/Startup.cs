@@ -61,6 +61,8 @@ namespace Isdisco_Web_API
                 //app.UseCustomAPIExceptionHandling();
                 //app.UseExceptionHandler();
             }
+            app.UseCustomAPIExceptionHandling();
+
             app.UseCors(MyAllowSpecificOrigins);
             app.UseHttpsRedirection();
             app.UseMvc();
