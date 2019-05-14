@@ -106,7 +106,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                     if (musicrequest.Upvotes.Count.Equals(2))
                         musicrequest.Upvotes.RemoveAt(1);
                     if (liverequest1.Upvotes.Count.Equals(2))
-                    liverequest1.Upvotes.RemoveAt(1);
+                        liverequest1.Upvotes.RemoveAt(1);
                 }
             }
             else 
