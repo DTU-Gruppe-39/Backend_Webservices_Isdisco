@@ -45,7 +45,7 @@ namespace Isdisco_Web_API.DAO
                 {
                     for (int j = 0; j < storageSingleton.MusicrequestList[i].UpvoteUsers.Count; j++)
                     {
-                        if (storageSingleton.MusicrequestList[i].UpvoteUsers[j].Equals(userid))
+                        if (storageSingleton.MusicrequestList[i].UpvoteUsers[j].Id.Equals(userid))
                         {
                             storageSingleton.MusicrequestList[i].UpvoteUsers.RemoveAt(j);
                         }
@@ -88,7 +88,7 @@ namespace Isdisco_Web_API.DAO
                 {
                     for (int j = 0; j < storageSingleton.MusicrequestList[i].DownvoteUsers.Count; j++)
                     {
-                        if (storageSingleton.MusicrequestList[i].DownvoteUsers[j].Equals(userid))
+                        if (storageSingleton.MusicrequestList[i].DownvoteUsers[j].Id.Equals(userid))
                         {
                             storageSingleton.MusicrequestList[i].DownvoteUsers.RemoveAt(j);
                         }
