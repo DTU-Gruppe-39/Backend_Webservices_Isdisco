@@ -18,6 +18,8 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         public void AddBlacklistItem (Blacklist blacklist)
         {
+            bool existsInList = true;
+
             if (blacklist != null)
             {
                 for (int j = 0; j < blacklistDAO.GetAll().Count; j++)
@@ -28,13 +30,17 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                     }
                     else
                     {
-                        blacklistDAO.Add(blacklist);
-                        for (int i = 0; i < ControllerRegistry.GetMusicrequestController().GetAllMusicRequests().Count; i++)
+                        existsInList = false;
+                    }
+                }
+                if (existsInList)
+                {
+                    blacklistDAO.Add(blacklist);
+                    for (int i = 0; i < ControllerRegistry.GetMusicrequestController().GetAllMusicRequests().Count; i++)
+                    {
+                        if (ControllerRegistry.GetMusicrequestController().GetAllMusicRequests()[i].Track.Id == blacklist.Track.Id)
                         {
-                            if (ControllerRegistry.GetMusicrequestController().GetAllMusicRequests()[i].Track.Id == blacklist.Track.Id)
-                            {
-                                ControllerRegistry.GetMusicrequestController().DeleteMusicrequest(ControllerRegistry.GetMusicrequestController().GetAllMusicRequests()[i].Id);
-                            }
+                            ControllerRegistry.GetMusicrequestController().DeleteMusicrequest(ControllerRegistry.GetMusicrequestController().GetAllMusicRequests()[i].Id);
                         }
                     }
                 }
