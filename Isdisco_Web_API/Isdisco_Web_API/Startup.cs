@@ -53,14 +53,16 @@ namespace Isdisco_Web_API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseCustomAPIExceptionHandling();
+                //app.UseCustomAPIExceptionHandling();
             }
             else
             {
                 app.UseHsts();
-                app.UseCustomAPIExceptionHandling();
-                app.UseExceptionHandler();
+                //app.UseCustomAPIExceptionHandling();
+                //app.UseExceptionHandler();
             }
+            app.UseCustomAPIExceptionHandling();
+
             app.UseCors(MyAllowSpecificOrigins);
             app.UseHttpsRedirection();
             app.UseMvc();
