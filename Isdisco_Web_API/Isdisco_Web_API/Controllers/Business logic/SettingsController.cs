@@ -84,7 +84,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                 storage.currentlyPlaying = currentlyPlaying;
 
                 //Send notifications
-                ncc.SendNowPlayingNotification(currentlyPlaying.Track).Start();
+                //ncc.SendNowPlayingNotification(currentlyPlaying.Track).Start();
 
                 Console.WriteLine("\n\n\n\nSONG UPDATED!!!!!!!!\n\n\n\n");
             }
@@ -94,7 +94,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         {
                 storage.p8Token = p8.GetToken();
 
-                ncc.SendNotification("Test af timer", "Test af timer").Start();
+                //ncc.SendNotification("Test af timer", "Test af timer").Start();
 
                 auth.GetRefreshAuthorizationCodeFlowAuthToken();
                 auth.GetClientCredentialsFlowAuthToken();
