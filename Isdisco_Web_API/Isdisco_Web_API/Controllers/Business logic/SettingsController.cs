@@ -26,6 +26,17 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         public SettingsController()
         {
+            aTimer = new Timer(10000);
+
+            // Hook up the Elapsed event for the timer.
+            aTimer.Elapsed += OnTimedEventAsync;
+
+            refreshTimer = new Timer(1800000);
+            //To get token before 30 min.
+
+            // Hook up the Elapsed event for the timer.
+            //refreshTimer.Elapsed += async RefreshEventAsync;
+            refreshTimer.Elapsed += async (sender, e) => await RefreshEventAsync(sender, e);
         }
 
         public void Reset()
@@ -42,21 +53,21 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             auth.GetClientCredentialsFlowAuthToken();
 
             // Create a timer with a two second interval.
-            aTimer = new Timer(10000);
+            //aTimer = new Timer(10000);
 
             // Hook up the Elapsed event for the timer.
-            aTimer.Elapsed += OnTimedEventAsync;
+            //aTimer.Elapsed += OnTimedEventAsync;
             aTimer.AutoReset = true;
             aTimer.Enabled = true;
             Console.WriteLine("\n\n\n\nTHE START EVENT TIMER WAS STARTED\n\n\n\n");
 
 
-            refreshTimer = new Timer(1800000);
+            //refreshTimer = new Timer(1800000);
             //To get token before 30 min.
 
             // Hook up the Elapsed event for the timer.
             //refreshTimer.Elapsed += async RefreshEventAsync;
-            refreshTimer.Elapsed += async (sender, e) => await RefreshEventAsync(sender, e);
+            //refreshTimer.Elapsed += async (sender, e) => await RefreshEventAsync(sender, e);
             refreshTimer.AutoReset = true;
             refreshTimer.Enabled = true;
         }
