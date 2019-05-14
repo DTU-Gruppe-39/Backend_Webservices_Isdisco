@@ -20,12 +20,22 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         {
             if (blacklist != null)
             {
-                blacklistDAO.Add(blacklist);
-                for (int i = 0; i < ControllerRegistry.GetMusicrequestController().GetAllMusicRequests().Count; i++)
+                for (int j = 0; j < blacklistDAO.GetAll().Count; j++)
                 {
-                    if (ControllerRegistry.GetMusicrequestController().GetAllMusicRequests()[i].Track.Id == blacklist.Track.Id)
+                    if (blacklistDAO.GetAll()[j].Track.Id.Equals(blacklist.Track.Id))
                     {
-                        ControllerRegistry.GetMusicrequestController().DeleteMusicrequest(ControllerRegistry.GetMusicrequestController().GetAllMusicRequests()[i].Id);
+                        throw new APIException(StatusCodes.Status409Conflict, "The track is already blacklisted");
+                    }
+                    else
+                    {
+                        blacklistDAO.Add(blacklist);
+                        for (int i = 0; i < ControllerRegistry.GetMusicrequestController().GetAllMusicRequests().Count; i++)
+                        {
+                            if (ControllerRegistry.GetMusicrequestController().GetAllMusicRequests()[i].Track.Id == blacklist.Track.Id)
+                            {
+                                ControllerRegistry.GetMusicrequestController().DeleteMusicrequest(ControllerRegistry.GetMusicrequestController().GetAllMusicRequests()[i].Id);
+                            }
+                        }
                     }
                 }
             }
