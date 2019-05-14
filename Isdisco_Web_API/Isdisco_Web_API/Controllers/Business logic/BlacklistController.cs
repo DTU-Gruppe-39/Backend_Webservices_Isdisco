@@ -18,7 +18,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         public void AddBlacklistItem (Blacklist blacklist)
         {
-            bool existsInList = true;
+            bool existsInList = false;
 
             if (blacklist != null)
             {
@@ -26,14 +26,11 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                 {
                     if (blacklistDAO.GetAll()[j].Track.Id.Equals(blacklist.Track.Id))
                     {
+                        existsInList = true;
                         throw new APIException(StatusCodes.Status409Conflict, "The track is already blacklisted");
-                    }
-                    else
-                    {
-                        existsInList = false;
-                    }
+                    }      
                 }
-                if (existsInList)
+                if (!existsInList)
                 {
                     blacklistDAO.Add(blacklist);
                     for (int i = 0; i < ControllerRegistry.GetMusicrequestController().GetAllMusicRequests().Count; i++)
