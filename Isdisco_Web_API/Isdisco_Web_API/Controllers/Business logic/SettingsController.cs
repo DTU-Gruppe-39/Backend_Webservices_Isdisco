@@ -84,7 +84,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                 storage.currentlyPlaying = currentlyPlaying;
 
                 //Send notifications
-                //ncc.SendNowPlayingNotification(currentlyPlaying.Track).Start();
+                ncc.SendNowPlayingNotification(currentlyPlaying.Track).Start();
 
                 Console.WriteLine("\n\n\n\nSONG UPDATED!!!!!!!!\n\n\n\n");
             } else if (currentlyPlaying == null)
