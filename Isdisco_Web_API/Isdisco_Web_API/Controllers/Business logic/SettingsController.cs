@@ -98,6 +98,15 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                 //Send notifications
                 ncc.SendNowPlayingNotification(currentlyPlaying.Track).Start();
 
+                //Remove matching songrequest
+                for (int i = 0; i < musicrequestController.GetAllMusicRequests().Count; i++)
+                {
+                    if (musicrequestController.GetAllMusicRequests()[i].Track.Id.Equals(currentlyPlaying.Track.Id))
+                    {
+                        musicrequestController.DeleteMusicrequest(musicrequestController.GetAllMusicRequests()[i].Id);
+                    }
+                }
+
                 Console.WriteLine("\n\n\n\nSONG UPDATED!!!!!!!!\n\n\n\n");
             } else if (currentlyPlaying.Track.Id.Equals(null))
             {
