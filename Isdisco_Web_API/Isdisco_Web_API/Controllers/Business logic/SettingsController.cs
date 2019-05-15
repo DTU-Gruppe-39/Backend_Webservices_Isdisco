@@ -93,8 +93,8 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                 {
                     if (musicrequestController.GetAllMusicRequests()[i].Track.Id.Equals(currentlyPlaying.Track.Id))
                     {
-                        //musicrequestController.DeleteMusicrequest(musicrequestController.GetAllMusicRequests()[i].Id);
-                        storage.MusicrequestList.RemoveAt(i); //(musicrequestController.GetAllMusicRequests()[i].Id);
+                        musicrequestController.DeleteMusicrequest(musicrequestController.GetAllMusicRequests()[i].Id);
+                        //storage.MusicrequestList.RemoveAt(i); //(musicrequestController.GetAllMusicRequests()[i].Id);
                     }
                 }
 
