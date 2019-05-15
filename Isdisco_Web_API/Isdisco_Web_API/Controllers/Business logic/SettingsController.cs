@@ -49,7 +49,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             aTimer = new System.Timers.Timer(10000);
 
             // Hook up the Elapsed event for the timer.
-            aTimer.Elapsed += OnTimedEvent;
+            aTimer.Elapsed += OnTimedEventAsync;
             aTimer.AutoReset = true;
             aTimer.Enabled = true;
             Console.WriteLine("\n\n\n\nTHE START EVENT TIMER WAS STARTED\n\n\n\n");
@@ -74,7 +74,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             storage.AuthorizationCodeFlowAuthToken = null;
         }
 
-        private void OnTimedEvent(Object sender, ElapsedEventArgs e)
+        private async void OnTimedEventAsync(Object sender, ElapsedEventArgs e)
         {
             CurrentlyPlaying currentlyPlaying = sc.GetCurrentlyPlayingSong();
             if (storage.currentlyPlaying == null)
@@ -86,7 +86,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                 storage.currentlyPlaying = currentlyPlaying;
 
                 //Send notifications
-                ncc.SendNowPlayingNotification(currentlyPlaying.Track).Start();
+                await ncc.SendNowPlayingNotification(currentlyPlaying.Track);
 
                 //Remove matching songrequest
                 for (int i = 0; i < musicrequestController.GetAllMusicRequests().Count; i++)
@@ -97,6 +97,8 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                         storage.MusicrequestList.RemoveAt(i); //(musicrequestController.GetAllMusicRequests()[i].Id);
                     }
                 }
+
+
 
                 Console.WriteLine("\n\n\n\nSONG UPDATED!!!!!!!!\n\n\n\n");
             } else if (currentlyPlaying.Track.Id.Equals(null))
