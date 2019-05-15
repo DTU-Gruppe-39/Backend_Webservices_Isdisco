@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using Isdisco_Web_API.Controllers.Business_logic;
@@ -9,10 +10,11 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 {
     public class SettingsController
     {
-        private static Timer aTimer;
-        private static Timer refreshTimer;
+        private static System.Timers.Timer aTimer;
+        private static System.Timers.Timer refreshTimer;
         SpotifyControllerClass sc = ControllerRegistry.GetSpotifyController();
         SpotifyAuthController auth = ControllerRegistry.GetSpotifyAuthController();
+
 
         NotificationControllerClass ncc = ControllerRegistry.GetNotificationController();
         MusicrequestController musicrequestController = ControllerRegistry.GetMusicrequestController();
@@ -22,21 +24,12 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         //NotificationControllerClass ncc = new NotificationControllerClass();
         StorageSingleton storage = StorageSingleton.GetInstance();
         private readonly string deviceToken = "834A1C6138CD293AC464D6CBFDBC987C3F73BC691EF55702F6DE5E84F2DA7081";
+        CancellationToken cancellationToken;
 
 
         public SettingsController()
         {
-            aTimer = new Timer(10000);
-
-            // Hook up the Elapsed event for the timer.
-            aTimer.Elapsed += OnTimedEventAsync;
-
-            refreshTimer = new Timer(1800000);
-            //To get token before 30 min.
-
-            // Hook up the Elapsed event for the timer.
-            //refreshTimer.Elapsed += async RefreshEventAsync;
-            refreshTimer.Elapsed += async (sender, e) => await RefreshEventAsync(sender, e);
+           
         }
 
         public void Reset()
@@ -47,28 +40,26 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
         public void StartEvent()
         {
-            //Create p8 token
+            //Create tokens
             storage.p8Token = p8.GetToken();
             auth.GetRefreshAuthorizationCodeFlowAuthToken();
             auth.GetClientCredentialsFlowAuthToken();
 
             // Create a timer with a two second interval.
-            //aTimer = new Timer(10000);
+            aTimer = new System.Timers.Timer(10000);
 
             // Hook up the Elapsed event for the timer.
-            //aTimer.Elapsed += OnTimedEventAsync;
+            aTimer.Elapsed += OnTimedEvent;
             aTimer.AutoReset = true;
             aTimer.Enabled = true;
             Console.WriteLine("\n\n\n\nTHE START EVENT TIMER WAS STARTED\n\n\n\n");
 
-
-            //refreshTimer = new Timer(1800000);
+            refreshTimer = new System.Timers.Timer(1800000);
             //To get token before 30 min.
 
             // Hook up the Elapsed event for the timer.
-            //refreshTimer.Elapsed += async RefreshEventAsync;
-            //refreshTimer.Elapsed += async (sender, e) => await RefreshEventAsync(sender, e);
-            refreshTimer.AutoReset = true;
+            refreshTimer.Elapsed += RefreshEventAsync;
+            refreshTimer.AutoReset = false;
             refreshTimer.Enabled = true;
         }
 
@@ -83,8 +74,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             storage.AuthorizationCodeFlowAuthToken = null;
         }
 
-
-        private void OnTimedEventAsync(Object source, ElapsedEventArgs e)
+        private void OnTimedEvent(Object sender, ElapsedEventArgs e)
         {
             CurrentlyPlaying currentlyPlaying = sc.GetCurrentlyPlayingSong();
             if (storage.currentlyPlaying == null)
@@ -105,14 +95,16 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             }
         }
 
-        private async Task RefreshEventAsync(Object sender, ElapsedEventArgs e)
+        private async void RefreshEventAsync(Object sender, ElapsedEventArgs e)
         {
-                storage.p8Token = p8.GetToken();
+            //Update APNS JWT and send a test notification to device.
+            storage.p8Token = p8.GetToken();
+            await ncc.SendNotification("Test af timer", "Test af timer");
 
-                await ncc.SendNotification("Test af timer", "Test af timer");
-
-                auth.GetRefreshAuthorizationCodeFlowAuthToken();
-                auth.GetClientCredentialsFlowAuthToken();
+            //Update the Spotify tokens
+            auth.GetRefreshAuthorizationCodeFlowAuthToken();
+            auth.GetClientCredentialsFlowAuthToken();
+            refreshTimer.Start();
         }
     }
 }

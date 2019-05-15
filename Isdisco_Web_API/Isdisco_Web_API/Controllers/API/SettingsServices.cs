@@ -17,7 +17,7 @@ namespace Isdisco_Web_API.Controllers.API
         Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
         //SettingsController ss = new SettingsController();
         SettingsController ss = ControllerRegistry.GetSettingsController();
-        private Businesslogic.NotificationControllerClass ncc = new Businesslogic.NotificationControllerClass();
+        Businesslogic.NotificationControllerClass ncc = ControllerRegistry.GetNotificationController();
 
         // GET: api/values
         //[HttpGet]
