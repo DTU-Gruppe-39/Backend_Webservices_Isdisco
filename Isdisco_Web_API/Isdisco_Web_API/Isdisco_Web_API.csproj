@@ -6,9 +6,9 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
-    <Folder Include="Controllers\API\" />
     <Folder Include="DAO\" />
     <Folder Include="Utility\" />
+    <Folder Include="API\" />
   </ItemGroup>
 
   <ItemGroup>
