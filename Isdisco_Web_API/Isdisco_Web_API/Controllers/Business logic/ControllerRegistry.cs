@@ -3,7 +3,6 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 {
     public static class ControllerRegistry
     {
-        private static AuthenticationController authenticationController;
         private static BlacklistController blacklistController;
         private static FeedbackController feedbackController;
         private static MusicrequestController musicrequestController;
@@ -12,13 +11,6 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         private static SpotifyControllerClass spotifyControllerClass;
         private static UserController userController;
         private static SpotifyAuthController spotifyAuthController;
-
-        public static AuthenticationController GetAuthenticationController()
-        {
-            if (authenticationController == null)
-                authenticationController = new AuthenticationController();
-            return authenticationController;
-        }
 
         public static BlacklistController GetBlacklistController()
         {
