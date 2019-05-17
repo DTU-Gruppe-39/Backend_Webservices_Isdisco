@@ -102,7 +102,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                     AddLiveRequest(liverequest1);
                     UpvoteLiveRequest(liverequest1.Id, liverequest1.UserId);
 
-                    //Hard coded shit code
+                    //Bug fix
                     if (musicrequest.Upvotes.Count.Equals(2))
                         musicrequest.Upvotes.RemoveAt(1);
                     if (liverequest1.Upvotes.Count.Equals(2))
