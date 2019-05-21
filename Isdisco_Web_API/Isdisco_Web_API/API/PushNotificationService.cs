@@ -9,7 +9,8 @@ namespace Isdisco_Web_API.Controllers.API
     [Route("api/notifications")]
     public class PushNotificationService : Controller
     {
-        private readonly Businesslogic.NotificationControllerClass ncc = new Businesslogic.NotificationControllerClass();
+        //private readonly Businesslogic.NotificationControllerClass ncc = new Businesslogic.NotificationControllerClass();
+        private readonly Businesslogic.NotificationControllerClass ncc = Businesslogic.ControllerRegistry.GetNotificationController();
 
         public PushNotificationService()
         {

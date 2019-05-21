@@ -15,21 +15,18 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         SpotifyControllerClass sc = ControllerRegistry.GetSpotifyController();
         SpotifyAuthController auth = ControllerRegistry.GetSpotifyAuthController();
 
-
         NotificationControllerClass ncc = ControllerRegistry.GetNotificationController();
         MusicrequestController musicrequestController = ControllerRegistry.GetMusicrequestController();
-
-        private CustomHttpHandler.ApnsProvider apnhttp = new CustomHttpHandler.ApnsProvider("https://api.development.push.apple.com:443", "com.Rasmus-Gregersen.Isdisco");
+       
         private JwtFromP8 p8 = new JwtFromP8();
+
+        //private CustomHttpHandler.ApnsProvider apnhttp = new CustomHttpHandler.ApnsProvider("https://api.development.push.apple.com:443", "com.Rasmus-Gregersen.Isdisco");
         //NotificationControllerClass ncc = new NotificationControllerClass();
         StorageSingleton storage = StorageSingleton.GetInstance();
         private readonly string deviceToken = "834A1C6138CD293AC464D6CBFDBC987C3F73BC691EF55702F6DE5E84F2DA7081";
-        CancellationToken cancellationToken;
-
 
         public SettingsController()
-        {
-           
+        {  
         }
 
         public void Reset()
@@ -59,7 +56,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
             // Hook up the Elapsed event for the timer.
             refreshTimer.Elapsed += RefreshEventAsync;
-            refreshTimer.AutoReset = false;
+            refreshTimer.AutoReset = true;
             refreshTimer.Enabled = true;
         }
 
@@ -98,10 +95,9 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
                     }
                 }
 
-
-
                 Console.WriteLine("\n\n\n\nSONG UPDATED!!!!!!!!\n\n\n\n");
-            } else if (currentlyPlaying.Track.Id.Equals(null))
+            }
+            else if (currentlyPlaying.Track.Id.Equals(null))
             {
                 storage.currentlyPlaying = null;
             }
@@ -111,12 +107,13 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         {
             //Update APNS JWT and send a test notification to device.
             storage.p8Token = p8.GetToken();
-            await ncc.SendNotification("Test af timer", "Test af timer");
 
             //Update the Spotify tokens
             auth.GetRefreshAuthorizationCodeFlowAuthToken();
             auth.GetClientCredentialsFlowAuthToken();
-            refreshTimer.Start();
+
+            await ncc.SendNotification("Test af timer", "Test af timer");
+
         }
     }
 }
