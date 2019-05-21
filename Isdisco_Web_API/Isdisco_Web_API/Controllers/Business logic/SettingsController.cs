@@ -82,8 +82,13 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             {
                 storage.currentlyPlaying = currentlyPlaying;
 
-                //Send notifications
-                await ncc.SendNowPlayingNotification(currentlyPlaying.Track);
+                if (!storage.currentlyPlaying.Track.SongName.Equals(""))
+                {
+                    //TODO: Get this function working.
+                    //Send notifications
+                    //await ncc.SendNowPlayingNotification(currentlyPlaying.Track);
+                }
+
 
                 //Remove matching songrequest
                 for (int i = 0; i < musicrequestController.GetAllMusicRequests().Count; i++)
