@@ -84,9 +84,9 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
 
                 if (!storage.currentlyPlaying.Track.SongName.Equals(""))
                 {
-                    //TODO: Get this function working.
-                    //Send notifications
-                    //await ncc.SendNowPlayingNotification(currentlyPlaying.Track);
+                //TODO: Get this function working.
+                //Send notifications
+                await ncc.SendNowPlayingNotification(currentlyPlaying.Track);
                 }
 
 
