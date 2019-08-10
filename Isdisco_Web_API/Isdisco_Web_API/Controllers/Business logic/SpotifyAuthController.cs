@@ -66,7 +66,7 @@ namespace Isdisco_Web_API.Controllers
             var tokenResponse = webClient.UploadValues("https://accounts.spotify.com/api/token", postparams);
 
             var textResponse = Encoding.UTF8.GetString(tokenResponse);
-            storage.AuthorizationCodeFlowAuthToken = textResponse;
+            storage.AuthorizationCodeFlowAuthTokenResponse = textResponse;
 
             JObject jObject = JObject.Parse(textResponse);
             string RefreshAuthToken = (string)jObject.SelectToken("refresh_token");
@@ -93,7 +93,7 @@ namespace Isdisco_Web_API.Controllers
             var tokenResponse = webClient.UploadValues("https://accounts.spotify.com/api/token", postparams);
 
             var textResponse = Encoding.UTF8.GetString(tokenResponse);
-            storage.AuthorizationCodeFlowAuthToken = textResponse;
+            storage.AuthorizationCodeFlowAuthTokenResponse = textResponse;
 
         }
     }

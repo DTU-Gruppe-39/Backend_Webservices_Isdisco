@@ -126,7 +126,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             public CurrentlyPlaying GetCurrentlyPlayingSong()
         {
             var webClient = new WebClient();
-            JObject jObject = JObject.Parse(storage.AuthorizationCodeFlowAuthToken);
+            JObject jObject = JObject.Parse(storage.AuthorizationCodeFlowAuthTokenResponse);
             string AuthToken = (string)jObject.SelectToken("access_token");
             webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
             webClient.Headers.Add(HttpRequestHeader.ContentType, "application/json");
@@ -158,7 +158,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         public ListOfTracks GetMyTopTracks()
         {
             var webClient = new WebClient();
-            JObject jObject = JObject.Parse(storage.AuthorizationCodeFlowAuthToken);
+            JObject jObject = JObject.Parse(storage.AuthorizationCodeFlowAuthTokenResponse);
             string AuthToken = (string)jObject.SelectToken("access_token");
             webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
             webClient.Headers.Add(HttpRequestHeader.ContentType, "application/json");

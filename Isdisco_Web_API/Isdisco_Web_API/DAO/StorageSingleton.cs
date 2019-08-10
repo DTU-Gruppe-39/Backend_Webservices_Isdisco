@@ -56,7 +56,7 @@ namespace Isdisco_Web_API.DAO
 
         public string p8Token { get; set; }
         public string ClientCredentialsFlowAuthToken { get; set; }
-        public string AuthorizationCodeFlowAuthToken { get; set; }
+        public string AuthorizationCodeFlowAuthTokenResponse { get; set; }
         public string AuthorizationCodeFlowAuthCode { get; set; }
         public string RefreshAuthorizationCodeFlowAuthToken { get; set; }
         public string LoginCallback { get; set; }
@@ -65,8 +65,8 @@ namespace Isdisco_Web_API.DAO
         public StorageSingleton() 
         {
             UserList.Add(new User(1, "Rasmus Gregersen", new LoginDetails("rasmus", "123"), false, "F9659290C65335689BB1F300EDDFDEC036BB3D32E78DB726879049AD487B333D"));
-            UserList.Add(new User(2, "Thomas Mattsson", new LoginDetails("thomas", "123"), false, "834A1C6138CD293AC464D6CBFDBC987C3F73BC691EF55702F6DE5E84F2DA7081"));
-            UserList.Add(new User(3, "Magnus Koch", new LoginDetails("magnus", "123"), false, "0519173D80C775708E67EB89C289F57928602BC3557F246BB17B678A24738E19"));
+            //UserList.Add(new User(2, "Thomas Mattsson", new LoginDetails("thomas", "123"), false, "834A1C6138CD293AC464D6CBFDBC987C3F73BC691EF55702F6DE5E84F2DA7081"));
+            //UserList.Add(new User(3, "Magnus Koch", new LoginDetails("magnus", "123"), false, "0519173D80C775708E67EB89C289F57928602BC3557F246BB17B678A24738E19"));
 
             ////public Track(string id, string songName, string artistName, string image_small_url, string image_medium_url, string image_large_url, string webplayerLink)
             //FakeTracks.Add(new Track("6u7jPi22kF8CTQ3rb9DHE7", "Old Town Road - Remix", "Lil Nas X", "https://i.scdn.co/image/394d581cef8d98be1884bfab8457e8581e800a8a", "https://i.scdn.co/image/85959c52c6ae576ee504a7c819cf65b71cb31278", "https://i.scdn.co/image/2cc54e7570d470966be2def87590dfa84f87076f", "https://open.spotify.com/track/6u7jPi22kF8CTQ3rb9DHE7"));

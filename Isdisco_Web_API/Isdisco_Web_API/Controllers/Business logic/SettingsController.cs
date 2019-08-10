@@ -68,7 +68,7 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             refreshTimer.Stop();
 
             //storage.AuthorizationCodeFlowAuthCode = null;
-            storage.AuthorizationCodeFlowAuthToken = null;
+            storage.AuthorizationCodeFlowAuthTokenResponse = null;
         }
 
         private async void OnTimedEventAsync(Object sender, ElapsedEventArgs e)

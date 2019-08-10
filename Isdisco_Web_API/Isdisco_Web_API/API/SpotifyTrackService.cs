@@ -86,7 +86,7 @@ namespace Isdisco_Web_API.Controllers.API
                 Response.Redirect(scc.GetUserScopes());
                 return null;
             }
-            if (storage.AuthorizationCodeFlowAuthToken == null)
+            if (storage.AuthorizationCodeFlowAuthTokenResponse == null)
             {
                 scc.GetAuthorizationCodeToken();
             }
@@ -109,7 +109,7 @@ namespace Isdisco_Web_API.Controllers.API
                 Response.Redirect(scc.GetUserScopes());
                 return null;
             }
-            if (storage.AuthorizationCodeFlowAuthToken == null)
+            if (storage.AuthorizationCodeFlowAuthTokenResponse == null)
             {
                 scc.GetAuthorizationCodeToken();
             }
