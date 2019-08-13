@@ -19,5 +19,25 @@ SELECT * FROM users;
 
 
 
-
 --DROP TABLE users;
+
+
+
+CREATE TABLE blacklist (
+	ID int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	TrackId varchar(90) NOT NULL UNIQUE,
+	SongName varchar(90) NOT NULL,
+	ArtistName varchar(90) NOT NULL,
+	Image_small_url varchar(255) NOT NULL,
+	Image_medium_url varchar(255) NOT NULL,
+	Image_large_url varchar(255) NOT NULL,
+	WebplayerLink varchar(255) NOT NULL
+	)
+
+
+CREATE TABLE feedback (
+	ID int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	UserId int NOT NULL FOREIGN KEY REFERENCES users(ID),
+	Tag varchar(30) NOT NULL,
+	TheMessage varchar(2000) NOT NULL,
+	)
