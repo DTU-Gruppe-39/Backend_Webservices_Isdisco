@@ -23,15 +23,17 @@ namespace Isdisco_Web_API
         }
 
         readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-        private string _dbSecretsPassword = null;
+        private DAO.StorageSingleton storage = DAO.StorageSingleton.GetInstance();
 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            _dbSecretsPassword = Configuration["DbSecrets:Password"];
+            var sqlBuilder = new SqlConnectionStringBuilder(
+                Configuration.GetConnectionString("DB"));
+            sqlBuilder.Password = Configuration["DbSecrets:Password"];
+            storage.DBConnectionString = sqlBuilder.ConnectionString;
 
             services.AddCors(options =>
             {
