@@ -31,14 +31,18 @@ namespace Isdisco_Web_API.Models
             AppToken = appToken;
         }
 
-        public User(int id, string fullname, bool vip, string appToken, string facebookToken)
+        public User(string fullname, string firstname, string email, string appToken, string facebookToken)
         {
-            Id = id;
-
             Fullname = fullname;
-            VIP = vip;
+            Firstname = firstname;
+            Email = email;
             AppToken = appToken;
             FacebookToken = facebookToken;
+        }
+
+        public User()
+        {
+
         }
     }
 }
