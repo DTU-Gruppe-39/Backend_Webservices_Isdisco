@@ -16,7 +16,31 @@ namespace Isdisco_Web_API.DAO
 
         public void Add(User element)
         {
-            storage.UserList.Add(element);
+            string sqlStatement = "INSERT INTO users (Fullname, Firstname, Email, AppToken, FacebookToken)" +
+                "VALUES (@Fullname, @Firstname, @Email, @Apptoken, @FacebookToken);";
+
+            using (SqlConnection connection = new SqlConnection(storage.DBConnectionString))
+            {
+                SqlCommand command = new SqlCommand(sqlStatement, connection);
+                command.Parameters.AddWithValue("@Fullname", element.Fullname);
+                command.Parameters.AddWithValue("@Firstname", element.Firstname);
+                command.Parameters.AddWithValue("@Email", element.Email);
+                command.Parameters.AddWithValue("@Apptoken", element.AppToken);
+                command.Parameters.AddWithValue("@FacebookToken", element.FacebookToken);
+
+                try
+                {
+                    connection.Open();
+                    int rowsAffected = command.ExecuteNonQuery();
+                    Console.WriteLine("Add user to DB. RowsAffected: {0}", rowsAffected);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+
+            }
+            //storage.UserList.Add(element);
         }
 
         public void Update(User element)
@@ -44,11 +68,13 @@ namespace Isdisco_Web_API.DAO
         public List<User> GetAll()
         {
             List<User> result = new List<User>();
+            string queryString = "SELECT * FROM users;";
+
             using (SqlConnection connection = new SqlConnection(storage.DBConnectionString))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand("SELECT * FROM users;", connection))
+                using (SqlCommand command = new SqlCommand(queryString, connection))
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
