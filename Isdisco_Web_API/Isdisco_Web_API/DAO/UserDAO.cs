@@ -90,9 +90,6 @@ namespace Isdisco_Web_API.DAO
                             Boolean vip = reader.GetBoolean(6);
 
                             result.Add(new User(id, fullname, firstname, email, appToken, facebookToken, vip));
-
-
-                            //result.Add(new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetBoolean(6)));
                         }
                     }
                 }
@@ -105,14 +102,48 @@ namespace Isdisco_Web_API.DAO
 
         public User Get(int id)
         {
-            foreach (User user in storage.UserList)
+            string queryString = "SELECT * FROM users WHERE ID=@Id;";
+
+            using (SqlConnection connection = new SqlConnection(storage.DBConnectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@Id", id);
+
+                try
+                {
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int userId = reader.GetInt32(0);
+                            string fullname = reader.GetString(1);
+                            string firstname = reader.GetString(2);
+                            string email = reader.GetString(3);
+                            //needed to handle potential null values
+                            string appToken = (reader.IsDBNull(4) ? "" : reader.GetString(4));
+                            string facebookToken = (reader.IsDBNull(5) ? "" : reader.GetString(5));
+                            Boolean vip = reader.GetBoolean(6);
+
+                            return new User(userId, fullname, firstname, email, appToken, facebookToken, vip);
+                        }
+                    }
+                } catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+            throw new APIException(StatusCodes.Status404NotFound);
+
+            /*foreach (User user in storage.UserList)
             {
                 if (user.Id.Equals(id))
                 {
                     return user;
                 }
             }
-            throw new APIException(StatusCodes.Status404NotFound);
+            throw new APIException(StatusCodes.Status404NotFound);*/
         }
     }
 }
