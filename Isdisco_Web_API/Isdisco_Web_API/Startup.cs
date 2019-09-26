@@ -30,10 +30,10 @@ namespace Isdisco_Web_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var sqlBuilder = new SqlConnectionStringBuilder(
-                Configuration.GetConnectionString("DB"));
-            sqlBuilder.Password = Configuration["DbSecrets:Password"];
-            storage.DBConnectionString = sqlBuilder.ConnectionString;
+            //var sqlBuilder = new SqlConnectionStringBuilder(
+            //    Configuration.GetConnectionString("DB"));
+            //sqlBuilder.Password = Configuration["DbSecrets:Password"];
+            //storage.DBConnectionString = sqlBuilder.ConnectionString;
 
             services.AddCors(options =>
             {
