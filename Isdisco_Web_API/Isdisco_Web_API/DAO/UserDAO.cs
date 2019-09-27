@@ -16,7 +16,7 @@ namespace Isdisco_Web_API.DAO
 
         public void Add(User element)
         {
-            string sqlStatement = "INSERT INTO users (Fullname, Firstname, Email, AppToken, FacebookToken)" +
+            /*string sqlStatement = "INSERT INTO users (Fullname, Firstname, Email, AppToken, FacebookToken)" +
                 "VALUES (@Fullname, @Firstname, @Email, @Apptoken, @FacebookToken);";
 
             using (SqlConnection connection = new SqlConnection(storage.DBConnectionString))
@@ -39,8 +39,8 @@ namespace Isdisco_Web_API.DAO
                     Console.WriteLine(e.Message);
                 }
 
-            }
-            //storage.UserList.Add(element);
+            }*/
+            storage.UserList.Add(element);
         }
 
         public void Update(User element)
@@ -67,7 +67,7 @@ namespace Isdisco_Web_API.DAO
 
         public List<User> GetAll()
         {
-            List<User> result = new List<User>();
+            /*List<User> result = new List<User>();
             string queryString = "SELECT * FROM users;";
 
             using (SqlConnection connection = new SqlConnection(storage.DBConnectionString))
@@ -94,15 +94,15 @@ namespace Isdisco_Web_API.DAO
                     }
                 }
             }
-            return result;
-/*
-            return storageSingleton.UserList;
-*/
+            return result;*/
+
+            return storage.UserList;
+
         }
 
         public User Get(int id)
         {
-            string queryString = "SELECT * FROM users WHERE ID=@Id;";
+            /*string queryString = "SELECT * FROM users WHERE ID=@Id;";
 
             using (SqlConnection connection = new SqlConnection(storage.DBConnectionString))
             {
@@ -134,16 +134,16 @@ namespace Isdisco_Web_API.DAO
                     Console.WriteLine(e.Message);
                 }
             }
-            throw new APIException(StatusCodes.Status404NotFound);
+            throw new APIException(StatusCodes.Status404NotFound);*/
 
-            /*foreach (User user in storage.UserList)
+            foreach (User user in storage.UserList)
             {
                 if (user.Id.Equals(id))
                 {
                     return user;
                 }
             }
-            throw new APIException(StatusCodes.Status404NotFound);*/
+            throw new APIException(StatusCodes.Status404NotFound);
         }
     }
 }

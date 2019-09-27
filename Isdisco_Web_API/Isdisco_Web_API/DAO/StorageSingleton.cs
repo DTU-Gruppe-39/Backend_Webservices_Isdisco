@@ -61,11 +61,11 @@ namespace Isdisco_Web_API.DAO
         public string RefreshAuthorizationCodeFlowAuthToken { get; set; }
         public string LoginCallback { get; set; }
         public CurrentlyPlaying currentlyPlaying { get; set; }
-        public string DBConnectionString { get; set; }
+        /*public string DBConnectionString { get; set; }*/
 
         public StorageSingleton() 
         {
-            UserList.Add(new User(1, "Rasmus Gregersen", false, "F9659290C65335689BB1F300EDDFDEC036BB3D32E78DB726879049AD487B333D"));
+            UserList.Add(new User(1, "Test Bruger", false, "F9659290C65335689BB1F300EDDFDEC036BB3D32E78DB726879049AD487B333D"));
             //UserList.Add(new User(2, "Thomas Mattsson", new LoginDetails("thomas", "123"), false, "834A1C6138CD293AC464D6CBFDBC987C3F73BC691EF55702F6DE5E84F2DA7081"));
             //UserList.Add(new User(3, "Magnus Koch", new LoginDetails("magnus", "123"), false, "0519173D80C775708E67EB89C289F57928602BC3557F246BB17B678A24738E19"));
 
@@ -123,14 +123,14 @@ namespace Isdisco_Web_API.DAO
          */
 
 
-        private List<Track> fakeTracks = new List<Track>();
+        /*private List<Track> fakeTracks = new List<Track>();
         public List<Track> FakeTracks
         {
             get
             {
                 return fakeTracks;
             }
-        }
+        }*/
     }
 
 }
