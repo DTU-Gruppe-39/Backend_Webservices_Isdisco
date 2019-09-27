@@ -28,7 +28,9 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             //webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
             webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + AuthToken);
 
-            var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/tracks/" + id);
+            var GetResponse = SendClientCredentialsRequest(webClient, "https://api.spotify.com/v1/tracks/" + id);
+
+
             var jsonTrack = JObject.Parse(GetResponse);
             var trackId = jsonTrack["id"].ToString();
             var songName = jsonTrack["name"].ToString();
@@ -55,7 +57,8 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             //webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
             webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + AuthToken);
             //var limit = "30";    //Number of songs that Spotify returns
-            var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/playlists/" + id + "/tracks");
+            //var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/playlists/" + id + "/tracks");
+            var GetResponse = SendClientCredentialsRequest(webClient, "https://api.spotify.com/v1/playlists/" + id + "/tracks");
 
             var jsonTracks = JObject.Parse(GetResponse);
             JArray tracks = (JArray)jsonTracks["items"];
@@ -89,7 +92,10 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             //webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
             webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + AuthToken);
             var limit = "20";    //Number of songs that Spotify returns
-            var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/search?q=track:" + Uri.EscapeUriString(songName) + "*&type=track&market=DK&limit=" + limit + "&offset=0");
+
+
+
+            var GetResponse = SendClientCredentialsRequest(webClient, "https://api.spotify.com/v1/search?q=track:" + Uri.EscapeUriString(songName) + "*&type=track&market=DK&limit=" + limit + "&offset=0");
 
             var jsonTracks = JObject.Parse(GetResponse);
             JArray tracks = (JArray)jsonTracks["tracks"]["items"];
@@ -126,14 +132,13 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             public CurrentlyPlaying GetCurrentlyPlayingSong()
         {
             var webClient = new WebClient();
-            JObject jObject = JObject.Parse(storage.AuthorizationCodeFlowAuthToken);
+            JObject jObject = JObject.Parse(storage.AuthorizationCodeFlowAuthTokenResponse);
             string AuthToken = (string)jObject.SelectToken("access_token");
             webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
             webClient.Headers.Add(HttpRequestHeader.ContentType, "application/json");
             webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + AuthToken);
-            var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/me/player/currently-playing?market=DK");
-            //Console.WriteLine("\n\n\n\n\n" + AuthToken + "\n\n\n\n\n");
-            //Console.WriteLine("\n\n\n\n\n" + GetResponse + "\n\n\n\n\n");
+
+            var GetResponse = SendAuthorizationCodeRequest(webClient, "https://api.spotify.com/v1/me/player/currently-playing?market=DK");
 
 
             var jsonTrack = JObject.Parse(GetResponse);
@@ -158,14 +163,14 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
         public ListOfTracks GetMyTopTracks()
         {
             var webClient = new WebClient();
-            JObject jObject = JObject.Parse(storage.AuthorizationCodeFlowAuthToken);
+            JObject jObject = JObject.Parse(storage.AuthorizationCodeFlowAuthTokenResponse);
             string AuthToken = (string)jObject.SelectToken("access_token");
             webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
             webClient.Headers.Add(HttpRequestHeader.ContentType, "application/json");
             webClient.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + AuthToken);
-            var GetResponse = webClient.DownloadString("https://api.spotify.com/v1/me/top/tracks");
-            //Console.WriteLine("\n\n\n\n\n" + AuthToken + "\n\n\n\n\n");
-            //Console.WriteLine("\n\n\n\n\n" + GetResponse + "\n\n\n\n\n");
+
+            var GetResponse = SendAuthorizationCodeRequest(webClient, "https://api.spotify.com/v1/me/top/tracks");
+
 
             var jsonTracks = JObject.Parse(GetResponse);
             JArray tracks = (JArray)jsonTracks["items"];
@@ -202,5 +207,78 @@ namespace Isdisco_Web_API.Controllers.Businesslogic
             //}
             auth.GetAuthorizationCodeFlowAuthToken();
         }
+
+
+        private String SendClientCredentialsRequest(WebClient webClient, string url)
+        {
+            string GetResponse;
+            try
+            {
+                GetResponse = webClient.DownloadString(url);
+            }
+            catch (WebException e)
+            {
+                HttpWebResponse webResp = (HttpWebResponse)e.Response;
+                if (webResp.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    //Token expires or invalid, request new token
+                    auth.GetClientCredentialsFlowAuthToken();
+
+                    //Set new token
+                    JObject jObject = JObject.Parse(storage.ClientCredentialsFlowAuthToken);
+                    string AuthToken = (string)jObject.SelectToken("access_token");
+                    //webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
+                    webClient.Headers.Set(HttpRequestHeader.Authorization, "Bearer " + AuthToken);
+                    GetResponse = webClient.DownloadString(url);
+                }
+                else
+                {
+                    throw new WebException("Something went wrong with accessing spotify's api");
+                }
+            }
+
+            if (String.IsNullOrEmpty(GetResponse))
+            {
+                throw new WebException("Something went wrong with accessing spotify's api. No data was returned.");
+            }
+            return GetResponse;
+        }
+
+
+        private String SendAuthorizationCodeRequest(WebClient webClient, string url)
+        {
+            string GetResponse;
+            try
+            {
+                GetResponse = webClient.DownloadString(url);
+            }
+            catch (WebException e)
+            {
+                HttpWebResponse webResp = (HttpWebResponse)e.Response;
+                if (webResp.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    //Token expires or invalid, request new token
+                    auth.GetRefreshAuthorizationCodeFlowAuthToken();
+
+                    JObject jObject = JObject.Parse(storage.AuthorizationCodeFlowAuthTokenResponse);
+                    string AuthToken = (string)jObject.SelectToken("access_token");
+                    webClient.Headers.Set(HttpRequestHeader.Authorization, "Bearer " + AuthToken);
+
+                    GetResponse = webClient.DownloadString(url);
+                }
+                else
+                {
+                    throw new WebException("Something went wrong with accessing spotify's api");
+                }
+            }
+
+            if (String.IsNullOrEmpty(GetResponse))
+            {
+                throw new WebException("Something went wrong with accessing spotify's api. No data was returned.");
+            }
+            return GetResponse;
+        }
+
+
     }
 }

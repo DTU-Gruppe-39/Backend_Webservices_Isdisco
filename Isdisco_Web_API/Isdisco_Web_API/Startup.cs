@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Data.SqlClient;
 
 namespace Isdisco_Web_API
 {
@@ -22,12 +23,17 @@ namespace Isdisco_Web_API
         }
 
         readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        private DAO.StorageSingleton storage = DAO.StorageSingleton.GetInstance();
 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //var sqlBuilder = new SqlConnectionStringBuilder(
+            //    Configuration.GetConnectionString("DB"));
+            //sqlBuilder.Password = Configuration["DbSecrets:Password"];
+            //storage.DBConnectionString = sqlBuilder.ConnectionString;
 
             services.AddCors(options =>
             {
@@ -49,9 +55,18 @@ namespace Isdisco_Web_API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-           // app.UseCors(options => options.AllowAnyOrigin());
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json",
+                    optional: false,
+                    reloadOnChange: true)
+                .AddEnvironmentVariables();
+
+
+            // app.UseCors(options => options.AllowAnyOrigin());
             if (env.IsDevelopment())
             {
+                builder.AddUserSecrets<Startup>();
                 app.UseDeveloperExceptionPage();
                 //app.UseCustomAPIExceptionHandling();
             }

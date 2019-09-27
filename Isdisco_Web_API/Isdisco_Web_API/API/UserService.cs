@@ -11,7 +11,7 @@ namespace Isdisco_Web_API.Controllers
     [Route("api/user")]
     [ApiController]
     public class UserService : Controller
-    {
+    {/*
         UserController userController = new UserController();
 
         // GET api/user
@@ -48,5 +48,5 @@ namespace Isdisco_Web_API.Controllers
         {
             userController.DeleteUser(id);
         }
-    }
+    */}
 }

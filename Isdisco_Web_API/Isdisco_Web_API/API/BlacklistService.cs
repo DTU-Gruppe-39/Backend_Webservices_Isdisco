@@ -13,7 +13,7 @@ namespace Isdisco_Web_API.Controllers.API
 {
     [Route("api/blacklist")]
     public class BlacklistService : Controller
-    {
+    {/*
         BlacklistController blacklistController = ControllerRegistry.GetBlacklistController();
 
         // GET: api/blacklist
@@ -43,5 +43,5 @@ namespace Isdisco_Web_API.Controllers.API
         {
             blacklistController.DeleteBlacklistItem(id);
         }
-    }
+    */}
 }
