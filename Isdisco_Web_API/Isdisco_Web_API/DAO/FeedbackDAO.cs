@@ -11,6 +11,7 @@ namespace Isdisco_Web_API.DAO
     {
         StorageSingleton storage = StorageSingleton.GetInstance();
         Controllers.Businesslogic.UserController usrcon = Controllers.Businesslogic.ControllerRegistry.GetUserController();
+        StorageSingleton storageSingleton = StorageSingleton.GetInstance();
 
         public FeedbackDAO()
         {
@@ -18,7 +19,7 @@ namespace Isdisco_Web_API.DAO
 
         public void Add(Feedback feedback)
         {
-            string sqlStatement = "INSERT INTO feedback (UserId, Tag, TheMessage)" +
+            /*string sqlStatement = "INSERT INTO feedback (UserId, Tag, TheMessage)" +
                 "VALUES (@UserId, @Tag, @TheMessage);";
 
             using (SqlConnection connection = new SqlConnection(storage.DBConnectionString))
@@ -39,16 +40,16 @@ namespace Isdisco_Web_API.DAO
                     Console.WriteLine(e.Message);
                 }
 
-            }
+            }*/
 
 
 
-            //storageSingleton.FeedbackList.Add(feedback);
+            storageSingleton.FeedbackList.Add(feedback);
         }
 
         public void Delete(int id)
         {
-            string sqlStatement = "DELETE FROM feedback WHERE ID=@ID";
+            /*string sqlStatement = "DELETE FROM feedback WHERE ID=@ID";
 
             using (SqlConnection connection = new SqlConnection(storage.DBConnectionString))
             {
@@ -66,21 +67,21 @@ namespace Isdisco_Web_API.DAO
                     Console.WriteLine(e.Message);
                 }
 
-            }
+            }*/
 
 
-            /*for (int i = 0; i < storage.FeedbackList.Count; i++)
+            for (int i = 0; i < storage.FeedbackList.Count; i++)
             {
                 if (storage.FeedbackList[i].Id.Equals(id))
                 {
                     storage.FeedbackList.RemoveAt(i);
                 }
-            }*/
+            }
         }
 
         public void DeleteAll()
         {
-            string sqlStatement = "DELETE FROM feedback;";
+            /*string sqlStatement = "DELETE FROM feedback;";
 
             using (SqlConnection connection = new SqlConnection(storage.DBConnectionString))
             {
@@ -96,15 +97,15 @@ namespace Isdisco_Web_API.DAO
                     Console.WriteLine(e.Message);
                 }
 
-            }
+            }*/
 
 
-            //storage.FeedbackList.Clear();
+            storage.FeedbackList.Clear();
         }
 
         public List<Feedback> GetAll()
         {
-            List<Feedback> result = new List<Feedback>();
+            /*List<Feedback> result = new List<Feedback>();
             string queryString = "SELECT * FROM feedback;";
 
             using (SqlConnection connection = new SqlConnection(storage.DBConnectionString))
@@ -128,10 +129,10 @@ namespace Isdisco_Web_API.DAO
                     }
                 }
             }
-            return result;
+            return result;*/
 
 
-            //return storage.FeedbackList;
+            return storage.FeedbackList;
         }
 
         public Feedback Get(int id)
