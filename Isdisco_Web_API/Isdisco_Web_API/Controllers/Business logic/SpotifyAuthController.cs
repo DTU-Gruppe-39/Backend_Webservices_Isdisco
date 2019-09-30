@@ -40,8 +40,8 @@ namespace Isdisco_Web_API.Controllers
         {
             var spotifyClient = "80b3eb68b8454a0c81554c61b47bcc39";
             //var spotifySecret = "c2a18bfa0793457f8a59d277ba412425";
-            //var redirect_uri = "https://isdisco.azurewebsites.net/api/spotify-track/callback";
-            var redirect_uri = "https://localhost:5002/api/spotify-track/callback";
+            var redirect_uri = "https://isdisco.azurewebsites.net/api/spotify-track/callback";
+            //var redirect_uri = "https://localhost:5002/api/spotify-track/callback";
             var scope = "user-read-currently-playing user-top-read playlist-read-private playlist-read-collaborative";      // use a space between multiple scopes fx "user-read-private user-read-email"
 
             return "https://accounts.spotify.com/authorize?client_id=" + Uri.EscapeUriString(spotifyClient) + "&response_type=code&redirect_uri=" + redirect_uri + "&scope=" + Uri.EscapeUriString(scope);
@@ -59,8 +59,8 @@ namespace Isdisco_Web_API.Controllers
             postparams.Add("grant_type", "authorization_code");
             postparams.Add("code", code);
             //redirect doesn't do anything here, but is just required for extra safety by spotify, it must match scope redirect
-            //postparams.Add("redirect_uri", "https://isdisco.azurewebsites.net/api/spotify-track/callback");
-            postparams.Add("redirect_uri", "https://localhost:5002/api/spotify-track/callback");
+            postparams.Add("redirect_uri", "https://isdisco.azurewebsites.net/api/spotify-track/callback");
+            //postparams.Add("redirect_uri", "https://localhost:5002/api/spotify-track/callback");
 
             var authHeader = Convert.ToBase64String(Encoding.Default.GetBytes($"{spotifyClient}:{spotifySecret}"));
             webClient.Headers.Add(HttpRequestHeader.Authorization, "Basic " + authHeader);
