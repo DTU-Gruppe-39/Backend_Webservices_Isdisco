@@ -40,7 +40,7 @@ namespace Isdisco_Web_API.Controllers.API
             if (storage.AuthorizationCodeFlowAuthCode == null)
             {
                 storage.LoginCallback = "settings/start";
-                Response.Headers.Add("Acess-Control-Allow-Origin", "*");
+                Response.Headers.Add("Access-Control-Allow-Origin", "*");
                 Response.Redirect(scc.GetUserScopes());
                 return null;
             }
