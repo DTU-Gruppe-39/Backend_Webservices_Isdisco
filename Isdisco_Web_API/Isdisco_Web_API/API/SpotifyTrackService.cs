@@ -49,7 +49,7 @@ namespace Isdisco_Web_API.Controllers.API
         public ListOfTracks GetSearch(String songName)
         {
             //Businesslogic.SpotifyControllerClass scc = new Businesslogic.SpotifyControllerClass();
-            Response.Headers.Add("Acess-Control-Allow-Origin", "*");
+            Response.Headers.Add("Access-Control-Allow-Origin", "*");
             return scc.GetSearch(songName);
         }
 
